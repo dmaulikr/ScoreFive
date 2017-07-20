@@ -6,17 +6,32 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "SFAppDelegate.h"
 
-@interface AppDelegate ()
+#import "sf_log.h"
+
+#import "UIColor+SFScoreFiveColors.h"
+
+@interface SFAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation SFAppDelegate
 
+@synthesize persistentContainer = _persistentContainer;
+@synthesize managedObjectModel = _managedObjectModel;
+
+#pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+//    self.window.tintColor = [UIColor resolutionBlueColor];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor mirageColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor spindleColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     return YES;
 }
 
@@ -46,53 +61,74 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+    NSError *terminateError;
+    [self saveContextWithError:&terminateError];
+    
+    
 }
 
-
-#pragma mark - Core Data stack
-
-@synthesize persistentContainer = _persistentContainer;
+#pragma mark - Property Access Methods
 
 - (NSPersistentContainer *)persistentContainer {
     // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
-    @synchronized (self) {
-        if (_persistentContainer == nil) {
-            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"ScoreFive"];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        if (!_persistentContainer) {
+            
+            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"ScoreFive" managedObjectModel:self.managedObjectModel];
+            
             [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-                if (error != nil) {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    
-                    /*
-                     Typical reasons for an error here include:
-                     * The parent directory does not exist, cannot be created, or disallows writing.
-                     * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                     * The device is out of space.
-                     * The store could not be migrated to the current model version.
-                     Check the error message to determine what the actual problem was.
-                    */
-                    NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+                
+                if (error) {
+
+                    os_log_fault(sf_log(), "Couldn't create persistent container: %@", error.localizedDescription);
                     abort();
+                    
                 }
+                
             }];
+            
         }
-    }
+        
+    });
     
     return _persistentContainer;
+    
+}
+
+- (NSManagedObjectModel *)managedObjectModel {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        if (!_managedObjectModel) {
+            
+            NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"ScoreFive" withExtension:@"momd"];
+            _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+            
+        }
+        
+    });
+    
+    return _managedObjectModel;
+    
 }
 
 #pragma mark - Core Data Saving support
 
-- (void)saveContext {
+- (void)saveContextWithError:(NSError *__autoreleasing *)error {
+    
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
-    NSError *error = nil;
-    if ([context hasChanges] && ![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-        abort();
+    
+    NSError *saveError = nil;
+    if ([context hasChanges] && ![context save:&saveError]) {
+        
+        *error = saveError;
+        
     }
+    
 }
 
 @end

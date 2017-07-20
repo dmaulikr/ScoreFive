@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WdT-27-s4h">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="agM-KL-WXL">
+            <objects>
+                <navigationController id="WdT-27-s4h" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Vb4-Cx-aZt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lCC-Ar-YiJ" kind="relationship" relationship="rootViewController" id="eqP-XR-JYz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cao-MQ-W6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-554" y="157"/>
+        </scene>
+        <!--New Game View Controller-->
+        <scene sceneID="ts1-0b-eKC">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="lCC-Ar-YiJ" customClass="SFNewGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Hq-25-RaX"/>
+                        <viewControllerLayoutGuide type="bottom" id="rbD-P5-NPH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uLm-Au-P6N">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Zma-dI-T3x">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="lCC-Ar-YiJ" id="UFM-pC-4BK"/>
+                                    <outlet property="delegate" destination="lCC-Ar-YiJ" id="o6f-mf-T99"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Zma-dI-T3x" firstAttribute="leading" secondItem="uLm-Au-P6N" secondAttribute="leading" id="0Sc-iz-var"/>
+                            <constraint firstAttribute="trailing" secondItem="Zma-dI-T3x" secondAttribute="trailing" id="jG5-4b-JsI"/>
+                            <constraint firstItem="rbD-P5-NPH" firstAttribute="top" secondItem="Zma-dI-T3x" secondAttribute="bottom" id="q6M-Zi-e9O"/>
+                            <constraint firstItem="Zma-dI-T3x" firstAttribute="top" secondItem="7Hq-25-RaX" secondAttribute="bottom" id="sLu-5O-ySS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="0W0-50-vjJ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qbI-BE-9i9">
+                            <connections>
+                                <action selector="userCancel:" destination="lCC-Ar-YiJ" id="7SL-m0-mPg"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="bja-18-VVe">
+                            <connections>
+                                <action selector="userSave:" destination="lCC-Ar-YiJ" id="x65-Fm-iie"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gameSettingsTable" destination="Zma-dI-T3x" id="sZG-mZ-nT0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yg4-k3-f6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="271" y="157"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="0.00051985308527946472" green="0.075109347701072693" blue="0.37089246511459351" alpha="1" colorSpace="calibratedRGB"/>
+</document>

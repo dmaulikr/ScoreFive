@@ -7,15 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */; };
+		072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */; };
+		072B95F11F21412800E4D1FB /* NewRound.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 072B95F01F21412800E4D1FB /* NewRound.storyboard */; };
+		072B95F41F21417700E4D1FB /* SFNewRoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95F31F21417700E4D1FB /* SFNewRoundViewController.m */; };
+		072B95F71F21462500E4D1FB /* UIColor+SFScoreFiveColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95F61F21462500E4D1FB /* UIColor+SFScoreFiveColors.m */; };
+		073F8A931F1FDE200086C7DF /* SFGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8A921F1FDE200086C7DF /* SFGame.m */; };
+		073F8A961F1FDFF60086C7DF /* SFGameRound.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8A951F1FDFF60086C7DF /* SFGameRound.m */; };
+		073F8A991F1FEE620086C7DF /* SFGameStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8A981F1FEE620086C7DF /* SFGameStorage.m */; };
+		073F8A9F1F2004680086C7DF /* SFGamesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8A9E1F2004680086C7DF /* SFGamesListViewController.m */; };
+		073F8AA11F2007210086C7DF /* NewGame.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 073F8AA01F2007210086C7DF /* NewGame.storyboard */; };
+		073F8AA41F2008630086C7DF /* SFNewGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AA31F2008630086C7DF /* SFNewGameViewController.m */; };
+		073F8AA71F2016FB0086C7DF /* sf_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AA51F2016FB0086C7DF /* sf_log.c */; };
+		073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AA91F2018DA0086C7DF /* SFFormatters.m */; };
+		073F8AAD1F2038D40086C7DF /* SFTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AAC1F2038D40086C7DF /* SFTextFieldTableViewCell.m */; };
+		073F8AB01F2061280086C7DF /* SFGame+DisplayStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AAF1F2061280086C7DF /* SFGame+DisplayStrings.m */; };
+		073F8AB31F20FF320086C7DF /* SFScoreCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AB21F20FF320086C7DF /* SFScoreCardViewController.m */; };
+		073F8AB61F21026C0086C7DF /* SFScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AB51F21026C0086C7DF /* SFScoreView.m */; };
+		073F8AB91F2119FE0086C7DF /* SFScoreViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AB81F2119FE0086C7DF /* SFScoreViewTableViewCell.m */; };
+		073F8ABC1F211F320086C7DF /* SFButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8ABB1F211F320086C7DF /* SFButtonTableViewCell.m */; };
 		0793EF501F1FA42B00FF2D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF4F1F1FA42B00FF2D08 /* main.m */; };
-		0793EF531F1FA42B00FF2D08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF521F1FA42B00FF2D08 /* AppDelegate.m */; };
-		0793EF561F1FA42B00FF2D08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF551F1FA42B00FF2D08 /* ViewController.m */; };
+		0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */; };
 		0793EF591F1FA42B00FF2D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF571F1FA42B00FF2D08 /* Main.storyboard */; };
 		0793EF5C1F1FA42B00FF2D08 /* ScoreFive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF5A1F1FA42B00FF2D08 /* ScoreFive.xcdatamodeld */; };
 		0793EF5E1F1FA42B00FF2D08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF5D1F1FA42B00FF2D08 /* Assets.xcassets */; };
 		0793EF611F1FA42B00FF2D08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF5F1F1FA42B00FF2D08 /* LaunchScreen.storyboard */; };
 		0793EF6C1F1FA42B00FF2D08 /* ScoreFiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF6B1F1FA42B00FF2D08 /* ScoreFiveTests.m */; };
 		0793EF771F1FA42B00FF2D08 /* ScoreFiveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF761F1FA42B00FF2D08 /* ScoreFiveUITests.m */; };
+		079B95EA1F214B3E00A5FFE1 /* UIResponder+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 079B95E91F214B3E00A5FFE1 /* UIResponder+ScoreFive.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,12 +55,46 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ScoreFive.h"; sourceTree = "<group>"; };
+		072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ScoreFive.m"; sourceTree = "<group>"; };
+		072B95EA1F213AE000E4D1FB /* UINavigationBar+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+ScoreFive.h"; sourceTree = "<group>"; };
+		072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+ScoreFive.m"; sourceTree = "<group>"; };
+		072B95F01F21412800E4D1FB /* NewRound.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRound.storyboard; sourceTree = "<group>"; };
+		072B95F21F21417700E4D1FB /* SFNewRoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFNewRoundViewController.h; sourceTree = "<group>"; };
+		072B95F31F21417700E4D1FB /* SFNewRoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFNewRoundViewController.m; sourceTree = "<group>"; };
+		072B95F51F21462500E4D1FB /* UIColor+SFScoreFiveColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SFScoreFiveColors.h"; sourceTree = "<group>"; };
+		072B95F61F21462500E4D1FB /* UIColor+SFScoreFiveColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SFScoreFiveColors.m"; sourceTree = "<group>"; };
+		073F8A911F1FDE200086C7DF /* SFGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGame.h; sourceTree = "<group>"; };
+		073F8A921F1FDE200086C7DF /* SFGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGame.m; sourceTree = "<group>"; };
+		073F8A941F1FDFF60086C7DF /* SFGameRound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGameRound.h; sourceTree = "<group>"; };
+		073F8A951F1FDFF60086C7DF /* SFGameRound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGameRound.m; sourceTree = "<group>"; };
+		073F8A971F1FEE620086C7DF /* SFGameStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGameStorage.h; sourceTree = "<group>"; };
+		073F8A981F1FEE620086C7DF /* SFGameStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGameStorage.m; sourceTree = "<group>"; };
+		073F8A9D1F2004680086C7DF /* SFGamesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGamesListViewController.h; sourceTree = "<group>"; };
+		073F8A9E1F2004680086C7DF /* SFGamesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGamesListViewController.m; sourceTree = "<group>"; };
+		073F8AA01F2007210086C7DF /* NewGame.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewGame.storyboard; sourceTree = "<group>"; };
+		073F8AA21F2008630086C7DF /* SFNewGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFNewGameViewController.h; sourceTree = "<group>"; };
+		073F8AA31F2008630086C7DF /* SFNewGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFNewGameViewController.m; sourceTree = "<group>"; };
+		073F8AA51F2016FB0086C7DF /* sf_log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sf_log.c; sourceTree = "<group>"; };
+		073F8AA61F2016FB0086C7DF /* sf_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sf_log.h; sourceTree = "<group>"; };
+		073F8AA81F2018DA0086C7DF /* SFFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFFormatters.h; sourceTree = "<group>"; };
+		073F8AA91F2018DA0086C7DF /* SFFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFFormatters.m; sourceTree = "<group>"; };
+		073F8AAB1F2038D40086C7DF /* SFTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		073F8AAC1F2038D40086C7DF /* SFTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		073F8AAE1F2061280086C7DF /* SFGame+DisplayStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SFGame+DisplayStrings.h"; sourceTree = "<group>"; };
+		073F8AAF1F2061280086C7DF /* SFGame+DisplayStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SFGame+DisplayStrings.m"; sourceTree = "<group>"; };
+		073F8AB11F20FF320086C7DF /* SFScoreCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFScoreCardViewController.h; sourceTree = "<group>"; };
+		073F8AB21F20FF320086C7DF /* SFScoreCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFScoreCardViewController.m; sourceTree = "<group>"; };
+		073F8AB41F21026C0086C7DF /* SFScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFScoreView.h; sourceTree = "<group>"; };
+		073F8AB51F21026C0086C7DF /* SFScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFScoreView.m; sourceTree = "<group>"; };
+		073F8AB71F2119FE0086C7DF /* SFScoreViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFScoreViewTableViewCell.h; sourceTree = "<group>"; };
+		073F8AB81F2119FE0086C7DF /* SFScoreViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFScoreViewTableViewCell.m; sourceTree = "<group>"; };
+		073F8ABA1F211F320086C7DF /* SFButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFButtonTableViewCell.h; sourceTree = "<group>"; };
+		073F8ABB1F211F320086C7DF /* SFButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFButtonTableViewCell.m; sourceTree = "<group>"; };
 		0793EF4B1F1FA42B00FF2D08 /* ScoreFive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreFive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0793EF4F1F1FA42B00FF2D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0793EF511F1FA42B00FF2D08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0793EF521F1FA42B00FF2D08 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0793EF541F1FA42B00FF2D08 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0793EF551F1FA42B00FF2D08 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAppDelegate.h; sourceTree = "<group>"; };
+		0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFAppDelegate.m; sourceTree = "<group>"; };
 		0793EF581F1FA42B00FF2D08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0793EF5B1F1FA42B00FF2D08 /* ScoreFive.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScoreFive.xcdatamodel; sourceTree = "<group>"; };
 		0793EF5D1F1FA42B00FF2D08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +106,8 @@
 		0793EF721F1FA42B00FF2D08 /* ScoreFiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoreFiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0793EF761F1FA42B00FF2D08 /* ScoreFiveUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoreFiveUITests.m; sourceTree = "<group>"; };
 		0793EF781F1FA42B00FF2D08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		079B95E81F214B3E00A5FFE1 /* UIResponder+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+ScoreFive.h"; sourceTree = "<group>"; };
+		079B95E91F214B3E00A5FFE1 /* UIResponder+ScoreFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+ScoreFive.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,16 +158,52 @@
 		0793EF4D1F1FA42B00FF2D08 /* ScoreFive */ = {
 			isa = PBXGroup;
 			children = (
-				0793EF511F1FA42B00FF2D08 /* AppDelegate.h */,
-				0793EF521F1FA42B00FF2D08 /* AppDelegate.m */,
-				0793EF541F1FA42B00FF2D08 /* ViewController.h */,
-				0793EF551F1FA42B00FF2D08 /* ViewController.m */,
+				072B95F51F21462500E4D1FB /* UIColor+SFScoreFiveColors.h */,
+				072B95F61F21462500E4D1FB /* UIColor+SFScoreFiveColors.m */,
+				0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */,
+				0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */,
 				0793EF571F1FA42B00FF2D08 /* Main.storyboard */,
-				0793EF5D1F1FA42B00FF2D08 /* Assets.xcassets */,
+				073F8AA01F2007210086C7DF /* NewGame.storyboard */,
 				0793EF5F1F1FA42B00FF2D08 /* LaunchScreen.storyboard */,
+				072B95F01F21412800E4D1FB /* NewRound.storyboard */,
+				0793EF5D1F1FA42B00FF2D08 /* Assets.xcassets */,
 				0793EF621F1FA42B00FF2D08 /* Info.plist */,
 				0793EF5A1F1FA42B00FF2D08 /* ScoreFive.xcdatamodeld */,
 				0793EF4E1F1FA42B00FF2D08 /* Supporting Files */,
+				073F8A911F1FDE200086C7DF /* SFGame.h */,
+				073F8A921F1FDE200086C7DF /* SFGame.m */,
+				073F8AAE1F2061280086C7DF /* SFGame+DisplayStrings.h */,
+				073F8AAF1F2061280086C7DF /* SFGame+DisplayStrings.m */,
+				073F8A941F1FDFF60086C7DF /* SFGameRound.h */,
+				073F8A951F1FDFF60086C7DF /* SFGameRound.m */,
+				073F8A971F1FEE620086C7DF /* SFGameStorage.h */,
+				073F8A981F1FEE620086C7DF /* SFGameStorage.m */,
+				073F8A9D1F2004680086C7DF /* SFGamesListViewController.h */,
+				073F8A9E1F2004680086C7DF /* SFGamesListViewController.m */,
+				073F8AA21F2008630086C7DF /* SFNewGameViewController.h */,
+				073F8AA31F2008630086C7DF /* SFNewGameViewController.m */,
+				073F8AA61F2016FB0086C7DF /* sf_log.h */,
+				073F8AA51F2016FB0086C7DF /* sf_log.c */,
+				073F8ABA1F211F320086C7DF /* SFButtonTableViewCell.h */,
+				073F8ABB1F211F320086C7DF /* SFButtonTableViewCell.m */,
+				073F8AA81F2018DA0086C7DF /* SFFormatters.h */,
+				073F8AA91F2018DA0086C7DF /* SFFormatters.m */,
+				073F8AAB1F2038D40086C7DF /* SFTextFieldTableViewCell.h */,
+				073F8AAC1F2038D40086C7DF /* SFTextFieldTableViewCell.m */,
+				073F8AB11F20FF320086C7DF /* SFScoreCardViewController.h */,
+				073F8AB21F20FF320086C7DF /* SFScoreCardViewController.m */,
+				073F8AB41F21026C0086C7DF /* SFScoreView.h */,
+				073F8AB51F21026C0086C7DF /* SFScoreView.m */,
+				073F8AB71F2119FE0086C7DF /* SFScoreViewTableViewCell.h */,
+				073F8AB81F2119FE0086C7DF /* SFScoreViewTableViewCell.m */,
+				072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */,
+				072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */,
+				072B95EA1F213AE000E4D1FB /* UINavigationBar+ScoreFive.h */,
+				072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */,
+				072B95F21F21417700E4D1FB /* SFNewRoundViewController.h */,
+				072B95F31F21417700E4D1FB /* SFNewRoundViewController.m */,
+				079B95E81F214B3E00A5FFE1 /* UIResponder+ScoreFive.h */,
+				079B95E91F214B3E00A5FFE1 /* UIResponder+ScoreFive.m */,
 			);
 			path = ScoreFive;
 			sourceTree = "<group>";
@@ -253,8 +344,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0793EF611F1FA42B00FF2D08 /* LaunchScreen.storyboard in Resources */,
+				073F8AA11F2007210086C7DF /* NewGame.storyboard in Resources */,
 				0793EF5E1F1FA42B00FF2D08 /* Assets.xcassets in Resources */,
 				0793EF591F1FA42B00FF2D08 /* Main.storyboard in Resources */,
+				072B95F11F21412800E4D1FB /* NewRound.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,10 +372,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */,
 				0793EF5C1F1FA42B00FF2D08 /* ScoreFive.xcdatamodeld in Sources */,
-				0793EF561F1FA42B00FF2D08 /* ViewController.m in Sources */,
-				0793EF531F1FA42B00FF2D08 /* AppDelegate.m in Sources */,
+				072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */,
+				072B95F71F21462500E4D1FB /* UIColor+SFScoreFiveColors.m in Sources */,
+				0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */,
+				079B95EA1F214B3E00A5FFE1 /* UIResponder+ScoreFive.m in Sources */,
+				073F8AB61F21026C0086C7DF /* SFScoreView.m in Sources */,
+				073F8AB31F20FF320086C7DF /* SFScoreCardViewController.m in Sources */,
+				073F8A991F1FEE620086C7DF /* SFGameStorage.m in Sources */,
+				073F8A931F1FDE200086C7DF /* SFGame.m in Sources */,
+				073F8AA71F2016FB0086C7DF /* sf_log.c in Sources */,
 				0793EF501F1FA42B00FF2D08 /* main.m in Sources */,
+				073F8A961F1FDFF60086C7DF /* SFGameRound.m in Sources */,
+				072B95F41F21417700E4D1FB /* SFNewRoundViewController.m in Sources */,
+				073F8AB91F2119FE0086C7DF /* SFScoreViewTableViewCell.m in Sources */,
+				073F8ABC1F211F320086C7DF /* SFButtonTableViewCell.m in Sources */,
+				073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */,
+				073F8A9F1F2004680086C7DF /* SFGamesListViewController.m in Sources */,
+				073F8AB01F2061280086C7DF /* SFGame+DisplayStrings.m in Sources */,
+				073F8AAD1F2038D40086C7DF /* SFTextFieldTableViewCell.m in Sources */,
+				073F8AA41F2008630086C7DF /* SFNewGameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +630,7 @@
 				0793EF7D1F1FA42B00FF2D08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0793EF7E1F1FA42B00FF2D08 /* Build configuration list for PBXNativeTarget "ScoreFiveTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +639,7 @@
 				0793EF801F1FA42B00FF2D08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0793EF811F1FA42B00FF2D08 /* Build configuration list for PBXNativeTarget "ScoreFiveUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +648,7 @@
 				0793EF831F1FA42B00FF2D08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

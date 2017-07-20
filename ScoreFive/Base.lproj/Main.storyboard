@@ -1,26 +1,144 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xen-rt-6Xz">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Navigation Controller-->
+        <scene sceneID="JFi-Rx-Wdq">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <navigationController id="xen-rt-6Xz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="P16-6m-cJ9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Rvu-F1-TMy" kind="relationship" relationship="rootViewController" id="qvc-FV-pGP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0mU-tz-amv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-456" y="-55"/>
+        </scene>
+        <!--Games List View Controller-->
+        <scene sceneID="Zab-FK-as6">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Rvu-F1-TMy" customClass="SFGamesListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ha1-ou-I0a"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Pr-aj-Ccv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BZR-zD-h1K">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="myB-2A-p2K">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Rvu-F1-TMy" id="8WH-c2-kZA"/>
+                                    <outlet property="delegate" destination="Rvu-F1-TMy" id="SVK-pq-Kle"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9Pr-aj-Ccv" firstAttribute="top" secondItem="myB-2A-p2K" secondAttribute="bottom" id="FeK-ad-MrC"/>
+                            <constraint firstItem="myB-2A-p2K" firstAttribute="leading" secondItem="BZR-zD-h1K" secondAttribute="leading" id="p6z-GI-flm"/>
+                            <constraint firstItem="myB-2A-p2K" firstAttribute="top" secondItem="ha1-ou-I0a" secondAttribute="bottom" id="si3-k8-exp"/>
+                            <constraint firstAttribute="trailing" secondItem="myB-2A-p2K" secondAttribute="trailing" id="yGQ-oD-YKd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="9qw-78-Rn5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8jY-2w-wxR">
+                            <connections>
+                                <action selector="userNewGame:" destination="Rvu-F1-TMy" id="9re-ie-6Yq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gamesTableView" destination="myB-2A-p2K" id="tte-L2-LsJ"/>
+                        <segue destination="nhZ-7d-zV1" kind="show" identifier="ScoreCardSegue" id="tEO-bP-og6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TBf-i1-eMf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="352.80000000000001" y="-55.322338830584712"/>
+        </scene>
+        <!--Score Card-->
+        <scene sceneID="IoT-hd-QFe">
+            <objects>
+                <viewController title="Score Card" id="nhZ-7d-zV1" customClass="SFScoreCardViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5oz-3J-A7Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="gXT-dg-65Z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cgh-V8-5V3">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brw-GN-xMG" customClass="SFScoreView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.08456498384475708" green="0.10243642330169678" blue="0.13520835340023041" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="yWa-nr-p12"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="columns">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANN-wW-cXi" customClass="SFScoreView">
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.08456498384475708" green="0.10243642330169678" blue="0.13520835340023041" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8xc-ee-z1i"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="columns">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kmx-rz-wLa">
+                                <rect key="frame" x="0.0" y="44" width="375" height="515"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="nhZ-7d-zV1" id="0EV-0X-VRe"/>
+                                    <outlet property="delegate" destination="nhZ-7d-zV1" id="3B5-b1-z4p"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Brw-GN-xMG" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="Jie-mh-hn8"/>
+                            <constraint firstItem="Brw-GN-xMG" firstAttribute="top" secondItem="5oz-3J-A7Q" secondAttribute="bottom" id="OFx-1R-yaa"/>
+                            <constraint firstItem="ANN-wW-cXi" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="QrZ-6I-ehh"/>
+                            <constraint firstItem="Kmx-rz-wLa" firstAttribute="top" secondItem="Brw-GN-xMG" secondAttribute="bottom" id="WNO-Sa-IXj"/>
+                            <constraint firstItem="ANN-wW-cXi" firstAttribute="top" secondItem="Kmx-rz-wLa" secondAttribute="bottom" id="aAE-uL-Phb"/>
+                            <constraint firstItem="Kmx-rz-wLa" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="cok-os-hOj"/>
+                            <constraint firstAttribute="trailing" secondItem="Brw-GN-xMG" secondAttribute="trailing" id="hx2-LS-rd0"/>
+                            <constraint firstItem="gXT-dg-65Z" firstAttribute="top" secondItem="ANN-wW-cXi" secondAttribute="bottom" id="pyK-tD-dWZ"/>
+                            <constraint firstAttribute="trailing" secondItem="Kmx-rz-wLa" secondAttribute="trailing" id="rbO-uR-8dG"/>
+                            <constraint firstAttribute="trailing" secondItem="ANN-wW-cXi" secondAttribute="trailing" id="v6I-qt-F4n"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="playersScoreView" destination="Brw-GN-xMG" id="we1-CC-4rO"/>
+                        <outlet property="roundsTableView" destination="Kmx-rz-wLa" id="ePJ-ES-tWd"/>
+                        <outlet property="totalScoreView" destination="ANN-wW-cXi" id="AaW-eq-5in"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BRT-D0-keh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1165.5999999999999" y="-55.322338830584712"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.00051985308527946472" green="0.075109347701072693" blue="0.37089246511459351" alpha="1" colorSpace="calibratedRGB"/>
 </document>

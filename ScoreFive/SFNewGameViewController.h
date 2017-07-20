@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SFNewGameViewController.h
 //  ScoreFive
 //
 //  Created by Varun Santhanam on 7/19/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SFNewGameViewController : UIViewController
 
 @end
-
