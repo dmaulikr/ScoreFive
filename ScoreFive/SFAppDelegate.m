@@ -26,7 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    self.window.tintColor = [UIColor resolutionBlueColor];
+    self.window.tintColor = [UIColor resolutionBlueColor];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor mirageColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor spindleColor]];

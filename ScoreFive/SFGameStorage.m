@@ -22,6 +22,8 @@
 
 @implementation SFGameStorage
 
+#pragma mark - Public Class Methods
+
 + (instancetype)sharedGameStorage {
     
     static SFGameStorage *sharedGameStorage;
@@ -35,6 +37,8 @@
     return sharedGameStorage;
     
 }
+
+#pragma mark - Property Access Methods
 
 - (SFAppDelegate *)appDelegate {
     
@@ -70,6 +74,8 @@
     return games;
     
 }
+
+#pragma mark - Public Instance Methods
 
 - (void)storeGame:(SFGame *)game {
     

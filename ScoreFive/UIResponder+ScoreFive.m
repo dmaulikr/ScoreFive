@@ -12,6 +12,8 @@
 
 static UIResponder *currentFirstResponder;
 
+#pragma markr - Public Class Methods
+
 + (instancetype)currentFirstResponder {
     
     [[UIApplication sharedApplication] sendAction:@selector(_trap)
@@ -22,6 +24,8 @@ static UIResponder *currentFirstResponder;
     return currentFirstResponder;
     
 }
+
+#pragma mark - Private Class Methods
 
 - (void)_trap {
     

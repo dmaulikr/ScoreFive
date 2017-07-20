@@ -24,6 +24,8 @@
 
 @implementation SFNewGameViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -38,6 +40,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+    
+}
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -56,18 +66,6 @@
     
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 0 && self.players.count > 2) {
-        
-        return YES;
-        
-    }
-    
-    return NO;
-    
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -77,6 +75,20 @@
         [self _updateAddPlayerButton];
         
     }
+    
+}
+
+#pragma mark - UITableViewDataSource
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0 && self.players.count > 2) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
     
 }
 
@@ -159,24 +171,7 @@
     
 }
 
-- (void)_addPlayer {
-    
-    [self.players addObject:@""];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.players.count - 1 inSection:0];
-    [self.gameSettingsTable insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.gameSettingsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.players.count - 1 inSection:0]];
-    [cell.textField becomeFirstResponder];
-    
-    [self _updateAddPlayerButton];
-    
-}
-
-- (void)_cancel {
-
-    [self.navigationController dismissViewControllerAnimated:YES
-                                                  completion:nil];
-    
-}
+#pragma mark - Actions
 
 - (IBAction)userSave:(id)sender {
     
@@ -222,6 +217,27 @@
 - (IBAction)userCancel:(id)sender {
     
     [self _cancel];
+    
+}
+
+#pragma mark - Private Instance Methods
+
+- (void)_addPlayer {
+    
+    [self.players addObject:@""];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.players.count - 1 inSection:0];
+    [self.gameSettingsTable insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.gameSettingsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.players.count - 1 inSection:0]];
+    [cell.textField becomeFirstResponder];
+    
+    [self _updateAddPlayerButton];
+    
+}
+
+- (void)_cancel {
+    
+    [self.navigationController dismissViewControllerAnimated:YES
+                                                  completion:nil];
     
 }
 

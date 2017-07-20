@@ -10,6 +10,8 @@
 
 @implementation SFFormatters
 
+#pragma mark - Public Class Methods
+
 + (NSDateFormatter *)lastPlayedFormatter {
     
     static NSDateFormatter *lastPlayedFormatter;

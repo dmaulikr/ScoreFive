@@ -12,6 +12,8 @@
 
 @synthesize scoreView = _scoreView;
 
+#pragma mark - Public Instance Methods
+
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];

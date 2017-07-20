@@ -18,6 +18,8 @@
 @synthesize columns = _columns;
 @synthesize scoreColor = _scoreColor;
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
@@ -47,6 +49,8 @@
     
 }
 
+#pragma mark - Property Access Methods
+
 - (void)setScoreColor:(UIColor *)scoreColor {
     
     _scoreColor = scoreColor;
@@ -69,6 +73,8 @@
     [self _createColumns];
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpScoreView {
     

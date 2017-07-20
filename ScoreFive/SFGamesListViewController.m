@@ -24,6 +24,8 @@
 
 @implementation SFGamesListViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -80,17 +82,13 @@
     
 }
 
+#pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self performSegueWithIdentifier:@"ScoreCardSegue" sender:[tableView cellForRowAtIndexPath:indexPath]];
-    
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return YES;
     
 }
 
@@ -105,6 +103,14 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
     }
+    
+}
+
+#pragma mark - UITableViewDataSource
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return YES;
     
 }
 
@@ -156,6 +162,8 @@
     
 }
 
+#pragma mark - Private Instance Methods
+
 - (void)_showNewGameUI {
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewGame" bundle:[NSBundle mainBundle]];
@@ -185,6 +193,8 @@
     self.gamesTableView.separatorColor = [[UIColor mirageColor] colorWithAlphaComponent:0.2f];
     
 }
+
+#pragma mark - Actions
 
 - (IBAction)userNewGame:(id)sender {
 

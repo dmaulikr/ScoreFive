@@ -12,6 +12,8 @@
 
 @synthesize textField = _textField;
 
+#pragma mark - Public Instance Methods
+
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -25,6 +27,8 @@
     return self;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpTextField {
     
@@ -64,17 +68,6 @@
                                                                      constant:16.0f]]];
     
     
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

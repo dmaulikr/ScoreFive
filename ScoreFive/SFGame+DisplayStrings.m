@@ -12,6 +12,8 @@
 
 @implementation SFGame (DisplayStrings)
 
+#pragma mark - Public Instance Methods
+
 - (NSString *)displayLastPlayed {
 
     return [NSString stringWithFormat:@"Last Played %@", [[SFFormatters lastPlayedFormatter] stringFromDate:self.timeStamp]];

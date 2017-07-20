@@ -174,6 +174,8 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     
 }
 
+#pragma mark - C Functions
+
 BOOL valid_score(NSInteger score) {
     
     return (score >= SF_GAME_ROUND_MIN && score <= SF_GAME_ROUND_MAX);

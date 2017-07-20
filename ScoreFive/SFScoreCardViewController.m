@@ -27,6 +27,8 @@
 
 @implementation SFScoreCardViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -67,17 +69,7 @@
     
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 0) {
-        
-        return YES;
-        
-    }
-    
-    return NO;
-    
-}
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -109,6 +101,20 @@
         [self _editRound:indexPath.row];
         
     }
+    
+}
+
+#pragma mark - UITableViewDataSource
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
     
 }
 
@@ -192,6 +198,8 @@
     
 }
 
+#pragma mark - Private Instance Methods
+
 - (void)_updateTotals {
     
     for (NSString *player in self.game.players) {
@@ -265,6 +273,8 @@
     [self _updateTotals];
     
 }
+
+#pragma mark - C Functions
 
 NSString * short_player_name(NSString *playerName) {
     

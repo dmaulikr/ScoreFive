@@ -14,16 +14,7 @@
 
 @synthesize buttonEnabled = _buttonEnabled;
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
+#pragma mark - Public Instance Methods
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -39,6 +30,8 @@
     return self;
     
 }
+
+#pragma mark - Property Acess Methods
 
 - (void)setButtonEnabled:(BOOL)buttonEnabled {
     

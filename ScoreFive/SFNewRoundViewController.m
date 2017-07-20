@@ -34,6 +34,8 @@
     
 }
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -96,6 +98,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+    
+}
+
+#pragma mark - UITableViewDataSource
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;
@@ -137,11 +147,7 @@
     
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    
-    return UIStatusBarStyleLightContent;
-    
-}
+#pragma mark - Private Instance Methods
 
 - (void)_setUpNewRoundViewController {
     
@@ -269,6 +275,8 @@
     self.saveButton.enabled = valid;
     
 }
+
+#pragma mark - Actions
 
 - (IBAction)userCancel:(id)sender {
     

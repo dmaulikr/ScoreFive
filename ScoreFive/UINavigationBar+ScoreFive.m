@@ -10,6 +10,8 @@
 
 @implementation UINavigationBar (ScoreFive)
 
+#pragma mark - Public Instance Methods
+
 - (BOOL)showHairline {
     
     UIImageView *hairline = [self _findHairlineUnderView:self];
@@ -39,6 +41,8 @@
     return NO;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (UIImageView *)_findHairlineUnderView:(UIView *)view {
     
