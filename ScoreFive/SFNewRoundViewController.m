@@ -55,7 +55,20 @@
     if (!self.round) {
         
         self.round = [self.game newRound];
+        for (int i = 0; i < self.round.players.count; i++) {
+            
+            [self.scores addObject:@(0)];
+            
+        }
         _shouldAddRound = YES;
+        
+    } else {
+        
+        for (NSString *player in self.round.players) {
+            
+            [self.scores addObject:@([self.round scoreForPlayer:player])];
+            
+        }
         
     }
     
@@ -114,11 +127,9 @@
     
     cell.textField.placeholder = self.round.players[indexPath.row];
     
-    NSString *player = self.round.players[indexPath.row];
-    
     if (!_shouldAddRound) {
         
-        cell.textField.text = [NSString stringWithFormat:@"%li", (long)[self.round scoreForPlayer:player]];
+        cell.textField.text = [NSString stringWithFormat:@"%li", (long)self.scores[indexPath.row].integerValue];
         
     }
     
@@ -179,8 +190,8 @@
     
     NSInteger index = [textFields indexOfObject:textField];
     
-    [self.scores insertObject:@(textField.text.integerValue) atIndex:index];
-    
+    [self.scores replaceObjectAtIndex:index withObject:@(textField.text.integerValue)];
+
     [self _updateSaveButton];
     
 }
