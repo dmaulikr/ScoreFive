@@ -67,6 +67,35 @@
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [self.game removeRoundAtIndex:indexPath.row];
+        [[SFGameStorage sharedGameStorage] storeGame:self.game];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [tableView reloadData];
+            
+        });
+        
+    }
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -74,6 +103,10 @@
     if (indexPath.section == 1 && indexPath.row == 0) {
         
         [self _newRound];
+        
+    } else if (indexPath.section == 0) {
+        
+        [self _editRound:indexPath.row];
         
     }
     
@@ -204,6 +237,17 @@
     UINavigationController *navController = [storyboard instantiateInitialViewController];
     SFNewRoundViewController *controller = (SFNewRoundViewController *)navController.viewControllers.firstObject;
     controller.game = self.game;
+    [self presentViewController:navController animated:YES completion:nil];
+    
+}
+
+- (void)_editRound:(NSInteger)round {
+ 
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewRound" bundle:[NSBundle mainBundle]];
+    UINavigationController *navController = [storyboard instantiateInitialViewController];
+    SFNewRoundViewController *controller = (SFNewRoundViewController *)navController.viewControllers.firstObject;
+    controller.game = self.game;
+    controller.round = self.game.rounds[round];
     [self presentViewController:navController animated:YES completion:nil];
     
 }

@@ -13,16 +13,26 @@
 #import "SFTextFieldTableViewCell.h"
 #import "SFGameStorage.h"
 
-@interface SFNewRoundViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SFGame (SFNewRoundViewController)
 
-@property (weak, nonatomic) IBOutlet UITableView *scoresTableView;
-@property (nonatomic, strong) SFGameRound *round;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *scores;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+- (void)_updateTimeStamp;
 
 @end
 
-@implementation SFNewRoundViewController
+@interface SFNewRoundViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *scoresTableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+
+@property (nonatomic, strong) NSMutableArray<NSNumber *> *scores;
+
+@end
+
+@implementation SFNewRoundViewController {
+    
+    BOOL _shouldAddRound;
+    
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
@@ -41,7 +51,13 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.round = [self.game newRound];
+    
+    if (!self.round) {
+        
+        self.round = [self.game newRound];
+        _shouldAddRound = YES;
+        
+    }
     
 }
 
@@ -49,6 +65,16 @@
     
     [super viewWillAppear:animated];
     [self _updateSaveButton];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.scoresTableView cellForRowAtIndexPath:indexPath];
+    [cell.textField becomeFirstResponder];
     
 }
 
@@ -87,6 +113,14 @@
     }
     
     cell.textField.placeholder = self.round.players[indexPath.row];
+    
+    NSString *player = self.round.players[indexPath.row];
+    
+    if (!_shouldAddRound) {
+        
+        cell.textField.text = [NSString stringWithFormat:@"%li", (long)[self.round scoreForPlayer:player]];
+        
+    }
     
     return cell;
     
@@ -161,6 +195,7 @@
     
     UITextField *textField = (UITextField *)[UIResponder currentFirstResponder];
     textField.text = @"0";
+    [self _updateSaveButton];
     [self _nextField:textField];
     
 }
@@ -169,6 +204,7 @@
     
     UITextField *textField = (UITextField *)[UIResponder currentFirstResponder];
     textField.text = @"50";
+    [self _updateSaveButton];
     [self _nextField:textField];
     
 }
@@ -239,7 +275,16 @@
         
     }
     
-    [self.game addRound:self.round];
+    if (_shouldAddRound) {
+        
+        [self.game addRound:self.round];
+        
+    } else {
+        
+        [self.game _updateTimeStamp];
+        
+    }
+    
     [[SFGameStorage sharedGameStorage] storeGame:self.game];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     

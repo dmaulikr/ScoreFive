@@ -171,6 +171,8 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
     [mutableRounds removeObjectAtIndex:index];
     _rounds = [mutableRounds copy];
     
+    [self _updateTimeStamp];
+    
 }
 
 - (NSInteger)totalScoreForPlayer:(NSString *)playerName {

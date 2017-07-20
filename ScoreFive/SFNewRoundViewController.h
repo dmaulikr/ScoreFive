@@ -13,5 +13,6 @@
 @interface SFNewRoundViewController : UIViewController
 
 @property (nonatomic, strong, nullable) SFGame *game;
+@property (nonatomic, strong, nullable) SFGameRound *round;
 
 @end
