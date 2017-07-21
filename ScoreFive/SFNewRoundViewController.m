@@ -200,6 +200,12 @@
 
     [self _updateSaveButton];
     
+    if (textField.text.length == 2) {
+        
+        [self _nextField:textField];
+        
+    }
+    
 }
 
 - (void)_next:(id)sender {

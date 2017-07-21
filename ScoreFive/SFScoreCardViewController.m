@@ -283,7 +283,7 @@ NSString * short_player_name(NSString *playerName) {
         NSArray<NSString *> *components = [playerName componentsSeparatedByString:@" "];
         NSInteger playerNumber = components[1].integerValue;
         
-        return [NSString stringWithFormat:@"P%li", playerNumber];
+        return [NSString stringWithFormat:@"P%li", (long)playerNumber];
         
     }
     

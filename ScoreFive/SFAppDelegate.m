@@ -6,11 +6,13 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UIColor+SFScoreFiveColors.h"
+
 #import "SFAppDelegate.h"
 
 #import "sf_log.h"
 
-#import "UIColor+SFScoreFiveColors.h"
+@import HockeySDK;
 
 @interface SFAppDelegate ()
 
@@ -25,6 +27,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"fd7ce91387784d8d95f939231090a325"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     self.window.tintColor = [UIColor resolutionBlueColor];
     
@@ -116,7 +122,7 @@
     
 }
 
-#pragma mark - Core Data Saving support
+#pragma mark - Public Instance Methods
 
 - (void)saveContextWithError:(NSError *__autoreleasing *)error {
     
