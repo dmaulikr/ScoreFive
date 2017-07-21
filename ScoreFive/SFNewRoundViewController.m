@@ -265,6 +265,14 @@
         
         [textField resignFirstResponder];
         
+        [self _updateSaveButton];
+        
+        if (self.saveButton.enabled) {
+            
+            [self _save];
+            
+        }
+        
     }
     
 }

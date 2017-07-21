@@ -31,6 +31,7 @@
 		07783BBB1F22920400E2D26B /* UIView+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BBA1F22920400E2D26B /* UIView+ScoreFive.m */; };
 		07783BBE1F22938400E2D26B /* UILabel+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BBD1F22938400E2D26B /* UILabel+ScoreFive.m */; };
 		07783BC01F229BD300E2D26B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07783BBF1F229BD300E2D26B /* QuartzCore.framework */; };
+		07783BC61F22AE8A00E2D26B /* SFGameStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BC51F22AE8A00E2D26B /* SFGameStats.m */; };
 		0793EF501F1FA42B00FF2D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF4F1F1FA42B00FF2D08 /* main.m */; };
 		0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */; };
 		0793EF591F1FA42B00FF2D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF571F1FA42B00FF2D08 /* Main.storyboard */; };
@@ -107,6 +108,8 @@
 		07783BBC1F22938400E2D26B /* UILabel+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ScoreFive.h"; sourceTree = "<group>"; };
 		07783BBD1F22938400E2D26B /* UILabel+ScoreFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ScoreFive.m"; sourceTree = "<group>"; };
 		07783BBF1F229BD300E2D26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		07783BC41F22AE8A00E2D26B /* SFGameStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGameStats.h; sourceTree = "<group>"; };
+		07783BC51F22AE8A00E2D26B /* SFGameStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGameStats.m; sourceTree = "<group>"; };
 		0793EF4B1F1FA42B00FF2D08 /* ScoreFive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreFive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0793EF4F1F1FA42B00FF2D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAppDelegate.h; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 				073F8A951F1FDFF60086C7DF /* SFGameRound.m */,
 				073F8A971F1FEE620086C7DF /* SFGameStorage.h */,
 				073F8A981F1FEE620086C7DF /* SFGameStorage.m */,
+				07783BC41F22AE8A00E2D26B /* SFGameStats.h */,
+				07783BC51F22AE8A00E2D26B /* SFGameStats.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 			files = (
 				072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */,
 				07783BBB1F22920400E2D26B /* UIView+ScoreFive.m in Sources */,
+				07783BC61F22AE8A00E2D26B /* SFGameStats.m in Sources */,
 				0793EF5C1F1FA42B00FF2D08 /* ScoreFive.xcdatamodeld in Sources */,
 				072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */,
 				0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */,

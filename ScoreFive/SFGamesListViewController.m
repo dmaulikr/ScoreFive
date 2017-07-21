@@ -13,7 +13,7 @@
 #import "SFGameStorage.h"
 #import "SFScoreCardViewController.h"
 
-@interface SFGamesListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SFGamesListViewController ()<UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *gamesTableView;
 
@@ -43,6 +43,12 @@
     
     [super viewDidLoad];
     [self _setUpGamesListUI];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)] && (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)) {
+        
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+        
+    }
     
 }
 
@@ -78,6 +84,29 @@
         controller.storageIdentifier = game.storageIdentifier;
         
     }
+    
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    
+    NSIndexPath *indexPath = [self.gamesTableView indexPathForRowAtPoint:location];
+    
+    UITableViewCell *cell = [self.gamesTableView cellForRowAtIndexPath:indexPath];
+    previewingContext.sourceRect = cell.frame;
+    
+    SFGame *game = self.games[indexPath.row];
+    SFScoreCardViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SFScoreCardViewControllerID"];
+    controller.storageIdentifier = game.storageIdentifier;
+    
+    return controller;
+    
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    
+    [self.navigationController pushViewController:viewControllerToCommit animated:NO];
     
 }
 

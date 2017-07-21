@@ -13,7 +13,7 @@
         <scene sceneID="JFi-Rx-Wdq">
             <objects>
                 <navigationController id="xen-rt-6Xz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="P16-6m-cJ9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="P16-6m-cJ9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -73,7 +73,7 @@
         <!--Score Card-->
         <scene sceneID="IoT-hd-QFe">
             <objects>
-                <viewController title="Score Card" id="nhZ-7d-zV1" customClass="SFScoreCardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SFScoreCardViewControllerID" title="Score Card" id="nhZ-7d-zV1" customClass="SFScoreCardViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5oz-3J-A7Q"/>
                         <viewControllerLayoutGuide type="bottom" id="gXT-dg-65Z"/>

@@ -27,7 +27,11 @@
 
 @end
 
-@implementation SFScoreCardViewController
+@implementation SFScoreCardViewController {
+    
+    BOOL completedFirstTotal;
+    
+}
 
 #pragma mark - Overridden Instance Methods
 
@@ -82,12 +86,18 @@
                                                                           preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *cancelCancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                                                      style:UIAlertActionStyleCancel
-                                                                   handler:nil];
+                                                                   handler:^(UIAlertAction *action) {
+                                                                      
+                                                                       [self setNeedsStatusBarAppearanceUpdate];
+                                                                       [self.roundsTableView setEditing:NO animated:YES];
+                                                                       
+                                                                   }];
         [alertController addAction:cancelCancelAction];
         UIAlertAction *desctructiveDeleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil)
                                                                            style:UIAlertActionStyleDestructive
                                                                          handler:^(UIAlertAction *action) {
                                                                             
+                                                                             [self setNeedsStatusBarAppearanceUpdate];
                                                                              [self _deleteRoundAtIndexPath:indexPath];
                                                                              
                                                                          }];
@@ -218,11 +228,24 @@
         
         NSInteger total = [self.game totalScoreForPlayer:player];
         newTotals = [newTotals arrayByAddingObject:@(total)];
-//        self.totalScoreView.scoreLabels[[self.game.players indexOfObject:player]].text = @(total).stringValue;
+        
+        if (!completedFirstTotal) {
+            
+            self.totalScoreView.scoreLabels[[self.game.players indexOfObject:player]].text = @(total).stringValue;
+            
+        }
         
     }
     
-    [self.totalScoreView animateScores:newTotals];
+    if (!completedFirstTotal) {
+        
+        completedFirstTotal = YES;
+        
+    } else {
+     
+        [self.totalScoreView animateScores:newTotals];
+        
+    }
     
 }
 
