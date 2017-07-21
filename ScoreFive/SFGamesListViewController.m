@@ -210,6 +210,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:[NSBundle mainBundle]];
     UINavigationController *controller = (UINavigationController *)[storyboard instantiateInitialViewController];
+    controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:controller
                        animated:YES
                      completion:nil];

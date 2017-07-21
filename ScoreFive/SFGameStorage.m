@@ -12,8 +12,6 @@
 
 #import "SFAppDelegate.h"
 
-#import "sf_log.h"
-
 @interface SFGameStorage ()
 
 @property (nonatomic, readonly) SFAppDelegate *appDelegate;

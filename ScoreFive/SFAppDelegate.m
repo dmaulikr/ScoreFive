@@ -10,10 +10,6 @@
 
 #import "SFAppDelegate.h"
 
-#import "sf_log.h"
-
-@import HockeySDK;
-
 @interface SFAppDelegate ()
 
 @end
@@ -27,10 +23,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"fd7ce91387784d8d95f939231090a325"];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     self.window.tintColor = [UIColor chetwodeBlueColor];
     

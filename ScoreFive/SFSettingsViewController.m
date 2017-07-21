@@ -6,7 +6,11 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UIColor+SFScoreFiveColors.h"
+
 #import "SFSettingsViewController.h"
+
+#import "SFSwitchTableViewCell.h"
 
 #define NUM_SECTIONS 2
 #define ABOUT_SECTION_INDEX 0
@@ -116,7 +120,7 @@
         
         if (!cell) {
             
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AboutCellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AboutCellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             
@@ -125,12 +129,14 @@
         if (indexPath.row == ABOUT_VERSION_ROW_INDEX) {
             
             cell.textLabel.text = NSLocalizedString(@"Version", nil);
+            cell.detailTextLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
             
         }
         
         if (indexPath.row == ABOUT_BUILD_ROW_INDEX) {
             
             cell.textLabel.text = NSLocalizedString(@"Build", nil);
+            cell.detailTextLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
             
         }
         
@@ -140,11 +146,12 @@
         
         static NSString *ScoreCardCellIdentifier = @"ScoreCardCellIdentifier";
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ScoreCardCellIdentifier];
+        SFSwitchTableViewCell *cell = (SFSwitchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:ScoreCardCellIdentifier];
         
         if (!cell) {
             
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ScoreCardCellIdentifier];
+            cell = [[SFSwitchTableViewCell alloc] initWithReuseIdentifier:ScoreCardCellIdentifier];
+            cell.switchControl.onTintColor = [UIColor chetwodeBlueColor];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
