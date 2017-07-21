@@ -13,7 +13,7 @@
         <scene sceneID="JFi-Rx-Wdq">
             <objects>
                 <navigationController id="xen-rt-6Xz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="P16-6m-cJ9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="P16-6m-cJ9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -55,6 +55,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9qw-78-Rn5">
+                        <barButtonItem key="leftBarButtonItem" image="gears-bar-icon" id="7z6-uV-dpY">
+                            <connections>
+                                <action selector="userSettings:" destination="Rvu-F1-TMy" id="Lye-Cn-uaq"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="8jY-2w-wxR">
                             <connections>
                                 <action selector="userNewGame:" destination="Rvu-F1-TMy" id="9re-ie-6Yq"/>
@@ -160,4 +165,7 @@
             <point key="canvasLocation" x="1165.5999999999999" y="-55.322338830584712"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gears-bar-icon" width="22" height="22"/>
+    </resources>
 </document>

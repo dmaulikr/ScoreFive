@@ -42,7 +42,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self _setUpGamesListUI];
     
     if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)] && (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)) {
         
@@ -206,15 +205,15 @@
     
 }
 
-- (void)_setUpGamesListUI {
+- (void)_showSettings {
     
-    [self _setUpGamesTableView];
     
-}
-
-- (void)_setUpGamesTableView {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:[NSBundle mainBundle]];
+    UINavigationController *controller = (UINavigationController *)[storyboard instantiateInitialViewController];
+    [self presentViewController:controller
+                       animated:YES
+                     completion:nil];
     
-
 }
 
 #pragma mark - Actions
@@ -222,6 +221,12 @@
 - (IBAction)userNewGame:(id)sender {
 
     [self _showNewGameUI];
+    
+}
+
+- (IBAction)userSettings:(id)sender {
+    
+    [self _showSettings];
     
 }
 
