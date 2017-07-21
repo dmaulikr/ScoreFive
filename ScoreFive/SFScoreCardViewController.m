@@ -102,7 +102,6 @@
                                                                              
                                                                          }];
         [alertController addAction:desctructiveDeleteAction];
-//        alertController.modalPresentationCapturesStatusBarAppearance = YES;
         [self presentViewController:alertController
                            animated:YES
                          completion:nil];

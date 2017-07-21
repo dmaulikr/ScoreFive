@@ -10,7 +10,11 @@
 
 @interface SFGameStats : NSObject
 
+@property (nonatomic, readonly) double avgScore;
+
 - (nullable instancetype)init NS_UNAVAILABLE;
 - (nullable instancetype)initWithStorageIdentifier:(nonnull NSString *)storageIdentifier NS_DESIGNATED_INITIALIZER;
+
+- (double)avgScoreForPlayer:(nonnull NSString *)playerName;
 
 @end

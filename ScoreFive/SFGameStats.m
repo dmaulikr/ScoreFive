@@ -34,4 +34,34 @@
     
 }
 
+- (double)avgScore {
+    
+    NSInteger total = 0;
+    
+    for (SFGameRound *round in self.game.rounds) {
+        
+        total += round.totalScore;
+        
+    }
+    
+    NSInteger numScores = self.game.rounds.count * self.game.players.count;
+    
+    return (double)total/(double)numScores;
+    
+}
+
+- (double)avgScoreForPlayer:(NSString *)playerName {
+    
+    NSInteger total = 0;
+    
+    for (SFGameRound *round in self.game.rounds) {
+        
+        total += [round scoreForPlayer:playerName];
+        
+    }
+    
+    return (double)total/(double)self.game.players.count;
+    
+}
+
 @end

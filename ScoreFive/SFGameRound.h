@@ -16,7 +16,8 @@ extern NSString * _Nonnull const SFGameRoundCantAddScoreException;
 @interface SFGameRound : NSObject<NSSecureCoding, NSCopying>
 
 @property (nonatomic, strong, readonly, nonnull) NSOrderedSet<NSString *> *players;
-@property (readonly, getter=isFinished) BOOL finished;
+@property (nonatomic, readonly, getter=isFinished) BOOL finished;
+@property (nonatomic, readonly) NSInteger totalScore;
 
 - (nullable instancetype)initWithPlayers:(nonnull NSOrderedSet<NSString *> *)players NS_DESIGNATED_INITIALIZER;
 

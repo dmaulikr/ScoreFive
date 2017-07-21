@@ -78,6 +78,26 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     
 }
 
+- (NSInteger)totalScore {
+    
+    if (self.finished) {
+        
+        NSInteger total = 0;
+        
+        for (NSString *player in self.players) {
+            
+            total += [self scoreForPlayer:player];
+            
+        }
+        
+        return total;
+        
+    }
+    
+    return 0;
+    
+}
+
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
