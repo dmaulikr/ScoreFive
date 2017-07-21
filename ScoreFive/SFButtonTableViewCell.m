@@ -6,6 +6,8 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UIColor+SFScoreFiveColors.h"
+
 #import "SFButtonTableViewCell.h"
 
 @implementation SFButtonTableViewCell
@@ -37,7 +39,7 @@
     
     if (_buttonEnabled) {
         
-        self.textLabel.textColor = self.tintColor;
+        self.textLabel.textColor = [UIColor chetwodeBlueColor];
         self.selectionStyle = UITableViewCellSelectionStyleDefault;
         
     } else {

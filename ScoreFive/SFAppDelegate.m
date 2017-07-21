@@ -6,6 +6,8 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UIColor+SFScoreFiveColors.h"
+
 #import "SFAppDelegate.h"
 
 #import "sf_log.h"
@@ -29,6 +31,12 @@
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"fd7ce91387784d8d95f939231090a325"];
     [[BITHockeyManager sharedHockeyManager] startManager];
     [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+    
+    self.window.tintColor = [UIColor chetwodeBlueColor];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor violetColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     return YES;
 }

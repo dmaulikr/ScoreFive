@@ -6,10 +6,14 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UILabel+ScoreFive.h"
+#import "UIColor+SFScoreFiveColors.h"
 
 #import "SFScoreView.h"
 
-#define SF_SCORE_VIEW_INDEX_LABEL_WIDTH 30.0f
+#import "SFGameRound.h"
+
+#define SF_SCORE_VIEW_INDEX_LABEL_WIDTH 50.0f
 
 @implementation SFScoreView
 
@@ -108,7 +112,7 @@
                                                         attribute:NSLayoutAttributeWidth
                                                        multiplier:0.0f
                                                          constant:SF_SCORE_VIEW_INDEX_LABEL_WIDTH]]];
-    
+        
 }
 
 - (void)_createColumns {
@@ -130,7 +134,7 @@
         UILabel *label = [[UILabel alloc] init];
         _scoreLabels = [self.scoreLabels arrayByAddingObject:label];
         
-        label.text = @"00";
+        label.text = @"0";
         label.textAlignment = NSTextAlignmentCenter;
         label.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -178,6 +182,28 @@
                                                              attribute:NSLayoutAttributeRight
                                                             multiplier:1.0f
                                                               constant:0.0f]];
+            
+        }
+        
+    }
+    
+}
+
+#pragma mark - Public Instance Methods
+
+- (void)animateScores:(NSArray<NSNumber *> *)scores {
+    
+    if (scores.count == self.scoreLabels.count) {
+        
+        for (NSNumber *score in scores) {
+            
+            UILabel *label = self.scoreLabels[[scores indexOfObject:score]];
+            
+            [label animateCounterWithStartValue:label.text.integerValue
+                                       endValue:score.integerValue
+                                       duration:1.0f
+                                completionBlock:nil];
+            
             
         }
         

@@ -14,7 +14,8 @@ IB_DESIGNABLE
 
 @property (nonatomic, strong, readonly, nonnull) NSArray<UILabel *> *scoreLabels;
 @property (nonatomic, strong, readonly, nonnull) UILabel *indexLabel;
-
 @property (nonatomic, assign) IBInspectable NSInteger columns;
+
+- (void)animateScores:(nonnull NSArray<NSNumber *> *)scores;
 
 @end

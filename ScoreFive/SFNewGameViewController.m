@@ -41,11 +41,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle {
-//    
-//    return UIStatusBarStyleLightContent;
-//    
-//}
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.gameSettingsTable cellForRowAtIndexPath:indexPath];
+    [cell.textField becomeFirstResponder];
+    
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+    
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -144,7 +154,7 @@
         }
         
         cell.textField.text = self.players[indexPath.row];
-        cell.textField.placeholder = [NSString stringWithFormat:@"Player %li", (long)indexPath.row + 1];
+        cell.textField.placeholder = [NSString stringWithFormat:@"Player %@", @(indexPath.row + 1).stringValue];
         
         return cell;
         
@@ -187,12 +197,12 @@
             
             NSInteger playerNumber = 1;
             
-            NSString *playerName = [NSString stringWithFormat:@"Player %li", (long)playerNumber];
+            NSString *playerName = [NSString stringWithFormat:@"Player %@", @(playerNumber).stringValue];
             
             while ([adjustedPlayers containsObject:playerName]) {
                 
                 playerNumber++;
-                playerName = [NSString stringWithFormat:@"Player %li", (long)playerNumber];
+                playerName = [NSString stringWithFormat:@"Player %@", @(playerNumber).stringValue];
                 
             }
             

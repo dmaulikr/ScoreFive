@@ -32,5 +32,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Caveat-Bold.ttf</string>
+		<string>Caveat-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

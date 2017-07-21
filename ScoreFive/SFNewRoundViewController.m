@@ -98,11 +98,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle {
-//    
-//    return UIStatusBarStyleLightContent;
-//    
-//}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+    
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -128,7 +128,6 @@
         
         cell = [[SFTextFieldTableViewCell alloc] initWithReuseIdentifier:ScoreCellIdentifier];
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
-        cell.textField.inputAccessoryView = [self _scoreToolbarWithText:@"Next"];
         [cell.textField addTarget:self
                            action:@selector(_enteredScore:)
                  forControlEvents:UIControlEventEditingChanged];
@@ -137,9 +136,19 @@
     
     cell.textField.placeholder = self.round.players[indexPath.row];
     
+    if (indexPath.row == self.round.players.count - 1) {
+        
+        cell.textField.inputAccessoryView = [self _scoreToolbarWithText:@"Done"];
+        
+    } else {
+        
+        cell.textField.inputAccessoryView = [self _scoreToolbarWithText:@"Next"];
+        
+    }
+    
     if (!_shouldAddRound) {
         
-        cell.textField.text = [NSString stringWithFormat:@"%li", (long)self.scores[indexPath.row].integerValue];
+        cell.textField.text = self.scores[indexPath.row].stringValue;
         
     }
     
@@ -200,7 +209,7 @@
 
     [self _updateSaveButton];
     
-    if (textField.text.length == 2) {
+    if (textField.text.length == 2 && valid_score(textField.text.integerValue)) {
         
         [self _nextField:textField];
         
@@ -282,16 +291,8 @@
     
 }
 
-#pragma mark - Actions
-
-- (IBAction)userCancel:(id)sender {
+- (void)_save {
     
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-}
-
-- (IBAction)userSave:(id)sender {
-
     for (int i = 0; i < self.round.players.count; i++) {
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -312,6 +313,21 @@
     
     [[SFGameStorage sharedGameStorage] storeGame:self.game];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    
+}
+
+#pragma mark - Actions
+
+- (IBAction)userCancel:(id)sender {
+    
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (IBAction)userSave:(id)sender {
+
+    [self _save];
     
 }
 

@@ -168,7 +168,7 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
         
     } else {
         
-        [NSException raise:SFGameRoundCantAddScoreException format:@"Can't Add Score %li For Player %@ -- Either Player or Score are Invalid", (long)score, playerName];
+        [NSException raise:SFGameRoundCantAddScoreException format:@"Can't Add Score %@ For Player %@ -- Either Player or Score are Invalid", @(score).stringValue, playerName];
         
     }
     

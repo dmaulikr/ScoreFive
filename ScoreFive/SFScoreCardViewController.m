@@ -6,7 +6,10 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "UINavigationBar+ScoreFive.h"
+#import "UIColor+SFScoreFiveColors.h"
 
 #import "SFScoreCardViewController.h"
 
@@ -43,9 +46,9 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     
-    [super viewWillDisappear:animated];
+    [super viewDidDisappear:animated];
     [self.navigationController.navigationBar showHairline];
     
 }
@@ -62,11 +65,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle {
-//    
-//    return UIStatusBarStyleLightContent;
-//    
-//}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+    
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -74,14 +77,25 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        [self.game removeRoundAtIndex:indexPath.row];
-        [[SFGameStorage sharedGameStorage] storeGame:self.game];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [tableView reloadData];
-            
-        });
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete Scores?", nil)
+                                                                                 message:nil
+                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *cancelCancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                                     style:UIAlertActionStyleCancel
+                                                                   handler:nil];
+        [alertController addAction:cancelCancelAction];
+        UIAlertAction *desctructiveDeleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil)
+                                                                           style:UIAlertActionStyleDestructive
+                                                                         handler:^(UIAlertAction *action) {
+                                                                            
+                                                                             [self _deleteRoundAtIndexPath:indexPath];
+                                                                             
+                                                                         }];
+        [alertController addAction:desctructiveDeleteAction];
+//        alertController.modalPresentationCapturesStatusBarAppearance = YES;
+        [self presentViewController:alertController
+                           animated:YES
+                         completion:nil];
         
     }
     
@@ -150,7 +164,7 @@
         if (!cell) {
             
             cell = [[SFScoreViewTableViewCell alloc] initWithReuseIdentifier:RoundCellIdentifier];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.scoreView.indexLabel.font = [UIFont fontWithName:@"Caveat-Bold" size:cell.scoreView.indexLabel.font.pointSize];
             
         }
         
@@ -161,7 +175,8 @@
         for (NSString *player in round.players) {
             
             UILabel *label = cell.scoreView.scoreLabels[[round.players indexOfObject:player]];
-            label.text = [NSString stringWithFormat:@"%li", (long)[round scoreForPlayer:player]];
+            label.text = @([round scoreForPlayer:player]).stringValue;
+            label.font = [UIFont fontWithName:@"Caveat-Regular" size:28.0f];
             
         }
 
@@ -197,12 +212,17 @@
 
 - (void)_updateTotals {
     
+    NSArray<NSNumber *> *newTotals = [[NSArray<NSNumber *> alloc] init];
+    
     for (NSString *player in self.game.players) {
         
         NSInteger total = [self.game totalScoreForPlayer:player];
-        self.totalScoreView.scoreLabels[[self.game.players indexOfObject:player]].text = [NSString stringWithFormat:@"%li", (long)total];
+        newTotals = [newTotals arrayByAddingObject:@(total)];
+//        self.totalScoreView.scoreLabels[[self.game.players indexOfObject:player]].text = @(total).stringValue;
         
     }
+    
+    [self.totalScoreView animateScores:newTotals];
     
 }
 
@@ -216,18 +236,34 @@
     self.playersScoreView.columns = self.game.players.count;
     self.totalScoreView.columns = self.game.players.count;
     
+    for (UILabel *label in self.totalScoreView.scoreLabels) {
+        
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont fontWithName:@"Caveat-Bold" size:28.0f];
+        
+    }
+    
+    for (UILabel *label in self.playersScoreView.scoreLabels) {
+        
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont fontWithName:@"Caveat-Bold" size:label.font.pointSize];
+        
+    }
+    
     for (NSString *player in self.game.players) {
         
         UILabel *label = self.playersScoreView.scoreLabels[[self.game.players indexOfObject:player]];
         label.text = short_player_name(player);
         
     }
-    
+
 }
 
 - (void)_setUpRoundsTableView {
     
-
+    self.roundsTableView.separatorColor = [UIColor chetwodeBlueColor];
+    self.roundsTableView.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    self.roundsTableView.rowHeight = 50.0f;
     
 }
 
@@ -266,6 +302,20 @@
     
 }
 
+- (void)_deleteRoundAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.game removeRoundAtIndex:indexPath.row];
+    [[SFGameStorage sharedGameStorage] storeGame:self.game];
+    [self.roundsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self.roundsTableView reloadData];
+        [self _updateTotals];
+        
+    });
+    
+}
+
 #pragma mark - C Functions
 
 NSString * short_player_name(NSString *playerName) {
@@ -275,7 +325,7 @@ NSString * short_player_name(NSString *playerName) {
         NSArray<NSString *> *components = [playerName componentsSeparatedByString:@" "];
         NSInteger playerNumber = components[1].integerValue;
         
-        return [NSString stringWithFormat:@"P%li", (long)playerNumber];
+        return [NSString stringWithFormat:@"P%@", @(playerNumber).stringValue];
         
     }
     
