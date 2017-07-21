@@ -211,4 +211,26 @@
     
 }
 
+- (void)markScores {
+    
+    for (UILabel *label in self.scoreLabels) {
+        
+        if ([label.text isEqualToString:@"0"]) {
+            
+            label.textColor = [UIColor japaneseLaurelColor];
+            
+        } else if ([label.text isEqualToString:@"50"]) {
+            
+            label.textColor = [UIColor redBerryColor];
+            
+        } else {
+            
+            label.textColor = [UIColor blackColor];
+            
+        }
+        
+    }
+    
+}
+
 @end

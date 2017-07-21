@@ -18,6 +18,8 @@
 + (UIColor *)purpleHeartColor;
 + (UIColor *)pixiePowderColor;
 + (UIColor *)violetColor;
++ (UIColor *)redBerryColor;
++ (UIColor *)japaneseLaurelColor;
 
 
 @end

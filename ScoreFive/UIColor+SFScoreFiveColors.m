@@ -43,6 +43,18 @@
 
 }
 
++ (UIColor *)redBerryColor {
+
+    return [UIColor colorWithRed:(CGFloat)0.541176 green:(CGFloat)0.000000 blue:(CGFloat)0.000000 alpha:(CGFloat)1.000000];
+
+}
+
++ (UIColor *)japaneseLaurelColor {
+
+    return [UIColor colorWithRed:(CGFloat)0.000000 green:(CGFloat)0.541176 blue:(CGFloat)0.000000 alpha:(CGFloat)1.000000];
+
+}
+
 
 
 @end

@@ -18,4 +18,6 @@ IB_DESIGNABLE
 
 - (void)animateScores:(nonnull NSArray<NSNumber *> *)scores;
 
+- (void)markScores;
+
 @end

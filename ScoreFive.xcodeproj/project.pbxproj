@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		070FB2321F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 070FB2311F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.m */; };
 		072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */; };
 		072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */; };
 		072B95F11F21412800E4D1FB /* NewRound.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 072B95F01F21412800E4D1FB /* NewRound.storyboard */; };
@@ -32,6 +31,7 @@
 		07783BBE1F22938400E2D26B /* UILabel+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BBD1F22938400E2D26B /* UILabel+ScoreFive.m */; };
 		07783BC01F229BD300E2D26B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07783BBF1F229BD300E2D26B /* QuartzCore.framework */; };
 		07783BC61F22AE8A00E2D26B /* SFGameStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BC51F22AE8A00E2D26B /* SFGameStats.m */; };
+		07783BC91F22B87000E2D26B /* UIColor+SFScoreFiveColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BC81F22B87000E2D26B /* UIColor+SFScoreFiveColors.m */; };
 		0793EF501F1FA42B00FF2D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF4F1F1FA42B00FF2D08 /* main.m */; };
 		0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */; };
 		0793EF591F1FA42B00FF2D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF571F1FA42B00FF2D08 /* Main.storyboard */; };
@@ -65,8 +65,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		070FB2301F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SFScoreFiveColors.h"; sourceTree = "<group>"; };
-		070FB2311F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SFScoreFiveColors.m"; sourceTree = "<group>"; };
 		072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ScoreFive.h"; sourceTree = "<group>"; };
 		072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ScoreFive.m"; sourceTree = "<group>"; };
 		072B95EA1F213AE000E4D1FB /* UINavigationBar+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+ScoreFive.h"; sourceTree = "<group>"; };
@@ -110,6 +108,8 @@
 		07783BBF1F229BD300E2D26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		07783BC41F22AE8A00E2D26B /* SFGameStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGameStats.h; sourceTree = "<group>"; };
 		07783BC51F22AE8A00E2D26B /* SFGameStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGameStats.m; sourceTree = "<group>"; };
+		07783BC71F22B87000E2D26B /* UIColor+SFScoreFiveColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SFScoreFiveColors.h"; sourceTree = "<group>"; };
+		07783BC81F22B87000E2D26B /* UIColor+SFScoreFiveColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SFScoreFiveColors.m"; sourceTree = "<group>"; };
 		0793EF4B1F1FA42B00FF2D08 /* ScoreFive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreFive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0793EF4F1F1FA42B00FF2D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAppDelegate.h; sourceTree = "<group>"; };
@@ -259,8 +259,8 @@
 		079B95ED1F216BC900A5FFE1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				070FB2301F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.h */,
-				070FB2311F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.m */,
+				07783BC71F22B87000E2D26B /* UIColor+SFScoreFiveColors.h */,
+				07783BC81F22B87000E2D26B /* UIColor+SFScoreFiveColors.m */,
 				072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */,
 				072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */,
 				072B95EA1F213AE000E4D1FB /* UINavigationBar+ScoreFive.h */,
@@ -569,13 +569,13 @@
 				073F8A961F1FDFF60086C7DF /* SFGameRound.m in Sources */,
 				072B95F41F21417700E4D1FB /* SFNewRoundViewController.m in Sources */,
 				073F8AB91F2119FE0086C7DF /* SFScoreViewTableViewCell.m in Sources */,
-				070FB2321F22882A00FEB7F4 /* UIColor+SFScoreFiveColors.m in Sources */,
 				073F8ABC1F211F320086C7DF /* SFButtonTableViewCell.m in Sources */,
 				073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */,
 				073F8A9F1F2004680086C7DF /* SFGamesListViewController.m in Sources */,
 				073F8AB01F2061280086C7DF /* SFGame+DisplayStrings.m in Sources */,
 				073F8AAD1F2038D40086C7DF /* SFTextFieldTableViewCell.m in Sources */,
 				073F8AA41F2008630086C7DF /* SFNewGameViewController.m in Sources */,
+				07783BC91F22B87000E2D26B /* UIColor+SFScoreFiveColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

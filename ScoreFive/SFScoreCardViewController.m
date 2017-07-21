@@ -192,6 +192,8 @@
         NSInteger playerIndex = indexPath.row % self.game.players.count;
         cell.scoreView.indexLabel.text = short_player_name(self.game.players[playerIndex]);
         
+        [cell.scoreView markScores];
+        
         return cell;
         
     } else if (indexPath.section == 1) {
