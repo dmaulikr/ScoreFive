@@ -37,7 +37,7 @@
     
     if (_buttonEnabled) {
         
-        self.textLabel.textColor = self.superview.tintColor;
+        self.textLabel.textColor = self.tintColor;
         self.selectionStyle = UITableViewCellSelectionStyleDefault;
         
     } else {

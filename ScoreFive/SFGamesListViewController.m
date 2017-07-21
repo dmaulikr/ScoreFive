@@ -59,11 +59,11 @@
     
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    
-    return UIStatusBarStyleLightContent;
-    
-}
+//- (UIStatusBarStyle)preferredStatusBarStyle {
+//    
+//    return UIStatusBarStyleLightContent;
+//    
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
