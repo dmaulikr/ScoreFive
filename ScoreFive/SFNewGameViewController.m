@@ -144,7 +144,7 @@
         }
         
         cell.textField.text = self.players[indexPath.row];
-        cell.textField.placeholder = [NSString stringWithFormat:@"Player %li", (NSInteger)indexPath.row + 1];
+        cell.textField.placeholder = [NSString stringWithFormat:@"Player %li", (long)indexPath.row + 1];
         
         return cell;
         

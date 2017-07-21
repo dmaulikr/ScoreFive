@@ -84,7 +84,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brw-GN-xMG" customClass="SFScoreView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.08456498384475708" green="0.10243642330169678" blue="0.13520835340023041" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="yWa-nr-p12"/>
                                 </constraints>
@@ -96,7 +95,6 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANN-wW-cXi" customClass="SFScoreView">
                                 <rect key="frame" x="0.0" y="559" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.08456498384475708" green="0.10243642330169678" blue="0.13520835340023041" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8xc-ee-z1i"/>
                                 </constraints>
@@ -140,5 +138,4 @@
             <point key="canvasLocation" x="1165.5999999999999" y="-55.322338830584712"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.00051985308527946472" green="0.075109347701072693" blue="0.37089246511459351" alpha="1" colorSpace="calibratedRGB"/>
 </document>

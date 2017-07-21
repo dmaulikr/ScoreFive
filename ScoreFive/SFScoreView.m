@@ -16,7 +16,6 @@
 @synthesize scoreLabels = _scoreLabels;
 @synthesize indexLabel = _indexLabel;
 @synthesize columns = _columns;
-@synthesize scoreColor = _scoreColor;
 
 #pragma mark - Overridden Instance Methods
 
@@ -51,22 +50,6 @@
 
 #pragma mark - Property Access Methods
 
-- (void)setScoreColor:(UIColor *)scoreColor {
-    
-    _scoreColor = scoreColor;
-    
-    if (_scoreColor) {
-        
-        for (UILabel *label in self.scoreLabels) {
-            
-            label.textColor = self.scoreColor;
-            
-        }
-        
-    }
-    
-}
-
 - (void)setColumns:(NSInteger)columns {
     
     _columns = columns;
@@ -91,7 +74,7 @@
         
     }
     
-    self.indexLabel = [[UILabel alloc] init];
+    _indexLabel = [[UILabel alloc] init];
     self.indexLabel.text = @"IN";
     self.indexLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.indexLabel.textAlignment = NSTextAlignmentCenter;
@@ -140,12 +123,12 @@
         
     }
     
-    self.scoreLabels = [[NSArray<UILabel *> alloc] init];
+    _scoreLabels = [[NSArray<UILabel *> alloc] init];
     
     for (int i = 0; i < self.columns; i++) {
         
         UILabel *label = [[UILabel alloc] init];
-        self.scoreLabels = [self.scoreLabels arrayByAddingObject:label];
+        _scoreLabels = [self.scoreLabels arrayByAddingObject:label];
         
         label.text = @"00";
         label.textAlignment = NSTextAlignmentCenter;

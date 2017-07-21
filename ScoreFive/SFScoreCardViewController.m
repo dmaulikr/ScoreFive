@@ -6,7 +6,6 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
-#import "UIColor+SFScoreFiveColors.h"
 #import "UINavigationBar+ScoreFive.h"
 
 #import "SFScoreCardViewController.h"
@@ -152,9 +151,6 @@
             
             cell = [[SFScoreViewTableViewCell alloc] initWithReuseIdentifier:RoundCellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.backgroundColor = [UIColor concreteColor];
-            cell.textLabel.textColor = [UIColor mirageColor];
-            cell.detailTextLabel.textColor = [UIColor mirageColor];
             
         }
         
@@ -183,7 +179,6 @@
         if (!cell) {
             
             cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AddScoreCellIdentifier];
-            cell.backgroundColor = [UIColor concreteColor];
             cell.buttonEnabled = YES;
             
         }
@@ -221,9 +216,6 @@
     self.playersScoreView.columns = self.game.players.count;
     self.totalScoreView.columns = self.game.players.count;
     
-    self.playersScoreView.scoreColor = [UIColor spindleColor];
-    self.totalScoreView.scoreColor = [UIColor spindleColor];
-    
     for (NSString *player in self.game.players) {
         
         UILabel *label = self.playersScoreView.scoreLabels[[self.game.players indexOfObject:player]];
@@ -235,7 +227,7 @@
 
 - (void)_setUpRoundsTableView {
     
-    self.roundsTableView.backgroundColor = [UIColor concreteColor];
+
     
 }
 

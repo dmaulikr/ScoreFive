@@ -7,7 +7,6 @@
 //
 
 #import "SFGame+DisplayStrings.h"
-#import "UIColor+SFScoreFiveColors.h"
 
 #import "SFGamesListViewController.h"
 
@@ -143,9 +142,6 @@
         if (!cell) {
             
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GameCellIdentifier];
-            cell.backgroundColor = [UIColor concreteColor];
-            cell.textLabel.textColor = [UIColor mirageColor];
-            cell.detailTextLabel.textColor = [UIColor mirageColor];
             
         }
         
@@ -189,9 +185,7 @@
 
 - (void)_setUpGamesTableView {
     
-    self.gamesTableView.backgroundColor = [UIColor concreteColor];
-    self.gamesTableView.separatorColor = [[UIColor mirageColor] colorWithAlphaComponent:0.2f];
-    
+
 }
 
 #pragma mark - Actions

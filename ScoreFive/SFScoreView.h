@@ -12,9 +12,9 @@ IB_DESIGNABLE
 
 @interface SFScoreView : UIView
 
-@property (nonatomic, strong, nonnull) NSArray<UILabel *> *scoreLabels;
-@property (nonatomic, strong, nonnull) UILabel *indexLabel;
+@property (nonatomic, strong, readonly, nonnull) NSArray<UILabel *> *scoreLabels;
+@property (nonatomic, strong, readonly, nonnull) UILabel *indexLabel;
+
 @property (nonatomic, assign) IBInspectable NSInteger columns;
-@property (nonatomic, strong, nullable) UIColor *scoreColor;
 
 @end

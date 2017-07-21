@@ -6,8 +6,6 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
-#import "UIColor+SFScoreFiveColors.h"
-
 #import "SFButtonTableViewCell.h"
 
 @implementation SFButtonTableViewCell
