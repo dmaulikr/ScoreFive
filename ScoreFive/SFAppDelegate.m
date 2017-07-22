@@ -10,6 +10,8 @@
 
 #import "SFAppDelegate.h"
 
+#import "SFAppSettings.h"
+
 @interface SFAppDelegate ()
 
 @end
@@ -23,6 +25,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    if (![SFAppSettings sharedAppSettings].firstLaunchHappened) {
+        
+        [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled = YES;
+        [SFAppSettings sharedAppSettings].scoreHighlightingEnabled = YES;
+        
+    }
     
     self.window.tintColor = [UIColor chetwodeBlueColor];
     

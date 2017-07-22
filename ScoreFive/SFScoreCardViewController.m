@@ -17,6 +17,7 @@
 #import "SFButtonTableViewCell.h"
 #import "SFNewRoundViewController.h"
 #import "SFGameStorage.h"
+#import "SFAppSettings.h"
 
 @interface SFScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -189,10 +190,22 @@
             
         }
 
-        NSInteger playerIndex = indexPath.row % self.game.players.count;
-        cell.scoreView.indexLabel.text = short_player_name(self.game.players[playerIndex]);
+        if ([SFAppSettings sharedAppSettings].indexByPlayerNameEnabled) {
+            
+            NSInteger playerIndex = indexPath.row % self.game.players.count;
+            cell.scoreView.indexLabel.text = short_player_name(self.game.players[playerIndex]);
+            
+        } else {
+            
+            cell.scoreView.indexLabel.text = @(indexPath.row + 1).stringValue;
+            
+        }
         
-        [cell.scoreView markScores];
+        if ([SFAppSettings sharedAppSettings].scoreHighlightingEnabled) {
+            
+            [cell.scoreView markScores];
+            
+        }
         
         return cell;
         

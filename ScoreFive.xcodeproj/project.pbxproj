@@ -35,6 +35,7 @@
 		07783BCB1F22BCC500E2D26B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07783BCA1F22BCC500E2D26B /* Settings.storyboard */; };
 		07783BCE1F22BD5B00E2D26B /* SFSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BCD1F22BD5B00E2D26B /* SFSettingsViewController.m */; };
 		07783BD31F22C5E900E2D26B /* SFSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BD21F22C5E900E2D26B /* SFSwitchTableViewCell.m */; };
+		07783BD61F22CB3700E2D26B /* SFAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BD51F22CB3700E2D26B /* SFAppSettings.m */; };
 		0793EF501F1FA42B00FF2D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF4F1F1FA42B00FF2D08 /* main.m */; };
 		0793EF531F1FA42B00FF2D08 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */; };
 		0793EF591F1FA42B00FF2D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0793EF571F1FA42B00FF2D08 /* Main.storyboard */; };
@@ -117,6 +118,8 @@
 		07783BD01F22C49C00E2D26B /* ScoreFive-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ScoreFive-Prefix.pch"; sourceTree = "<group>"; };
 		07783BD11F22C5E900E2D26B /* SFSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSwitchTableViewCell.h; sourceTree = "<group>"; };
 		07783BD21F22C5E900E2D26B /* SFSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSwitchTableViewCell.m; sourceTree = "<group>"; };
+		07783BD41F22CB3700E2D26B /* SFAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAppSettings.h; sourceTree = "<group>"; };
+		07783BD51F22CB3700E2D26B /* SFAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAppSettings.m; sourceTree = "<group>"; };
 		0793EF4B1F1FA42B00FF2D08 /* ScoreFive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreFive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0793EF4F1F1FA42B00FF2D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAppDelegate.h; sourceTree = "<group>"; };
@@ -326,6 +329,8 @@
 				073F8AA91F2018DA0086C7DF /* SFFormatters.m */,
 				0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */,
 				0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */,
+				07783BD41F22CB3700E2D26B /* SFAppSettings.h */,
+				07783BD51F22CB3700E2D26B /* SFAppSettings.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -571,6 +576,7 @@
 				073F8ABC1F211F320086C7DF /* SFButtonTableViewCell.m in Sources */,
 				07783BCE1F22BD5B00E2D26B /* SFSettingsViewController.m in Sources */,
 				073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */,
+				07783BD61F22CB3700E2D26B /* SFAppSettings.m in Sources */,
 				073F8A9F1F2004680086C7DF /* SFGamesListViewController.m in Sources */,
 				073F8AB01F2061280086C7DF /* SFGame+DisplayStrings.m in Sources */,
 				073F8AAD1F2038D40086C7DF /* SFTextFieldTableViewCell.m in Sources */,
@@ -726,12 +732,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ScoreFive/Frameworks/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(PROJECT_NAME)-Prefix.pch";
 				INFOPLIST_FILE = ScoreFive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.varunsanthanam.ScoreFive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -743,12 +747,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ScoreFive/Frameworks/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(PROJECT_NAME)-Prefix.pch";
 				INFOPLIST_FILE = ScoreFive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.varunsanthanam.ScoreFive;
 				PRODUCT_NAME = "$(TARGET_NAME)";

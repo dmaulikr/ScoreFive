@@ -58,7 +58,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="8ec-yo-khd">
                         <barButtonItem key="leftBarButtonItem" image="gears-bar-icon" id="2qY-9b-Ar3"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="zDK-aA-5Td"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zDK-aA-5Td"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9y-eS-kZe" userLabel="First Responder" sceneMemberID="firstResponder"/>

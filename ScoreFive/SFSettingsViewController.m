@@ -11,6 +11,7 @@
 #import "SFSettingsViewController.h"
 
 #import "SFSwitchTableViewCell.h"
+#import "SFAppSettings.h"
 
 #define NUM_SECTIONS 2
 #define ABOUT_SECTION_INDEX 0
@@ -25,6 +26,9 @@
 @interface SFSettingsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
+
+@property (nonatomic, readonly) UISwitch *indexByPlayerSwitch;
+@property (nonatomic, readonly) UISwitch *highlightScoreSwitch;
 
 @end
 
@@ -44,19 +48,29 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     return UIStatusBarStyleLightContent;
+    
+}
+
+#pragma mark - Property Access Methods
+
+- (UISwitch *)indexByPlayerSwitch {
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:SCORECARD_INDEX_ROW_INDEX inSection:SCORECARD_SECTION_INDEX];
+    SFSwitchTableViewCell *cell = (SFSwitchTableViewCell *)[self.settingsTableView cellForRowAtIndexPath:indexPath];
+    
+    return cell.switchControl;
+    
+}
+
+- (UISwitch *)highlightScoreSwitch {
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:SCORECARD_HIGHLIGHT_ROW_INDEX inSection:SCORECARD_SECTION_INDEX];
+    SFSwitchTableViewCell *cell = (SFSwitchTableViewCell *)[self.settingsTableView cellForRowAtIndexPath:indexPath];
+    
+    return cell.switchControl;
     
 }
 
@@ -153,18 +167,23 @@
             cell = [[SFSwitchTableViewCell alloc] initWithReuseIdentifier:ScoreCardCellIdentifier];
             cell.switchControl.onTintColor = [UIColor chetwodeBlueColor];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.switchControl addTarget:self
+                                   action:@selector(_saveSettings)
+                         forControlEvents:UIControlEventValueChanged];
             
         }
         
         if (indexPath.row == SCORECARD_INDEX_ROW_INDEX) {
             
             cell.textLabel.text = NSLocalizedString(@"Index By Player", nil);
+            cell.switchControl.on = [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled;
             
         }
         
         if (indexPath.row == SCORECARD_HIGHLIGHT_ROW_INDEX) {
             
             cell.textLabel.text = NSLocalizedString(@"Highlight Scores", nil);
+            cell.switchControl.on = [SFAppSettings sharedAppSettings].scoreHighlightingEnabled;
             
         }
         
@@ -190,6 +209,22 @@
 - (void)_setUpSettingsViewController {
     
     self.title = NSLocalizedString(@"Settings", nil);
+    
+}
+
+- (void)_saveSettings {
+    
+    [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled = self.indexByPlayerSwitch.on;
+    [SFAppSettings sharedAppSettings].scoreHighlightingEnabled = self.highlightScoreSwitch.on;
+ 
+    [self _refreshSetings];
+    
+}
+
+- (void)_refreshSetings {
+    
+    self.indexByPlayerSwitch.on = [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled;
+    self.highlightScoreSwitch.on = [SFAppSettings sharedAppSettings].scoreHighlightingEnabled;
     
 }
 
