@@ -2,15 +2,18 @@
 //  SFGameStorage.m
 //  ScoreFive
 //
-//  Created by Varun Santhanam on 7/19/17.
+//  Created by Varun Santhanam on 7/23/17.
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
-#import "SFGameMO+CoreDataClass.h"
+#import "ScoreFive+CoreDataModel.h"
 
 #import "SFGameStorage.h"
 
 #import "SFAppDelegate.h"
+
+NSString * const SFGameStorageErrorNotification = @"SFGameStorageErrorNotification";
+NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsistencyException";
 
 @interface SFGameStorage ()
 
@@ -28,9 +31,10 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        sharedGameStorage = [[self alloc] init];
+        sharedGameStorage = [[[self class] alloc] init];
         
     });
+    
     
     return sharedGameStorage;
     
@@ -41,35 +45,105 @@
 - (SFAppDelegate *)appDelegate {
     
     return (SFAppDelegate *)[UIApplication sharedApplication].delegate;
-    
+
 }
 
-- (NSArray<SFGame *> *)games {
+- (NSArray<SFGame *> *)allGames {
     
-    NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
-    fetchRequest.sortDescriptors = @[sortDescriptor];
+    NSArray<SFGame *> *allGames = [[NSArray<SFGame *> alloc] init];
+    
+    NSSortDescriptor *timestampSort = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     
     NSError *error;
     
-    NSArray<SFGameMO *> *savedGames = [self.appDelegate.persistentContainer.viewContext executeFetchRequest:fetchRequest error:&error];
+    NSArray<SFGameMO *> *results = [self _fetchGamesWithPredicate:nil
+                                                  sortDescriptors:@[timestampSort]
+                                                            error:&error];
     
     if (error) {
         
-        os_log_error(sf_log(), "Couldn't fetch saved games: %@", error.localizedDescription);
+        os_log_error(sf_log(), "Couldn't fetch all games from storage: %@", error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
+        
+    } else {
+        
+        for (SFGameMO *gameMO in results) {
+            
+            SFGame *game = (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:gameMO.gameData];
+            allGames = [allGames arrayByAddingObject:game];
+            
+        }
         
     }
     
-    NSArray<SFGame *> *games = [[NSArray<SFGame *> alloc] init];
+    return allGames;
     
-    for (SFGameMO *savedGame in savedGames) {
+}
+
+- (NSArray<SFGame *> *)unfinishedGames {
+    
+    NSArray<SFGame *> *unfinishedGames = [[NSArray<SFGame *> alloc] init];
+    
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"finished == NO"];
+    NSSortDescriptor *timestampSort = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+    
+    NSError *error;
+    
+    NSArray<SFGameMO *> *results = [self _fetchGamesWithPredicate:predicate
+                                                  sortDescriptors:@[timestampSort]
+                                                            error:&error];
+    
+    if (error) {
         
-        SFGame *game = (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:savedGame.gameData];
-        games = [games arrayByAddingObject:game];
+        os_log_error(sf_log(), "Couldn't fetch unfinished games from storage: %@", error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
+        
+    } else {
+        
+        for (SFGameMO *gameMO in results) {
+            
+            SFGame *game = (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:gameMO.gameData];
+            unfinishedGames = [unfinishedGames arrayByAddingObject:game];
+            
+        }
         
     }
     
-    return games;
+    return unfinishedGames;
+    
+}
+
+- (NSArray<SFGame *> *)finishedGames {
+    
+    NSArray<SFGame *> *finishedGames = [[NSArray<SFGame *> alloc] init];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"finished == YES"];
+    NSSortDescriptor *timestampSort = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+
+    NSError *error;
+    
+    NSArray<SFGameMO *> *results = [self _fetchGamesWithPredicate:predicate
+                                                  sortDescriptors:@[timestampSort]
+                                                            error:&error];
+    
+    if (error) {
+        
+        os_log_error(sf_log(), "Couldn't fetch finished games from storage: %@", error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
+        
+    } else {
+        
+        for (SFGameMO *gameMO in results) {
+            
+            SFGame *game = (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:gameMO.gameData];
+            finishedGames = [finishedGames arrayByAddingObject:game];
+            
+        }
+        
+    }
+    
+    return finishedGames;
     
 }
 
@@ -77,27 +151,28 @@
 
 - (void)storeGame:(SFGame *)game {
     
-    NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"storageIdentifier == %@", game.storageIdentifier];
-    fetchRequest.predicate = predicate;
-    NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+    NSFetchRequest *fetchRequest = [self _fetchRequestWithStorageIdentifier:game.storageIdentifier];
     
     NSError *deleteError;
     
-    [self.appDelegate.persistentContainer.viewContext executeRequest:deleteRequest error:&deleteError];
+    [self _deleteGamesFromRequest:fetchRequest withError:&deleteError];
     
     if (deleteError) {
         
-        os_log_error(sf_log(), "Couldn't overwrite previously stored game: %@", deleteError.localizedDescription);
+        os_log_error(sf_log(), "Couldn't overwrite previous games with storage identifier %@: %@", game.storageIdentifier, deleteError.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:deleteError];
         
     }
     
+    SFGameMO *gameMO = [[SFGameMO alloc] initWithContext:self.appDelegate.persistentContainer.viewContext];
+    
+    [game updateTimestamp];
     NSData *gameData = [NSKeyedArchiver archivedDataWithRootObject:game];
     
-    SFGameMO *storedGame = [[SFGameMO alloc] initWithContext:self.appDelegate.persistentContainer.viewContext];
-    storedGame.storageIdentifier = game.storageIdentifier;
-    storedGame.gameData = gameData;
-    storedGame.timestamp = game.timeStamp;
+    gameMO.gameData = gameData;
+    gameMO.storageIdentifier = game.storageIdentifier;
+    gameMO.timestamp = game.timestamp;
+    gameMO.finished = game.finished;
     
     NSError *error;
     
@@ -105,69 +180,136 @@
     
     if (error) {
         
-        os_log_error(sf_log(), "Couldn't save game: %@", error.localizedDescription);
+        os_log_error(sf_log(), "Couldn't save game with storage identifier %@: %@", game.storageIdentifier, error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
         
     }
     
 }
 
-- (SFGame *)fetchGameWithIdentifier:(NSString *)identifier {
+- (SFGame *)gameWithStorageIdentifier:(NSString *)storageIdentifier {
     
-    NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"storageIdentifier == %@", identifier];
-    fetchRequest.predicate = predicate;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"storageIdentifier == %@", storageIdentifier];
     
     NSError *error;
     
-    NSArray<SFGameMO *> *results = [self.appDelegate.persistentContainer.viewContext executeFetchRequest:fetchRequest error:&error];
+    NSArray<SFGameMO *> *results = [self _fetchGamesWithPredicate:predicate sortDescriptors:nil error:&error];
     
     if (error) {
         
-        os_log_error(sf_log(), "Couldn't fetch game: %@", error.localizedDescription);
+        os_log_error(sf_log(), "Couldn't retrieve game with storage identifier %@: %@", storageIdentifier, error.localizedDescription);
+        
+        return nil;
+        
+    } else if (results.count > 1){
+        
+        [NSException raise:SFGameStorageInconsistencyException format:@"Multiple games with a single storage identifier found in storage! Call -removeAllGames to resolve."];
+        
+        return nil;
+        
+    } else if (results.count == 0) {
+        
+        return nil;
         
     }
     
-    SFGameMO *storedGame = results.firstObject;
-    SFGame *game = (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:storedGame.gameData];
+    SFGameMO *gameMO = results.firstObject;
     
-    return game;
+    return (SFGame *)[NSKeyedUnarchiver unarchiveObjectWithData:gameMO.gameData];
     
 }
 
-- (void)removeGameWithIdentifier:(NSString *)identifier {
+- (void)removeGameWithIdentifier:(NSString *)storageIdentifier {
+ 
+    NSFetchRequest *fetchRequest = [self _fetchRequestWithStorageIdentifier:storageIdentifier];
+
+    NSError *error;
+
+    [self _deleteGamesFromRequest:fetchRequest withError:&error];
+    
+    if (error) {
+        
+        os_log_error(sf_log(), "Couldn't delete game with storage identifier %@: %@", storageIdentifier, error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
+        
+    }
+    
+}
+
+- (void)removeAllGames {
+ 
+    NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
+    
+    NSError *error;
+    
+    [self _deleteGamesFromRequest:fetchRequest withError:&error];
+    
+    if (error) {
+        
+        os_log_error(sf_log(), "Couldn't delete all games: %@", error.localizedDescription);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
+        
+    }
+    
+}
+
+#pragma mark - Private Instance Methods
+
+- (NSFetchRequest *)_fetchRequestWithStorageIdentifier:(NSString *)storageIdentifier {
     
     NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"storageIdentifier == %@", identifier];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"storageIdentifier == %@", storageIdentifier];
     fetchRequest.predicate = predicate;
+    
+    return fetchRequest;
+    
+}
+
+
+- (void)_deleteGamesFromRequest:(NSFetchRequest *)fetchRequest withError:(NSError *__autoreleasing *)error {
     
     NSBatchDeleteRequest *request = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
     
-    NSError *error;
+    NSError *deleteError;
     
-    [self.appDelegate.persistentContainer.viewContext executeRequest:request error:&error];
+    [self.appDelegate.persistentContainer.viewContext executeRequest:request error:&deleteError];
     
-    if (error) {
+    if (deleteError) {
         
-        os_log_error(sf_log(), "Couldn't delete game with ID %@", identifier);
+        *error = deleteError;
         
     }
     
 }
 
-- (void)eraseAllGames {
+- (NSArray<SFGameMO *> *)_fetchGamesWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray<NSSortDescriptor *> *)sortDescriptors error:(NSError *__autoreleasing *)error {
     
     NSFetchRequest *fetchRequest = [SFGameMO fetchRequest];
-    NSBatchDeleteRequest *request = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
     
-    NSError *error;
-    
-    [self.appDelegate.persistentContainer.viewContext executeRequest:request error:&error];
-    
-    if (error) {
+    if (predicate) {
         
-        os_log_error(sf_log(), "Couldn't erase all games: %@", error.localizedDescription);
+        fetchRequest.predicate = predicate;
         
     }
+    
+    if (sortDescriptors) {
+     
+        fetchRequest.sortDescriptors = sortDescriptors;
+        
+    }
+    
+    NSError *fetchError;
+    
+    NSArray<SFGameMO *> *results = [self.appDelegate.persistentContainer.viewContext executeFetchRequest:fetchRequest error:&fetchError];
+    
+    if (fetchError) {
+        
+        *error = fetchError;
+        
+    }
+    
+    return results;
     
 }
 

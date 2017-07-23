@@ -2,17 +2,18 @@
 //  SFGameRound.m
 //  ScoreFive
 //
-//  Created by Varun Santhanam on 7/19/17.
+//  Created by Varun Santhanam on 7/22/17.
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
 #import "SFGameRound.h"
 
-NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreException";
+NSString * const SFGameRoundInvalidScoreException = @"SFGameRoundInvalidScoreException";
+NSString * const SFGameRoundInvalidPlayerException = @"SFGameRoundInvalidPlayerException";
 
 @interface SFGameRound ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *scores;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *scoresDict;
 
 @end
 
@@ -20,7 +21,7 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
 
 @synthesize players = _players;
 
-@synthesize scores = _scores;
+@synthesize scoresDict = _scoresDict;
 
 #pragma mark - Overridden Instance Methods
 
@@ -34,13 +35,13 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
 
 - (NSUInteger)hash {
     
-    return self.players.hash ^ self.scores.hash;
+    return self.players.hash ^ self.scoresDict.hash;
     
 }
 
 - (BOOL)isEqual:(id)object {
     
-    if (self == object) {
+    if (object == self) {
         
         return YES;
         
@@ -50,7 +51,7 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
         
     }
     
-    return [self isEqualToGameRound:(SFGameRound *)object];
+    return [self isEqualToRound:(SFGameRound *)object];
     
 }
 
@@ -58,15 +59,9 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
 
 - (BOOL)isFinished {
     
-    if (self.scores.allKeys.count != self.players.count) {
-        
-        return NO;
-        
-    }
-    
     for (NSString *player in self.players) {
-        
-        if (!self.scores[player]) {
+
+        if (!self.scoresDict[player]) {
             
             return NO;
             
@@ -78,23 +73,23 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     
 }
 
-- (NSInteger)totalScore {
+- (NSUInteger)totalScore {
     
-    if (self.finished) {
+    if (!self.finished) {
         
-        NSInteger total = 0;
-        
-        for (NSString *player in self.players) {
-            
-            total += [self scoreForPlayer:player];
-            
-        }
-        
-        return total;
+        return 0;
         
     }
     
-    return 0;
+    NSUInteger total = 0;
+    
+    for (NSString *player in self.players) {
+        
+        total += [self scoreForPlayer:player];
+        
+    }
+    
+    return total;
     
 }
 
@@ -109,18 +104,18 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     
     [aCoder encodeObject:self.players forKey:NSStringFromSelector(@selector(players))];
-    [aCoder encodeObject:self.scores forKey:NSStringFromSelector(@selector(scores))];
+    [aCoder encodeObject:self.scoresDict forKey:NSStringFromSelector(@selector(scoresDict))];
     
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
-    self = [self init];
+    NSOrderedSet<NSString *> *players = (NSOrderedSet<NSString *> *)[aDecoder decodeObjectOfClass:[NSOrderedSet<NSString *> class] forKey:NSStringFromSelector(@selector(players))];
+    self = [self initWithPlayers:players];
     
     if (self) {
         
-        _players = (NSOrderedSet<NSString *> *)[aDecoder decodeObjectOfClass:[NSOrderedSet<NSString *> class] forKey:NSStringFromSelector(@selector(players))];
-        self.scores = (NSMutableDictionary<NSString *, NSNumber *> *)[aDecoder decodeObjectOfClass:[NSMutableDictionary<NSString *, NSNumber *> class] forKey:NSStringFromSelector(@selector(scores))];
+        self->_scoresDict = (NSMutableDictionary<NSString *, NSNumber *> *)[aDecoder decodeObjectOfClass:[NSMutableDictionary<NSString *, NSNumber *> class] forKey:NSStringFromSelector(@selector(scoresDict))];
         
     }
     
@@ -134,7 +129,7 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     
     SFGameRound *copy = [[[self class] allocWithZone:zone] init];
     copy->_players = [self.players copyWithZone:zone];
-    copy.scores = [self.scores copyWithZone:zone];
+    copy.scoresDict = [self.scoresDict mutableCopyWithZone:zone];
     
     return copy;
     
@@ -149,7 +144,7 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     if (self) {
         
         _players = players;
-        self.scores = [[NSMutableDictionary<NSString *, NSNumber *> alloc] init];
+        self.scoresDict = [[NSMutableDictionary<NSString *, NSNumber *> alloc] init];
         
     }
     
@@ -157,48 +152,71 @@ NSString * const SFGameRoundCantAddScoreException = @"SFGameRoundCantAddScoreExc
     
 }
 
-- (BOOL)isEqualToGameRound:(SFGameRound *)gameRound {
+- (BOOL)isEqualToRound:(SFGameRound *)round {
     
-    if (!gameRound) {
+    if (!round) {
         
         return NO;
         
     }
     
-    BOOL equalPlayers = [self.players isEqualToOrderedSet:gameRound.players];
-    BOOL equalScores = [self.scores isEqualToDictionary:gameRound.scores];
+    BOOL equalPlayers = [self.players isEqualToOrderedSet:round.players];
+    BOOL equalScores = [self.scoresDict isEqualToDictionary:round.scoresDict];
     
-    return equalPlayers && equalScores;
-    
-}
-
-- (NSInteger)scoreForPlayer:(NSString *)playerName {
-    
-    NSNumber *score = self.scores[playerName];
-    
-    return score.integerValue;
+    return (equalPlayers && equalScores);
     
 }
 
-- (void)setScore:(NSInteger)score forPlayer:(NSString *)playerName {
+- (NSUInteger)scoreForPlayer:(NSString *)player {
     
-    if (valid_score(score) && [self.players containsObject:playerName]) {
+    if (![self.players containsObject:player]) {
         
-        self.scores[playerName] = @(score);
+        [NSException raise:SFGameRoundInvalidPlayerException format:@"Player %@ is invalid for this round", player];
         
     } else {
         
-        [NSException raise:SFGameRoundCantAddScoreException format:@"Can't Add Score %@ For Player %@ -- Either Player or Score are Invalid", @(score).stringValue, playerName];
+        if (self.scoresDict[player]) {
+            
+            NSNumber *score = self.scoresDict[player];
+            return score.unsignedIntegerValue;
+            
+        }
         
+    }
+    
+    return 0;
+    
+}
+
+- (void)setScore:(NSUInteger)score forPlayer:(NSString *)player {
+    
+    if (![self.players containsObject:player]) {
+    
+        [NSException raise:SFGameRoundInvalidPlayerException format:@"Player %@ is invalid for this round", player];
+        
+    } else if (!valid_score(score)) {
+            
+        [NSException raise:SFGameRoundInvalidScoreException format:@"Sore %lu is invalid", (unsigned long)score];
+            
+    } else {
+            
+        self.scoresDict[player] = @(score);
+            
     }
     
 }
 
 #pragma mark - C Functions
 
-BOOL valid_score(NSInteger score) {
+BOOL valid_score(NSUInteger score) {
     
-    return (score >= SF_GAME_ROUND_MIN && score <= SF_GAME_ROUND_MAX);
+    if (score >= SF_GAME_ROUND_MIN && score <= SF_GAME_ROUND_MAX) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
     
 }
 

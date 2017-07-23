@@ -2,7 +2,7 @@
 //  SFGameRound.h
 //  ScoreFive
 //
-//  Created by Varun Santhanam on 7/19/17.
+//  Created by Varun Santhanam on 7/22/17.
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
@@ -11,21 +11,23 @@
 #define SF_GAME_ROUND_MIN 0
 #define SF_GAME_ROUND_MAX 50
 
-extern NSString * _Nonnull const SFGameRoundCantAddScoreException;
+extern NSString * _Nonnull const SFGameRoundInvalidScoreException;
+extern NSString * _Nonnull const SFGameRoundInvalidPlayerException;
 
 @interface SFGameRound : NSObject<NSSecureCoding, NSCopying>
 
 @property (nonatomic, strong, readonly, nonnull) NSOrderedSet<NSString *> *players;
+
 @property (nonatomic, readonly, getter=isFinished) BOOL finished;
-@property (nonatomic, readonly) NSInteger totalScore;
+@property (nonatomic, readonly) NSUInteger totalScore;
 
 - (nullable instancetype)initWithPlayers:(nonnull NSOrderedSet<NSString *> *)players NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)isEqualToGameRound:(nullable SFGameRound *)gameRound;
+- (BOOL)isEqualToRound:(nullable SFGameRound *)round;
 
-- (NSInteger)scoreForPlayer:(nonnull NSString *)playerName;
-- (void)setScore:(NSInteger)score forPlayer:(nonnull NSString *)playerName;
+- (NSUInteger)scoreForPlayer:(nonnull NSString *)player;
+- (void)setScore:(NSUInteger)score forPlayer:(nonnull NSString *)player;
 
-BOOL valid_score(NSInteger score);
+BOOL valid_score(NSUInteger score);
 
 @end

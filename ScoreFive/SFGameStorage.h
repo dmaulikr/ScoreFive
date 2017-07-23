@@ -2,7 +2,7 @@
 //  SFGameStorage.h
 //  ScoreFive
 //
-//  Created by Varun Santhanam on 7/19/17.
+//  Created by Varun Santhanam on 7/23/17.
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
@@ -10,16 +10,22 @@
 
 #import "SFGame.h"
 
+extern NSString * _Nonnull const SFGameStorageErrorNotification;
+
+extern NSString * _Nonnull const SFGameStorageInconsistencyException;
+
 @interface SFGameStorage : NSObject
 
-@property (nonnull, readonly) NSArray<SFGame *> *games;
+@property (nonatomic, readonly, nonnull) NSArray<SFGame *> *allGames;
+@property (nonatomic, readonly, nonnull) NSArray<SFGame *> *unfinishedGames;
+@property (nonatomic, readonly, nonnull) NSArray<SFGame *> *finishedGames;
 
 + (nullable instancetype)sharedGameStorage;
 
 - (void)storeGame:(nonnull SFGame *)game;
-- (void)removeGameWithIdentifier:(nonnull NSString *)identifier;
-- (nonnull SFGame *)fetchGameWithIdentifier:(nonnull NSString *)identifier;
+- (nullable SFGame *)gameWithStorageIdentifier:(nonnull NSString *)storageIdentifier;
 
-- (void)eraseAllGames;
+- (void)removeGameWithIdentifier:(nonnull NSString *)storageIdentifier;
+- (void)removeAllGames;
 
 @end

@@ -2,46 +2,44 @@
 //  SFGame.m
 //  ScoreFive
 //
-//  Created by Varun Santhanam on 7/19/17.
+//  Created by Varun Santhanam on 7/22/17.
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
 #import "SFGame.h"
 
-NSString * const SFGameCantAddPlayerException = @"SFGameCantAddPlayerException";
-NSString * const SFGameCantAddRoundException = @"SFGameCantAddRoundException";
-NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException";
+NSString * const SFGameInvalidPlayerCountException = @"SFGameInvalidPlayerCountException";
+NSString * const SFGameInvalidPlayerException = @"SFGameInvalidPlayerException";
+NSString * const SFGameInvalidRoundException = @"SFGameInvalidRoundException";
 
+@interface SFGameRound ()
+
+@end
 
 @implementation SFGame
 
+@synthesize scoreLimit = _scoreLimit;
 @synthesize players = _players;
 @synthesize rounds = _rounds;
 @synthesize storageIdentifier = _storageIdentifier;
-@synthesize timeStamp = _timeStamp;
+@synthesize timestamp = _timestamp;
 
 #pragma mark - Overridden Instance Methods
 
 - (instancetype)init {
     
-    self = [super init];
+    NSArray<NSString *> *playersArray = @[@"Player 1", @"Player 2"];
+    NSOrderedSet<NSString *> *players = [NSOrderedSet orderedSetWithArray:playersArray];
     
-    if (self) {
-        
-        _players = [[NSOrderedSet<NSString *> alloc] init];
-        _rounds = [[NSArray<SFGameRound *> alloc] init];
-        _storageIdentifier = [NSUUID UUID].UUIDString;
-        _timeStamp = [NSDate date];
-        
-    }
-    
+    self = [self initWithPlayers:players scoreLimit:200];
+ 
     return self;
     
 }
 
 - (NSUInteger)hash {
     
-    return self.players.hash ^ self.rounds.hash;
+    return @(self.scoreLimit).hash ^ self.players.hash ^ self.rounds.hash ^ self.storageIdentifier.hash ^ self.timestamp.hash;
     
 }
 
@@ -61,6 +59,52 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
     
 }
 
+#pragma mark - Property Access Methods
+
+- (NSOrderedSet<NSString *> *)alivePlayers {
+ 
+    NSArray<NSString *> *alivePlayersArray = [[NSArray<NSString *> alloc] init];
+    
+    for (NSString *player in self.players) {
+        
+        NSUInteger score = [self totalScoreForPlayer:player];
+        
+        if (score < self.scoreLimit) {
+            
+            alivePlayersArray = [alivePlayersArray arrayByAddingObject:player];
+            
+        }
+        
+    }
+    
+    return [[NSOrderedSet<NSString *> alloc] initWithArray:alivePlayersArray];
+    
+}
+
+- (BOOL)isFinished {
+    
+    if (self.alivePlayers.count == 1) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
+
+- (NSString *)winner {
+    
+    if (!self.finished) {
+        
+        return nil;
+        
+    }
+    
+    return self.alivePlayers.firstObject;
+    
+}
+
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
@@ -71,23 +115,26 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     
+    [aCoder encodeObject:@(self.scoreLimit) forKey:NSStringFromSelector(@selector(scoreLimit))];
     [aCoder encodeObject:self.players forKey:NSStringFromSelector(@selector(players))];
     [aCoder encodeObject:self.rounds forKey:NSStringFromSelector(@selector(rounds))];
     [aCoder encodeObject:self.storageIdentifier forKey:NSStringFromSelector(@selector(storageIdentifier))];
-    [aCoder encodeObject:self.timeStamp forKey:NSStringFromSelector(@selector(timeStamp))];
+    [aCoder encodeObject:self.timestamp forKey:NSStringFromSelector(@selector(timestamp))];
     
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
-    self = [self init];
+    NSOrderedSet<NSString *> *players = (NSOrderedSet<NSString *> *)[aDecoder decodeObjectOfClass:[NSOrderedSet<NSString *> class] forKey:NSStringFromSelector(@selector(players))];
+    NSNumber *scoreLimit = (NSNumber *)[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(scoreLimit))];
+    
+    self = [self initWithPlayers:players scoreLimit:scoreLimit.unsignedIntegerValue];
     
     if (self) {
         
-        _players = (NSOrderedSet<NSString *> *)[aDecoder decodeObjectOfClass:[NSOrderedSet<NSString *> class] forKey:NSStringFromSelector(@selector(players))];
-        _rounds = (NSArray<SFGameRound *> *)[aDecoder decodeObjectOfClass:[NSArray<SFGameRound *> class] forKey:NSStringFromSelector(@selector(rounds))];
-        _storageIdentifier = (NSString *)[aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(storageIdentifier))];
-        _timeStamp = (NSDate *)[aDecoder decodeObjectOfClass:[NSDate class] forKey:NSStringFromSelector(@selector(timeStamp))];
+        self->_rounds = (NSArray<SFGameRound *> *)[aDecoder decodeObjectOfClass:[NSArray<SFGameRound *> class] forKey:NSStringFromSelector(@selector(rounds))];
+        self->_storageIdentifier = (NSString *)[aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(storageIdentifier))];
+        self->_timestamp = (NSDate *)[aDecoder decodeObjectOfClass:[NSDate class] forKey:NSStringFromSelector(@selector(timestamp))];
         
     }
     
@@ -100,16 +147,37 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
 - (id)copyWithZone:(NSZone *)zone {
     
     SFGame *copy = [[[self class] allocWithZone:zone] init];
+    copy->_scoreLimit = self.scoreLimit;
     copy->_players = [self.players copyWithZone:zone];
     copy->_rounds = [self.rounds copyWithZone:zone];
     copy->_storageIdentifier = [self.storageIdentifier copyWithZone:zone];
-    copy->_timeStamp = [self.timeStamp copyWithZone:zone];
+    copy->_timestamp = [self.timestamp copyWithZone:zone];
     
     return copy;
     
 }
 
 #pragma mark - Public Instance Methods
+
+- (instancetype)initWithPlayers:(NSOrderedSet<NSString *> *)players scoreLimit:(NSUInteger)scoreLimit {
+    
+    self = [super init];
+    
+    if (self) {
+        
+        _scoreLimit = scoreLimit;
+        _players = players;
+        _rounds = [[NSArray<SFGameRound *> alloc] init];
+        _storageIdentifier = [NSUUID UUID].UUIDString;
+        _timestamp = [NSDate date];
+        
+        [self _validate];
+        
+    }
+    
+    return self;
+    
+}
 
 - (BOOL)isEqualToGame:(SFGame *)game {
     
@@ -119,77 +187,34 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
         
     }
     
+    BOOL equalScoreLimits = self.scoreLimit == game.scoreLimit;
     BOOL equalPlayers = [self.players isEqualToOrderedSet:game.players];
     BOOL equalRounds = [self.rounds isEqualToArray:game.rounds];
+    BOOL equalIdentifiers = [self.storageIdentifier isEqualToString:game.storageIdentifier];
+    BOOL equalTimestamps = [self.timestamp isEqualToDate:game.timestamp];
     
-    return equalPlayers && equalRounds;
+    return (equalScoreLimits && equalPlayers && equalRounds && equalIdentifiers && equalTimestamps);
 }
 
 - (SFGameRound *)newRound {
     
-    SFGameRound *round = [[SFGameRound alloc] initWithPlayers:self.players];
-    
-    return round;
+    return [[SFGameRound alloc] initWithPlayers:self.alivePlayers];
     
 }
 
-- (void)addPlayer:(NSString *)playerName {
+- (NSUInteger)totalScoreForPlayer:(NSString *)player {
     
-    if (self.rounds.count == 0) {
+    if (![self.players containsObject:player]) {
         
-        NSArray<NSString *> *playersArray = self.players.array;
-        playersArray = [playersArray arrayByAddingObject:playerName];
-        _players = [[NSOrderedSet<NSString *> alloc] initWithArray:playersArray];
-        
-    } else {
-        
-        [NSException raise:SFGameCantAddPlayerException format:@"Can't add player %@ -- the game is already in progress", playerName];
+        [NSException raise:SFGameRoundInvalidPlayerException format:@"Player %@ is invalid for this game", player];
         
     }
     
-}
-
-- (void)addRound:(SFGameRound *)round {
-    
-    if ([self.players isEqual:round.players] && round.finished) {
-        
-        _rounds = [self.rounds arrayByAddingObject:round];
-        
-        [self _updateTimeStamp];
-        
-    } else {
-        
-        [NSException raise:SFGameCantAddRoundException format:@"Can't add round -- is either missing the necessary players or scores"];
-        
-    }
-    
-}
-
-- (void)removeRoundAtIndex:(NSInteger)index {
-    
-    NSMutableArray<SFGameRound *> *mutableRounds = [self.rounds mutableCopy];
-    [mutableRounds removeObjectAtIndex:index];
-    _rounds = [mutableRounds copy];
-    
-    [self _updateTimeStamp];
-    
-}
-
-- (NSInteger)totalScoreForPlayer:(NSString *)playerName {
-    
-    if (![self.players containsObject:playerName]) {
-        
-        [NSException raise:SFGamePlayerNotFoundException format:@"Player %@ isn't in this game", playerName];
-        
-        return 0;
-        
-    }
-    
-    NSInteger total = 0;
+    NSUInteger total = 0;
     
     for (SFGameRound *round in self.rounds) {
         
-        total += [round scoreForPlayer:playerName];
+        total += [round scoreForPlayer:player];
         
     }
     
@@ -197,11 +222,55 @@ NSString * const SFGamePlayerNotFoundException = @"SFGamePlayerNotFoundException
     
 }
 
+- (void)addRound:(SFGameRound *)round {
+    
+    if (![self.alivePlayers isEqualToOrderedSet:round.players] || !round.finished) {
+        
+        [NSException raise:SFGameInvalidRoundException format:@"Round is missing scores or players"];
+        
+    } else {
+        
+        NSInteger numZeroes = 0;
+        
+        for (NSString *player in round.players) {
+            
+            if ([round scoreForPlayer:player] == 0) {
+                
+                numZeroes++;
+                
+            }
+            
+        }
+        
+        if (numZeroes == 0 || numZeroes == round.players.count) {
+            
+            [NSException raise:SFGameInvalidRoundException format:@"Round scores are invalid"];
+            
+        } else {
+            
+            _rounds = [self.rounds arrayByAddingObject:round];
+            
+        }
+        
+    }
+    
+}
+
+- (void)updateTimestamp {
+    
+    self->_timestamp = [NSDate date];
+    
+}
+
 #pragma mark - Private Instance Methods
 
-- (void)_updateTimeStamp {
+- (void)_validate {
     
-    _timeStamp = [NSDate date];
+    if (self.players.count < 2 || self.scoreLimit < 50) {
+        
+        [NSException raise:SFGameInvalidPlayerCountException format:@"A game requies at least 2 players"];
+        
+    }
     
 }
 

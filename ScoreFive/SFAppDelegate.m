@@ -6,8 +6,6 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
-#import "UIColor+SFScoreFiveColors.h"
-
 #import "SFAppDelegate.h"
 
 #import "SFAppSettings.h"
@@ -33,13 +31,8 @@
         
     }
     
-    self.window.tintColor = [UIColor chetwodeBlueColor];
-    
-    [[UINavigationBar appearance] setBarTintColor:[UIColor violetColor]];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
     return YES;
+    
 }
 
 

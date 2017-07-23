@@ -45,8 +45,7 @@
     });
     
     dispatch_resume(timer);
-    
-    
+
 }
 
 @end

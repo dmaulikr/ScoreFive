@@ -13,159 +13,36 @@
         <scene sceneID="JFi-Rx-Wdq">
             <objects>
                 <navigationController id="xen-rt-6Xz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="P16-6m-cJ9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P16-6m-cJ9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Rvu-F1-TMy" kind="relationship" relationship="rootViewController" id="qvc-FV-pGP"/>
+                        <segue destination="SVY-mC-kzj" kind="relationship" relationship="rootViewController" id="S0G-Nc-Rcx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mU-tz-amv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-456" y="-55"/>
+            <point key="canvasLocation" x="-614" y="-55"/>
         </scene>
-        <!--Games List View Controller-->
-        <scene sceneID="Zab-FK-as6">
+        <!--View Controller-->
+        <scene sceneID="F61-jf-rVp">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Rvu-F1-TMy" customClass="SFGamesListViewController" sceneMemberID="viewController">
+                <viewController id="SVY-mC-kzj" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ha1-ou-I0a"/>
-                        <viewControllerLayoutGuide type="bottom" id="9Pr-aj-Ccv"/>
+                        <viewControllerLayoutGuide type="top" id="pEw-Sh-swd"/>
+                        <viewControllerLayoutGuide type="bottom" id="82d-SG-iYX"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="BZR-zD-h1K">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                    <view key="view" contentMode="scaleToFill" id="ccW-J8-r02">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="myB-2A-p2K">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Rvu-F1-TMy" id="8WH-c2-kZA"/>
-                                    <outlet property="delegate" destination="Rvu-F1-TMy" id="SVK-pq-Kle"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="9Pr-aj-Ccv" firstAttribute="top" secondItem="myB-2A-p2K" secondAttribute="bottom" id="FeK-ad-MrC"/>
-                            <constraint firstItem="myB-2A-p2K" firstAttribute="leading" secondItem="BZR-zD-h1K" secondAttribute="leading" id="p6z-GI-flm"/>
-                            <constraint firstItem="myB-2A-p2K" firstAttribute="top" secondItem="ha1-ou-I0a" secondAttribute="bottom" id="si3-k8-exp"/>
-                            <constraint firstAttribute="trailing" secondItem="myB-2A-p2K" secondAttribute="trailing" id="yGQ-oD-YKd"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="9qw-78-Rn5">
-                        <barButtonItem key="leftBarButtonItem" image="gears-bar-icon" id="7z6-uV-dpY">
-                            <connections>
-                                <action selector="userSettings:" destination="Rvu-F1-TMy" id="Lye-Cn-uaq"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8jY-2w-wxR">
-                            <connections>
-                                <action selector="userNewGame:" destination="Rvu-F1-TMy" id="9re-ie-6Yq"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="gamesTableView" destination="myB-2A-p2K" id="tte-L2-LsJ"/>
-                        <segue destination="nhZ-7d-zV1" kind="show" identifier="ScoreCardSegue" id="tEO-bP-og6"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="jen-fb-53e"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TBf-i1-eMf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7H8-pt-8Vx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="352.80000000000001" y="-55.322338830584712"/>
-        </scene>
-        <!--Score Card-->
-        <scene sceneID="IoT-hd-QFe">
-            <objects>
-                <viewController storyboardIdentifier="SFScoreCardViewControllerID" title="Score Card" id="nhZ-7d-zV1" customClass="SFScoreCardViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5oz-3J-A7Q"/>
-                        <viewControllerLayoutGuide type="bottom" id="gXT-dg-65Z"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Cgh-V8-5V3">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brw-GN-xMG" customClass="SFScoreView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                <color key="backgroundColor" red="0.12747792899608612" green="0.0082771666347980499" blue="0.15659664571285248" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="yWa-nr-p12"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="columns">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANN-wW-cXi" customClass="SFScoreView">
-                                <rect key="frame" x="0.0" y="553" width="375" height="50"/>
-                                <color key="backgroundColor" red="0.12747792899608612" green="0.0082771666347980499" blue="0.15659664571285248" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="8xc-ee-z1i"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="columns">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kmx-rz-wLa">
-                                <rect key="frame" x="0.0" y="50" width="375" height="503"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="nhZ-7d-zV1" id="0EV-0X-VRe"/>
-                                    <outlet property="delegate" destination="nhZ-7d-zV1" id="3B5-b1-z4p"/>
-                                </connections>
-                            </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AqG-gw-Tn8">
-                                <rect key="frame" x="51" y="50" width="1" height="503"/>
-                                <color key="backgroundColor" red="0.44617199897766113" green="0.44934374094009399" blue="0.86262321472167969" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1" id="V8l-vP-BF8"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kDW-xl-sGz">
-                                <rect key="frame" x="48" y="50" width="1" height="503"/>
-                                <color key="backgroundColor" red="0.44617199897766113" green="0.44934374094009399" blue="0.86262321472167969" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1" id="sys-VP-wZ8"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="kDW-xl-sGz" firstAttribute="top" secondItem="Brw-GN-xMG" secondAttribute="bottom" id="7q2-2t-vDt"/>
-                            <constraint firstItem="Brw-GN-xMG" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="Jie-mh-hn8"/>
-                            <constraint firstItem="kDW-xl-sGz" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" constant="48" id="KY7-Vg-dU1"/>
-                            <constraint firstItem="AqG-gw-Tn8" firstAttribute="leading" secondItem="kDW-xl-sGz" secondAttribute="trailing" constant="2" id="MRf-fb-VEG"/>
-                            <constraint firstItem="Brw-GN-xMG" firstAttribute="top" secondItem="5oz-3J-A7Q" secondAttribute="bottom" id="OFx-1R-yaa"/>
-                            <constraint firstItem="AqG-gw-Tn8" firstAttribute="top" secondItem="Brw-GN-xMG" secondAttribute="bottom" id="QPg-oq-fGe"/>
-                            <constraint firstItem="ANN-wW-cXi" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="QrZ-6I-ehh"/>
-                            <constraint firstItem="Kmx-rz-wLa" firstAttribute="top" secondItem="Brw-GN-xMG" secondAttribute="bottom" id="WNO-Sa-IXj"/>
-                            <constraint firstItem="ANN-wW-cXi" firstAttribute="top" secondItem="Kmx-rz-wLa" secondAttribute="bottom" id="aAE-uL-Phb"/>
-                            <constraint firstItem="ANN-wW-cXi" firstAttribute="top" secondItem="AqG-gw-Tn8" secondAttribute="bottom" id="art-MH-GTG"/>
-                            <constraint firstItem="Kmx-rz-wLa" firstAttribute="leading" secondItem="Cgh-V8-5V3" secondAttribute="leading" id="cok-os-hOj"/>
-                            <constraint firstAttribute="trailing" secondItem="Brw-GN-xMG" secondAttribute="trailing" id="hx2-LS-rd0"/>
-                            <constraint firstItem="gXT-dg-65Z" firstAttribute="top" secondItem="ANN-wW-cXi" secondAttribute="bottom" id="pyK-tD-dWZ"/>
-                            <constraint firstAttribute="trailing" secondItem="Kmx-rz-wLa" secondAttribute="trailing" id="rbO-uR-8dG"/>
-                            <constraint firstItem="ANN-wW-cXi" firstAttribute="top" secondItem="kDW-xl-sGz" secondAttribute="bottom" id="tNP-Kg-d8J"/>
-                            <constraint firstAttribute="trailing" secondItem="ANN-wW-cXi" secondAttribute="trailing" id="v6I-qt-F4n"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="playersScoreView" destination="Brw-GN-xMG" id="we1-CC-4rO"/>
-                        <outlet property="roundsTableView" destination="Kmx-rz-wLa" id="ePJ-ES-tWd"/>
-                        <outlet property="totalScoreView" destination="ANN-wW-cXi" id="AaW-eq-5in"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BRT-D0-keh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1165.5999999999999" y="-55.322338830584712"/>
+            <point key="canvasLocation" x="305" y="-55"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="gears-bar-icon" width="22" height="22"/>
-    </resources>
 </document>
