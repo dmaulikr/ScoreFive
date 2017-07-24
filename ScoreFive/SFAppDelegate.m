@@ -10,6 +10,8 @@
 
 #import "SFAppSettings.h"
 
+#import "SFGameStorage.h"
+
 @interface SFAppDelegate ()
 
 @end

@@ -23,12 +23,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mU-tz-amv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-614" y="-55"/>
+            <point key="canvasLocation" x="-801" y="-56"/>
         </scene>
-        <!--View Controller-->
+        <!--Game List View Controller-->
         <scene sceneID="F61-jf-rVp">
             <objects>
-                <viewController id="SVY-mC-kzj" sceneMemberID="viewController">
+                <viewController id="SVY-mC-kzj" customClass="SFGameListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pEw-Sh-swd"/>
                         <viewControllerLayoutGuide type="bottom" id="82d-SG-iYX"/>
@@ -36,13 +36,38 @@
                     <view key="view" contentMode="scaleToFill" id="ccW-J8-r02">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="YUg-6u-iyu">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="SVY-mC-kzj" id="uhg-ZD-f75"/>
+                                    <outlet property="delegate" destination="SVY-mC-kzj" id="dcy-TU-hI6"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YUg-6u-iyu" firstAttribute="height" secondItem="ccW-J8-r02" secondAttribute="height" id="0qA-V0-MIK"/>
+                            <constraint firstItem="YUg-6u-iyu" firstAttribute="centerX" secondItem="ccW-J8-r02" secondAttribute="centerX" id="ILt-78-HsB"/>
+                            <constraint firstItem="YUg-6u-iyu" firstAttribute="centerY" secondItem="ccW-J8-r02" secondAttribute="centerY" id="Oar-3N-l8a"/>
+                            <constraint firstItem="YUg-6u-iyu" firstAttribute="width" secondItem="ccW-J8-r02" secondAttribute="width" id="Rr5-H5-QWi"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jen-fb-53e"/>
+                    <navigationItem key="navigationItem" id="jen-fb-53e">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1bI-xD-Qmc">
+                            <connections>
+                                <action selector="userNewGame:" destination="SVY-mC-kzj" id="KKL-h9-yuu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gameList" destination="YUg-6u-iyu" id="fF3-Sf-EYx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7H8-pt-8Vx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="-55"/>
+            <point key="canvasLocation" x="35" y="-56"/>
         </scene>
     </scenes>
 </document>

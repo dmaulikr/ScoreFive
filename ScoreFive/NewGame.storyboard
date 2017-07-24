@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OJh-Yp-dcx">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="aho-LC-Vs0">
+            <objects>
+                <navigationController id="OJh-Yp-dcx" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="GDL-Xu-R1s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Tw8-cl-Qml" kind="relationship" relationship="rootViewController" id="W9o-Kl-HcM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="thh-9B-btz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1300" y="69"/>
+        </scene>
+        <!--New Game View Controller-->
+        <scene sceneID="JVR-Qa-KN1">
+            <objects>
+                <viewController id="Tw8-cl-Qml" customClass="SFNewGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dAv-Mk-6DG"/>
+                        <viewControllerLayoutGuide type="bottom" id="r6B-6G-NXb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6A3-Eb-6kU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="hVz-hZ-dYg">
+                                <rect key="frame" x="0.0" y="-0.5" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Tw8-cl-Qml" id="lt2-7j-eSB"/>
+                                    <outlet property="delegate" destination="Tw8-cl-Qml" id="66N-Bz-kCH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hVz-hZ-dYg" firstAttribute="centerY" secondItem="6A3-Eb-6kU" secondAttribute="centerY" id="00N-69-8k4"/>
+                            <constraint firstItem="hVz-hZ-dYg" firstAttribute="width" secondItem="6A3-Eb-6kU" secondAttribute="width" id="FLF-sp-fXT"/>
+                            <constraint firstItem="hVz-hZ-dYg" firstAttribute="centerX" secondItem="6A3-Eb-6kU" secondAttribute="centerX" id="uJD-R0-RgR"/>
+                            <constraint firstItem="hVz-hZ-dYg" firstAttribute="height" secondItem="6A3-Eb-6kU" secondAttribute="height" id="wgX-2y-mi9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bhM-xo-GVl">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="NCj-mO-LBf">
+                            <connections>
+                                <action selector="userCancel:" destination="Tw8-cl-Qml" id="veK-cn-vvl"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="pTA-p2-lhU">
+                            <connections>
+                                <action selector="userSave:" destination="Tw8-cl-Qml" id="yPK-ai-C2x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gameSettingsTableView" destination="hVz-hZ-dYg" id="jis-E2-OIv"/>
+                        <outlet property="saveButton" destination="pTA-p2-lhU" id="kxt-6o-eIz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MY6-RN-VwL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-463" y="69"/>
+        </scene>
+    </scenes>
+</document>
