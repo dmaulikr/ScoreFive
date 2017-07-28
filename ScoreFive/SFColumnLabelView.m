@@ -10,11 +10,16 @@
 
 #import "SFColumnLabelView.h"
 
+@interface SFColumnLabelView ()
+
+@property (nonatomic, strong, readonly, nonnull) NSArray<UILabel *> *labels;
+
+@end
+
 @implementation SFColumnLabelView
 
 @synthesize numberOfColumns = _numberOfColumns;
-@synthesize textColor = _textColor;
-@synthesize textFont = _textFont;
+@synthesize defaultColor = _defaultColor;
 
 #pragma mark - Overridden Class Methods
 
@@ -32,9 +37,8 @@
     
     if (self) {
         
-        _textColor = [UIColor blackColor];
-        _textFont = [UIFont systemFontOfSize:17.0f];
         _markWithFlags = NO;
+        _defaultColor = [UIColor blackColor];
         self.numberOfColumns = 4;
         
     }
@@ -49,9 +53,8 @@
     
     if (self) {
         
-        _textColor = [UIColor blackColor];
-        _textFont = [UIFont systemFontOfSize:17.0f];
         _markWithFlags = NO;
+        _defaultColor = [UIColor blackColor];
         self.numberOfColumns = 4;
         
     }
@@ -66,44 +69,9 @@
     
     if (self) {
         
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(textColor))]) {
-            
-            _textColor = (UIColor *)[aDecoder decodeObjectOfClass:[UIColor class] forKey:NSStringFromSelector(@selector(textColor))];
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(textFont))]) {
-            
-            _textFont = (UIFont *)[aDecoder decodeObjectOfClass:[UIFont class] forKey:NSStringFromSelector(@selector(textColor))];
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(numberOfColumns))]) {
-            
-            NSNumber *numberOfColumns = (NSNumber *)[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(numberOfColumns))];
-            _numberOfColumns = numberOfColumns.unsignedIntegerValue;
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(shouldMarkWithFlags))]) {
-            
-            _markWithFlags = (BOOL)[aDecoder decodeBoolForKey:NSStringFromSelector(@selector(shouldMarkWithFlags))];
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(positiveFlag))]) {
-            
-            _positiveFlag = (NSString *)[aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(positiveFlag))];
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(negativeFlag))]) {
-            
-            _negativeFlag = (NSString *)[aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(negativeFlag))];
-            
-        }
-        
-        [self _setUpColumns];
+        _markWithFlags = NO;
+        _defaultColor = [UIColor blackColor];
+        self.numberOfColumns = 4;
         
     }
     
@@ -111,56 +79,10 @@
     
 }
 
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    
-    [aCoder encodeObject:self.textColor forKey:NSStringFromSelector(@selector(textColor))];
-    [aCoder encodeObject:self.textFont forKey:NSStringFromSelector(@selector(textFont))];
-    [aCoder encodeObject:@(self.numberOfColumns) forKey:NSStringFromSelector(@selector(numberOfColumns))];
-    [aCoder encodeBool:_markWithFlags forKey:NSStringFromSelector(@selector(shouldMarkWithFlags))];
-    
-    if (self.positiveFlag) {
-        
-        [aCoder encodeObject:self.positiveFlag forKey:NSStringFromSelector(@selector(positiveFlag))];
-        
-    }
-    
-    if (self.negativeFlag) {
-        
-        [aCoder encodeObject:self.negativeFlag forKey:NSStringFromSelector(@selector(negativeFlag))];
-        
-    }
-    
-}
-
 - (void)setNumberOfColumns:(NSUInteger)numberOfColumns {
     
     _numberOfColumns = numberOfColumns;
     [self _setUpColumns];
-    
-}
-
-- (void)setTextColor:(UIColor *)textColor {
-    
-    _textColor = textColor;
-    
-    for (UILabel *label in self.labels) {
-        
-        label.textColor = self.textColor;
-        
-    }
-    
-}
-
-- (void)setTextFont:(UIFont *)textFont {
-    
-    _textFont = textFont;
-    
-    for (UILabel *label in self.labels) {
-        
-        label.font = self.textFont;
-        
-    }
     
 }
 
@@ -185,7 +107,69 @@
     
 }
 
+- (void)setDefaultColor:(UIColor *)defaultColor {
+    
+    _defaultColor = defaultColor;
+    
+    for (int i = 0; i < self.numberOfColumns; i++) {
+        
+        [self setTextColor:self.defaultColor forColumn:i];
+        
+    }
+    
+}
+
+- (void)setDefaultFont:(UIFont *)defaultFont {
+    
+    _defaultFont = defaultFont;
+    
+    for (int i = 0; i < self.numberOfColumns; i++) {
+        
+        [self setFont:self.defaultFont forColumn:i];
+        
+    }
+    
+}
+
 #pragma mark - Public Instance Methods
+
+- (void)setTextColor:(UIColor *)color forColumn:(NSUInteger)column {
+    
+    UILabel *label = self.labels[column];
+    label.textColor = color;
+    
+}
+
+- (void)setFont:(UIFont *)font forColumn:(NSUInteger)column {
+    
+    UILabel *label = self.labels[column];
+    label.font = font;
+    
+}
+
+- (void)setAlpha:(CGFloat)alpha forColumn:(NSUInteger)column {
+    
+    UILabel *label = self.labels[column];
+    label.alpha = alpha;
+    
+}
+
+- (void)setText:(NSString *)text forColumn:(NSUInteger)column {
+    
+    UILabel *label = self.labels[column];
+    label.text = text;
+    
+}
+
+- (void)setFontForAllColumns:(UIFont *)font {
+    
+    for (int i = 0; i < self.numberOfColumns; i++) {
+        
+        [self setFont:font forColumn:i];
+        
+    }
+    
+}
 
 - (void)updateFlagMarks {
     
@@ -203,7 +187,7 @@
                 
             } else {
                 
-                label.textColor = self.textColor;
+                label.textColor = self.defaultColor ? self.defaultColor : [UIColor blackColor];
                 
             }
             
@@ -232,8 +216,8 @@
     for (int i = 0; i < self.numberOfColumns; i++) {
         
         UILabel *label = [[UILabel alloc] init];
-        label.textColor = self.textColor;
-        label.font = self.textFont;
+        label.textColor = self.defaultColor ? self.defaultColor : [UIColor blackColor];
+        label.font = self.defaultFont ? self.defaultFont : [UIFont systemFontOfSize:17.0f];
         label.textAlignment = NSTextAlignmentCenter;
         label.text = NSLocalizedString(@"0", nil);
         

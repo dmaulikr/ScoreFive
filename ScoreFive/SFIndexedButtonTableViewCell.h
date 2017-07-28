@@ -12,10 +12,8 @@
 
 - (nullable instancetype)initWithReuseIdentifier:(nonnull NSString *)reuseIdentifier;
 
-@property (nonatomic, strong, nonnull) UILabel *indexLabel;
-@property (nonatomic, strong, nonnull) UILabel *buttonLabel;
-
 @property (nonatomic, nullable) NSString *indexText;
 @property (nonatomic, nullable) NSString *buttonText;
+@property (nonatomic, nonnull) UIColor *buttonTintColor;
 
 @end

@@ -12,7 +12,6 @@
 
 #import "SFGameStorage.h"
 #import "SFScoreCardViewController.h"
-#import "SFButtonTableViewCell.h"
 
 @interface SFGameListViewController ()<UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
@@ -295,13 +294,13 @@
             
         }
         
-        SFButtonTableViewCell *cell = (SFButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
         
         if (!cell) {
             
-            cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AllGamesCellIdentifier];
-            cell.buttonTintColor = self.view.tintColor;
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AllGamesCellIdentifier];
             cell.textLabel.text = NSLocalizedString(@"All Games", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         
@@ -309,13 +308,13 @@
         
     } else if (indexPath.section == 2) {
         
-        SFButtonTableViewCell *cell = (SFButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
         
         if (!cell) {
             
-            cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AllGamesCellIdentifier];
-            cell.buttonTintColor = self.view.tintColor;
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AllGamesCellIdentifier];
             cell.textLabel.text = NSLocalizedString(@"All Games", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         

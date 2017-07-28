@@ -200,8 +200,8 @@
         if (!cell) {
             
             cell = [[SFIndexedColumnLabelTableViewCell alloc] initWithReuseIdentifier:ScoreCellIdentifier];
-            cell.indexedColumnLabelView.indexLabel.font = [UIFont fontWithName:@"PermanentMarker" size:cell.indexedColumnLabelView.indexLabel.font.pointSize];
-            cell.indexedColumnLabelView.columnLabelView.textFont = [UIFont fontWithName:@"PermanentMarker" size:cell.indexedColumnLabelView.columnLabelView.textFont.pointSize];
+            cell.indexedColumnLabelView.indexFont = [UIFont fontWithName:@"PermanentMarker" size:cell.indexedColumnLabelView.indexFont.pointSize];
+            cell.indexedColumnLabelView.columnLabelView.defaultFont = [UIFont fontWithName:@"PermanentMarker" size:17.0f];
             
         }
         
@@ -217,10 +217,10 @@
         
         cell.indexedColumnLabelView.columnLabelView.numberOfColumns = self.game.players.count;
         
-        for (UILabel *label in cell.indexedColumnLabelView.columnLabelView.labels) {
+        for (int i = 0; i < cell.indexedColumnLabelView.columnLabelView.numberOfColumns; i++) {
             
-            label.text = @"";
-            
+            [cell.indexedColumnLabelView.columnLabelView setText:@"" forColumn:i];
+    
         }
         
         SFGameRound *round = self.game.rounds[indexPath.row];
@@ -228,10 +228,9 @@
         for (NSString *player in round.players) {
             
             NSInteger index = [self.game.players indexOfObject:player];
-            UILabel *label = cell.indexedColumnLabelView.columnLabelView.labels[index];
-            label.text = @([round scoreForPlayer:player]).stringValue;
-            
-            label.alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+            [cell.indexedColumnLabelView.columnLabelView setText:@([round scoreForPlayer:player]).stringValue forColumn:index];
+            CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+            [cell.indexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
             
         }
         
@@ -261,7 +260,7 @@
             
             cell = [[SFIndexedButtonTableViewCell alloc] initWithReuseIdentifier:AddRoundCellIdentifier];
             cell.buttonText = NSLocalizedString(@"+ Add Scores", nil);
-            cell.buttonLabel.textColor = self.view.tintColor;
+            cell.buttonTintColor = self.view.tintColor;
             
         }
         
@@ -288,9 +287,9 @@
 }
 
 - (void)_setUpPlayerNames {
-    
-    self.playerNamesIndexedColumnLabelView.columnLabelView.textFont = [UIFont fontWithName:@"PermanentMarker" size:self.playerNamesIndexedColumnLabelView.columnLabelView.textFont.pointSize];
 
+    self.playerNamesIndexedColumnLabelView.columnLabelView.defaultFont = [UIFont fontWithName:@"PermanentMarker" size:17.0f];
+    
     self.playerNamesIndexedColumnLabelView.layer.shadowOffset = CGSizeMake(0.0f, 2.0f);
     self.playerNamesIndexedColumnLabelView.layer.shadowRadius = 3.0;
     self.playerNamesIndexedColumnLabelView.layer.shadowOpacity = 0.0f;
@@ -299,7 +298,7 @@
 
 - (void)_setUpTotalScores {
     
-    self.totalScoreIndexedColumnLabelView.columnLabelView.textFont = [UIFont fontWithName:@"PermanentMarker" size:self.playerNamesIndexedColumnLabelView.columnLabelView.textFont.pointSize];
+    self.totalScoreIndexedColumnLabelView.columnLabelView.defaultFont = [UIFont fontWithName:@"PermanentMarker" size:17.0f];
     
     self.totalScoreIndexedColumnLabelView.layer.shadowOffset = CGSizeMake(0.0f, -2.0f);
     self.totalScoreIndexedColumnLabelView.layer.shadowRadius = 1.5f;
@@ -333,10 +332,11 @@
     
     for (NSString *player in self.game.players) {
         
-        UILabel *label = self.playerNamesIndexedColumnLabelView.columnLabelView.labels[[self.game.players indexOfObject:player]];
-        label.text = player_short_name(player);
-        
-        label.alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+        NSInteger index = [self.game.players indexOfObject:player];
+        [self.playerNamesIndexedColumnLabelView.columnLabelView setText:player_short_name(player) forColumn:index];
+    
+        CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+        [self.playerNamesIndexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
         
     }
     
@@ -394,10 +394,10 @@
     
     for (NSString *player in self.game.players) {
         
-        UILabel *label = self.totalScoreIndexedColumnLabelView.columnLabelView.labels[[self.game.players indexOfObject:player]];
-        label.text = @([self.game totalScoreForPlayer:player]).stringValue;        
-        
-        label.alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+        NSInteger index = [self.game.players indexOfObject:player];
+        [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@([self.game totalScoreForPlayer:player]).stringValue forColumn:index];
+        CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
+        [self.totalScoreIndexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
         
         if (self.game.rounds.count > 0) {
             

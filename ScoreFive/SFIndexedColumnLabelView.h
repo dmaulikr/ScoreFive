@@ -15,8 +15,9 @@ IB_DESIGNABLE
 @interface SFIndexedColumnLabelView : UIView
 
 @property (nonatomic, nullable) IBInspectable NSString *indexText;
+@property (nonatomic, nullable) IBInspectable UIColor *indexTextColor;
+@property (nonatomic, strong, readonly, nonnull) IBInspectable SFColumnLabelView *columnLabelView;
 
-@property (nonatomic, strong, readonly, nonnull) SFColumnLabelView *columnLabelView;
-@property (nonatomic, strong, readonly, nonnull) UILabel *indexLabel;
+@property (nonatomic, nullable) UIFont *indexFont;
 
 @end

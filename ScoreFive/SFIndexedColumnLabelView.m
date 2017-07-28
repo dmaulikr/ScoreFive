@@ -8,6 +8,12 @@
 
 #import "SFIndexedColumnLabelView.h"
 
+@interface SFIndexedColumnLabelView ()
+
+@property (nonatomic, strong, readonly) UILabel *indexLabel;
+
+@end
+
 @implementation SFIndexedColumnLabelView
 
 + (BOOL)requiresConstraintBasedLayout {
@@ -36,18 +42,6 @@
     
     if (self) {
         
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(indexLabel))]) {
-            
-            _indexLabel = (UILabel *)[aDecoder decodeObjectOfClass:[UILabel class] forKey:NSStringFromSelector(@selector(indexLabel))];
-            
-        }
-        
-        if ([aDecoder containsValueForKey:NSStringFromSelector(@selector(columnLabelView))]) {
-            
-            _columnLabelView = (SFColumnLabelView *)[aDecoder decodeObjectOfClass:[SFColumnLabelView class] forKey:NSStringFromSelector(@selector(columnLabelView))];
-            
-        }
-        
         [self _setUp];
         
     }
@@ -70,15 +64,6 @@
     
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    
-    [super encodeWithCoder:aCoder];
-    
-    [aCoder encodeObject:self.indexLabel forKey:NSStringFromSelector(@selector(indexLabel))];
-    [aCoder encodeObject:self.columnLabelView forKey:NSStringFromSelector(@selector(columnLabelView))];
-    
-}
-
 - (NSString *)indexText {
     
     return self.indexLabel.text;
@@ -88,6 +73,30 @@
 - (void)setIndexText:(NSString *)indexText {
     
     self.indexLabel.text = indexText;
+    
+}
+
+- (UIColor *)indexTextColor {
+
+    return self.indexLabel.textColor;
+    
+}
+
+- (void)setIndexTextColor:(UIColor *)indexTextColor {
+    
+    self.indexLabel.textColor = indexTextColor;
+    
+}
+
+- (UIFont *)indexFont {
+    
+    return self.indexLabel.font;
+    
+}
+
+- (void)setIndexFont:(UIFont *)indexFont {
+    
+    self.indexLabel.font = indexFont;
     
 }
 

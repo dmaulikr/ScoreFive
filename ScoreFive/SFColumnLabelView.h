@@ -13,13 +13,17 @@ IB_DESIGNABLE;
 @interface SFColumnLabelView : UIView
 
 @property (nonatomic, assign) IBInspectable NSUInteger numberOfColumns;
-@property (nonatomic, strong, nonnull) IBInspectable UIColor *textColor;
+@property (nonatomic, strong, nonnull) IBInspectable UIColor *defaultColor;
+@property (nonatomic, assign, getter=shouldMarkWithFlags) IBInspectable BOOL markWithFlags;
+@property (nonatomic, strong, nullable) IBInspectable NSString *negativeFlag;
+@property (nonatomic, strong, nullable) IBInspectable NSString *positiveFlag;
 
-@property (nonatomic, strong, nonnull) UIFont *textFont;
-@property (nonatomic, strong, readonly, nonnull) NSArray<UILabel *> *labels;
-@property (nonatomic, assign, getter=shouldMarkWithFlags) BOOL markWithFlags;
-@property (nonatomic, strong, nullable) NSString *negativeFlag;
-@property (nonatomic, strong, nullable) NSString *positiveFlag;
+@property (nonatomic, strong, nonnull) UIFont *defaultFont;
+
+- (void)setFont:(nonnull UIFont *)font forColumn:(NSUInteger)column;
+- (void)setTextColor:(nonnull UIColor *)color forColumn:(NSUInteger)column;
+- (void)setAlpha:(CGFloat)alpha forColumn:(NSUInteger)column;
+- (void)setText:(nullable NSString *)text forColumn:(NSUInteger)column;
 
 - (void)updateFlagMarks;
 

@@ -10,6 +10,9 @@
 
 @interface SFIndexedButtonTableViewCell ()
 
+@property (nonatomic, strong) UILabel *indexLabel;
+@property (nonatomic, strong) UILabel *buttonLabel;
+
 @end
 
 @implementation SFIndexedButtonTableViewCell
@@ -50,6 +53,18 @@
 - (void)setButtonText:(NSString *)buttonText {
     
     self.buttonLabel.text = buttonText;
+    
+}
+
+- (UIColor *)buttonTintColor {
+    
+    return self.buttonLabel.textColor;
+    
+}
+
+- (void)setButtonTintColor:(UIColor *)buttonTintColor {
+    
+    self.buttonLabel.textColor = buttonTintColor;
     
 }
 

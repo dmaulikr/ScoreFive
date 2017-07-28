@@ -331,6 +331,7 @@
     NSString *text = index == self.round.players.count - 1 ? @"Done" : @"Next";
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, 44.0f)];
+    toolbar.tintColor = self.view.tintColor;
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:text
                                                                  style:UIBarButtonItemStyleDone
