@@ -120,6 +120,19 @@
     
 }
 
+- (void)testMutatingRoundScore {
+    
+    SFGame *game = [[SFGame alloc] init];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    
+    XCTAssertThrows([round setScore:0 forPlayer:@"Player 1"], @"Allowing Player 1 to be rescored");
+    XCTAssertThrows([round setScore:50 forPlayer:@"Player 2"], @"Allowing Player 2 to be resocred");
+    
+}
+
 - (void)testInvalidPlayerInRound {
     
     SFGame *game = [[SFGame alloc] init];
@@ -127,6 +140,33 @@
     SFGameRound *round = [game newRound];
     
     XCTAssertThrows([round setScore:32 forPlayer:@"Player 3"], @"Allowed score for inavlid player");
+    
+}
+
+- (void)testRoundStats {
+    
+    SFGame *game = [[SFGame alloc] init];
+    
+    SFGameRound *round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    
+    XCTAssert(round.bestScore == 0, @"Best score is wrong");
+    XCTAssert(round.worstScore == 50, @"Worst score is wrong");
+    
+}
+
+- (void)testUnfinishedRoundStats {
+    
+    SFGame *game = [[SFGame alloc] init];
+    
+    SFGameRound *round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    
+    XCTAssertThrows(round.bestScore, @"Best score provided for an unfinished round");
+    XCTAssertThrows(round.worstScore, @"Worst score provided for an unfinished round");
     
 }
 
@@ -160,15 +200,19 @@
     
     XCTAssertThrows([game2 addRound:round], @"Incompatible round added to game");
     
-    [round setScore:50 forPlayer:@"Player 1"];
-    [round setScore:50 forPlayer:@"Player 2"];
+    SFGameRound *round1 = [game1 newRound];
     
-    XCTAssertThrows([game1 addRound:round], @"Invalid round added to game -- Nobody got a zero");
+    [round1 setScore:50 forPlayer:@"Player 1"];
+    [round1 setScore:50 forPlayer:@"Player 2"];
     
-    [round setScore:0 forPlayer:@"Player 1"];
-    [round setScore:0 forPlayer:@"Player 2"];
+    XCTAssertThrows([game1 addRound:round1], @"Invalid round added to game -- Nobody got a zero");
     
-    XCTAssertThrows([game1 addRound:round], @"Invalid round added to game -- Everbody got a zero");
+    SFGameRound *round2 = [game1 newRound];
+    
+    [round2 setScore:0 forPlayer:@"Player 1"];
+    [round2 setScore:0 forPlayer:@"Player 2"];
+    
+    XCTAssertThrows([game1 addRound:round1], @"Invalid round added to game -- Everbody got a zero");
     
 }
 
@@ -195,7 +239,7 @@
     
 }
 
-- (void)testTotalScoreForInvalidPlayer {
+- (void)testPlayerTotalScoreForInvalidPlayer {
     
     SFGame *game = [[SFGame alloc] init];
     
@@ -209,6 +253,7 @@
     XCTAssertThrows([game totalScoreForPlayer:@"Player 3"], @"Total score provided for invalid player without exception");
     
 }
+
 
 - (void)testPlayerDeath {
     
@@ -228,6 +273,28 @@
     XCTAssertTrue([game.alivePlayers containsObject:@"Player 2"], @"Player 2 is dead -- should be alive");
     XCTAssertTrue([game.alivePlayers containsObject:@"Player 3"], @"Player 3 is dead -- should be alive");
     
+    round = [game newRound];
+    
+    XCTAssertFalse([round.players containsObject:@"Player 1"], @"Player 1 included in new round after death");
+    XCTAssertTrue([round.players containsObject:@"Player 2"], @"Player 2 not included in new round after Player 1 death");
+    XCTAssertTrue([round.players containsObject:@"Player 3"], @"Player 3 not included in new round after Player 1 death");
+    
+    [round setScore:1 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:2 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1"] == 50, @"Invalid total score fore Player 1 after death");
+    XCTAssert([game totalScoreForPlayer:@"Player 2"] == 1, @"Invalid total score for Player 2 after Player 1 death");
+    XCTAssert([game totalScoreForPlayer:@"Player 3"] == 2, @"Invalid total score for Player 3 after Player 1 death");
+    
 }
 
 - (void)testGameEnd {
@@ -246,6 +313,624 @@
     XCTAssertTrue(game.finished, @"Game didin't end");
     XCTAssertTrue([game.winner isEqualToString:@"Player 1"], @"Incorrect game winner");
     
+    
+}
+
+- (void)testTotalPlayerScoringAtIndex {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:300];
+    
+    SFGameRound *round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:0] == 0, @"Invalid score for Player 1 after round index 0");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:0] == 50, @"Invalid score for Player 2 after round index 0");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:0] == 34, @"Invalid score for Player 3 after round index 0");
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:34 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:0] == 0, @"Invalid score for Player 1 after round index 0");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:0] == 50, @"Invalid score for Player 2 after round index 0");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:0] == 34, @"Invalid score for Player 3 after round index 0");
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:1] == 50, @"Invalid score for Player 1 after round index 1");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:1] == 84, @"Invalid score for Player 2 after round index 1");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:1] == 34, @"Invalid score for Player 3 after round index 1");
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" beforeRoundIndex:1] == 0, @"Invalid score for Player 1 before round index 1");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" beforeRoundIndex:1] == 50, @"Invalid score for Player 2 before round index 1");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" beforeRoundIndex:1] == 34, @"Invalid score for Player 3 before round index 1");
+    
+}
+
+- (void)testTotalPlayerScoringAtIndexWithPlayerDeath {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:3] == 100, @"Invalid score for Player 1 after round index 3");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:3] == 50, @"Invalid score for Player 2 after round index 3");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:3] == 83, @"Invalid score for Player 3 after round index 3");
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" beforeRoundIndex:4] == 100, @"Invalid score for Player 1 before round index 4");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" beforeRoundIndex:4] == 50, @"Invalid score for Player 2 before round index 4");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" beforeRoundIndex:4] == 83, @"Invalid score for Player 3 before round index 4");
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:4] == 100, @"Invalid score for Player 1 before round index 4");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:4] == 64, @"Invalid score for Player 2 before round index 4");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:4] == 83, @"Invalid score for Player 3 before round index 4");
+    
+}
+
+- (void)testTotalPlayerScoringAtInvalidIndex {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:300];
+    
+    SFGameRound *round = [game newRound];
+
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 1" afterRoundIndex:0], @"Getting total score for Player 1 after round 0 with no rounds didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 2" afterRoundIndex:0], @"Getting total score for Player 2 after round 0 with no rounds didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 3" afterRoundIndex:0], @"Getting total score for Player 3 after round 0 with no rounds didn't except");
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 1" beforeRoundIndex:0], @"Getting total score for Player 1 before round 0 didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 2" beforeRoundIndex:0], @"Getting total score for Player 2 before round 0 didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 3" beforeRoundIndex:0], @"Getting total score for Player 3 before round 0 didn't except");
+
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 1" afterRoundIndex:1], @"Getting total score for Player 1 after round 1 with 1 round didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 2" afterRoundIndex:1], @"Getting total score for Player 2 after round 1 with 1 round didn't except");
+    XCTAssertThrows([game totalScoreForPlayer:@"Player 3" afterRoundIndex:1], @"Getting total score for Player 3 after round 1 with 1 round didn't except");
+    
+}
+
+- (void)testHistoricalAlivePlayers {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    NSOrderedSet<NSString *> *aliveAfter0 = [game alivePlayersAfterRoundIndex:0];
+    NSOrderedSet<NSString *> *aliveBefore1 = [game alivePlayersBeforeRoundIndex:1];
+    
+    NSOrderedSet<NSString *> *aliveAfter1 = [game alivePlayersAfterRoundIndex:1];
+    NSOrderedSet<NSString *> *aliveBefore2 = [game alivePlayersBeforeRoundIndex:2];
+    
+    NSOrderedSet<NSString *> *aliveAfter2 = [game alivePlayersAfterRoundIndex:2];
+    NSOrderedSet<NSString *> *aliveBefore3 = [game alivePlayersBeforeRoundIndex:3];
+    
+    NSOrderedSet<NSString *> *aliveAfter3 = [game alivePlayersAfterRoundIndex:3];
+    NSOrderedSet<NSString *> *aliveBefore4 = [game alivePlayersBeforeRoundIndex:4];
+    
+    NSOrderedSet<NSString *> *aliveAfter4 = [game alivePlayersAfterRoundIndex:4];
+    
+    XCTAssertTrue([aliveAfter0 containsObject:@"Player 1"], @"Player 1 died too early!");
+    XCTAssertTrue([aliveAfter0 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveAfter0 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertTrue([aliveBefore1 containsObject:@"Player 1"], @"Player 1 died too early!");
+    XCTAssertTrue([aliveBefore1 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveBefore1 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertTrue([aliveAfter1 containsObject:@"Player 1"], @"Player 1 died too early!");
+    XCTAssertTrue([aliveAfter1 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveAfter1 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertTrue([aliveBefore2 containsObject:@"Player 1"], @"Player 1 died too early!");
+    XCTAssertTrue([aliveBefore2 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveBefore2 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertFalse([aliveAfter2 containsObject:@"Player 1"], @"Player 1 is alive -- should be dead");
+    XCTAssertTrue([aliveAfter2 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveAfter2 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertFalse([aliveBefore3 containsObject:@"Player 1"], @"Player 1 is alive -- should be dead");
+    XCTAssertTrue([aliveBefore3 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveBefore3 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertFalse([aliveAfter3 containsObject:@"Player 1"], @"Player 1 is alive -- should be dead");
+    XCTAssertTrue([aliveAfter3 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveAfter3 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertFalse([aliveBefore4 containsObject:@"Player 1"], @"Player 1 is alive -- should be dead");
+    XCTAssertTrue([aliveBefore4 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveBefore4 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertFalse([aliveAfter4 containsObject:@"Player 1"], @"Player 1 is alive -- should be dead");
+    XCTAssertTrue([aliveAfter4 containsObject:@"Player 2"], @"Player 2 died too early!");
+    XCTAssertTrue([aliveAfter4 containsObject:@"Player 3"], @"Player 3 died too early!");
+    
+    XCTAssertThrows([game alivePlayersBeforeRoundIndex:5], @"Before 5 not possible");
+    
+}
+
+- (void)testHistoricalRoundCreation {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRoundForIndex:0];
+    XCTAssert([round.players isEqualToOrderedSet:game.rounds[0].players]);
+    
+    round = [game newRoundForIndex:1];
+    XCTAssert([round.players isEqualToOrderedSet:game.rounds[1].players]);
+    
+    round = [game newRoundForIndex:2];
+    XCTAssert([round.players isEqualToOrderedSet:game.rounds[2].players]);
+    
+    round = [game newRoundForIndex:3];
+    XCTAssert([round.players isEqualToOrderedSet:game.rounds[3].players]);
+    
+    round = [game newRoundForIndex:4];
+    XCTAssert([round.players isEqualToOrderedSet:game.rounds[4].players]);
+    
+}
+
+- (void)testInvalidHistoricalRoundCreation {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssertThrows([game newRoundForIndex:5], @"Illegally created new round");
+    
+}
+
+- (void)testRoundReplacement {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    SFGameRound *replacementForRound1 = [game newRoundForIndex:1];
+    [replacementForRound1 setScore:0 forPlayer:@"Player 1"];
+    [replacementForRound1 setScore:50 forPlayer:@"Player 2"];
+    [replacementForRound1 setScore:33 forPlayer:@"Player 3"];
+    
+    [game replaceRoundAtIndex:1 withRound:replacementForRound1];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1" afterRoundIndex:1] == 50, @"Invalid total score after round 0 after update");
+    XCTAssert([game totalScoreForPlayer:@"Player 2" afterRoundIndex:1] == 50, @"Invalid total score after round 0 after update");
+    XCTAssert([game totalScoreForPlayer:@"Player 3" afterRoundIndex:1] == 67, @"Invalid total score after round 0 after update");
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1"] == 100, @"Invalid total score after update");
+    XCTAssert([game totalScoreForPlayer:@"Player 2"] == 64, @"Invalid total score after update");
+    XCTAssert([game totalScoreForPlayer:@"Player 3"] == 82, @"Invalid total score after update");
+    
+}
+
+- (void)testInvalidRoundReplacement {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    SFGameRound *unfinishedRound = [game newRoundForIndex:0];
+    [unfinishedRound setScore:50 forPlayer:@"Player 1"];
+    [unfinishedRound setScore:0 forPlayer:@"Player 2"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:0 withRound:unfinishedRound], @"Replaced a completed round with an unfinished one");
+    
+    SFGameRound *gameChangingRound = [game newRoundForIndex:0];
+    
+    [gameChangingRound setScore:15 forPlayer:@"Player 1"];
+    [gameChangingRound setScore:0 forPlayer:@"Player 2"];
+    [gameChangingRound setScore:34 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:0 withRound:gameChangingRound], @"Replaced a completed round with an invalid one");
+    
+    SFGameRound *wrongRound = [game newRoundForIndex:0];
+    
+    [wrongRound setScore:50 forPlayer:@"Player 1"];
+    [wrongRound setScore:0 forPlayer:@"Player 2"];
+    [wrongRound setScore:34 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:4 withRound:wrongRound], @"Round with too many players allowed");
+    
+    SFGameRound *badRound = [game newRoundForIndex:4];
+    [badRound setScore:0 forPlayer:@"Player 2"];
+    [badRound setScore:0 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:4 withRound:badRound], @"Round with only zeros allowed");
+    
+    badRound = [game newRoundForIndex:4];
+    [badRound setScore:50 forPlayer:@"Player 2"];
+    [badRound setScore:50 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:4 withRound:badRound], @"Round with no zeroes allowed");
+    
+    badRound = [game newRoundForIndex:4];
+    [badRound setScore:15 forPlayer:@"Player 2"];
+    [badRound setScore:0 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:5 withRound:badRound], @"Replacing round that doesn't exist");
+    
+}
+
+- (void)testRemoveRound {
+ 
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    [game removeRoundAtIndex:4];
+    
+    XCTAssert([game totalScoreForPlayer:@"Player 1"] == 100, @"Invalid score for Player 1 after round removal");
+    XCTAssert([game totalScoreForPlayer:@"Player 2"] == 50, @"Invalid score for Player 1 after round removal");
+    XCTAssert([game totalScoreForPlayer:@"Player 3"] == 83, @"Invalid score for Player 1 after round removal");
+    
+}
+
+- (void)testRemoveIllegalRound {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssertThrows([game removeRoundAtIndex:0], @"Removed vital round");
+    XCTAssertThrows([game removeRoundAtIndex:5], @"Removed round that doesn't exist");
+    
+    [game removeRoundAtIndex:4];
+    [game removeRoundAtIndex:3];
+    [game removeRoundAtIndex:2];
+    [game removeRoundAtIndex:1];
+    
+    XCTAssertNoThrow([game removeRoundAtIndex:0], @"Formally vital round caused exception when removed");
+    
+}
+
+- (void)testReplaceFormallyIllegalRound {
+    
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
+    
+    SFGameRound *round = [game newRound];
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    [round setScore:34 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:1 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:14 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
+    
+    [round setScore:14 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    SFGameRound *gameChangingRound = [game newRoundForIndex:0];
+    
+    [gameChangingRound setScore:15 forPlayer:@"Player 1"];
+    [gameChangingRound setScore:0 forPlayer:@"Player 2"];
+    [gameChangingRound setScore:34 forPlayer:@"Player 3"];
+    
+    XCTAssertThrows([game replaceRoundAtIndex:0 withRound:gameChangingRound], @"Replaced a completed round with an invalid one");
+    
+    [game removeRoundAtIndex:4];
+    [game removeRoundAtIndex:3];
+    [game removeRoundAtIndex:2];
+    [game removeRoundAtIndex:1];
+    
+    XCTAssertNoThrow([game replaceRoundAtIndex:0 withRound:gameChangingRound], @"Replacing a formally illegal round threw an exception");
     
 }
 

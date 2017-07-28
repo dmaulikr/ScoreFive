@@ -11,6 +11,7 @@
 @implementation SFButtonTableViewCell
 
 @synthesize buttonEnabled = _buttonEnabled;
+@synthesize buttonTintColor = _buttonTintColor;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -18,6 +19,7 @@
     
     if (self) {
         
+        self.buttonTintColor = self.tintColor;
         [self _setUpButtonCell];
         
     }
@@ -40,12 +42,24 @@
     if (self.buttonEnabled) {
         
         self.selectionStyle = UITableViewCellSelectionStyleDefault;
-        self.textLabel.textColor = self.tintColor;
+        self.textLabel.textColor = self.buttonTintColor;
         
     } else {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.textLabel.textColor = [UIColor lightGrayColor];
+        
+    }
+    
+}
+
+- (void)setButtonTintColor:(UIColor *)buttonTintColor {
+    
+    _buttonTintColor = buttonTintColor;
+    
+    if (self.buttonEnabled) {
+        
+        self.textLabel.textColor = self.buttonTintColor;
         
     }
     

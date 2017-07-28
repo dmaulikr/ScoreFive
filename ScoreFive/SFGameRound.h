@@ -13,6 +13,7 @@
 
 extern NSString * _Nonnull const SFGameRoundInvalidScoreException;
 extern NSString * _Nonnull const SFGameRoundInvalidPlayerException;
+extern NSString * _Nonnull const SFGameRoundUnfinishedStatsException;
 
 @interface SFGameRound : NSObject<NSSecureCoding, NSCopying>
 
@@ -20,6 +21,8 @@ extern NSString * _Nonnull const SFGameRoundInvalidPlayerException;
 
 @property (nonatomic, readonly, getter=isFinished) BOOL finished;
 @property (nonatomic, readonly) NSUInteger totalScore;
+@property (nonatomic, readonly) NSUInteger worstScore;
+@property (nonatomic, readonly) NSUInteger bestScore;
 
 - (nullable instancetype)initWithPlayers:(nonnull NSOrderedSet<NSString *> *)players NS_DESIGNATED_INITIALIZER;
 

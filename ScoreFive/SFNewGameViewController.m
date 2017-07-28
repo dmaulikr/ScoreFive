@@ -7,6 +7,7 @@
 //
 
 #import "UIResponder+ScoreFive.h"
+#import "UIColor+SFScoreFiveColors.h"
 
 #import "SFNewGameViewController.h"
 
@@ -139,6 +140,30 @@
 
 #pragma mark - UITableViewDataSource
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 1 && self.playerNames.count > 2) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 1 && editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [self.playerNames removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self _updatePlaceholders];
+        
+    }
+    
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 3;
@@ -199,7 +224,7 @@
             cell = [[SFTextFieldTableViewCell alloc] initWithReuseIdentifier:PlayerNameCellIdentifier];
             cell.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
             [cell.textField addTarget:self
-                               action:@selector(_nextPlayerField:)
+                               action:@selector(_nextField:)
                      forControlEvents:UIControlEventEditingDidEndOnExit];
             [cell.textField addTarget:self
                                action:@selector(_updateNames:)
@@ -231,7 +256,8 @@
             
             cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AddPlayerCellIdentifier];
             cell.textLabel.text = NSLocalizedString(@"+ Add Player", nil);
-            
+            cell.buttonTintColor = [UIColor ceruleanColor];
+
         }
         
         return cell;
@@ -279,16 +305,10 @@
     UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil)
                                                                  style:UIBarButtonItemStyleDone
                                                                 target:self
-                                                                action:@selector(_startEnteringPlayers:)];
+                                                                action:@selector(_nextField:)];
     toolbar.items = @[flexItem, nextItem];
     
     return toolbar;
-    
-}
-
-- (void)_startEnteringPlayers:(id)sender {
-    
-    [self.playerTextFields.firstObject becomeFirstResponder];
     
 }
 
@@ -368,19 +388,43 @@
     
 }
 
-- (void)_nextPlayerField:(id)sender {
+- (void)_nextField:(id)sender {
     
-    NSInteger currentTextFieldIndex = [self.playerTextFields indexOfObject:sender];
-    
-    if (currentTextFieldIndex == self.playerNames.count - 1) {
+    if ([sender isKindOfClass:[UITextField class]]) {
         
-        [sender resignFirstResponder];
+        if ([self.playerTextFields containsObject:sender]) {
+            
+            if (sender == self.playerTextFields.lastObject) {
+                
+                [sender resignFirstResponder];
+                
+            } else {
+                
+                NSInteger index = [self.playerTextFields indexOfObject:sender];
+                UITextField *textField = self.playerTextFields[index + 1];
+                [textField becomeFirstResponder];
+                
+            }
+            
+        } else {
+            
+            [self.playerTextFields.firstObject becomeFirstResponder];
+            
+        }
         
     } else {
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:currentTextFieldIndex + 1 inSection:1];
-        SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.gameSettingsTableView cellForRowAtIndexPath:indexPath];
-        [cell.textField becomeFirstResponder];
+        [self _nextField:[UIResponder currentFirstResponder]];
+        
+    }
+    
+}
+
+- (void)_updatePlaceholders {
+    
+    for (UITextField *textField in self.playerTextFields) {
+        
+        textField.placeholder = [NSString stringWithFormat:@"Player %@", @([self.playerTextFields indexOfObject:textField] + 1).stringValue];
         
     }
     

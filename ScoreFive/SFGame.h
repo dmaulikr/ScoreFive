@@ -13,6 +13,9 @@
 extern NSString * _Nonnull const SFGameInvalidPlayerCountException;
 extern NSString * _Nonnull const SFGameInvalidPlayerException;
 extern NSString * _Nonnull const SFGameInvalidRoundException;
+extern NSString * _Nonnull const SFGameInvalidRoundIndexException;
+extern NSString * _Nonnull const SFGameInvalidRoundReplacementException;
+extern NSString * _Nonnull const SFGamePostGameMutationException;
 
 @interface SFGame : NSObject<NSSecureCoding, NSCopying>
 
@@ -25,15 +28,32 @@ extern NSString * _Nonnull const SFGameInvalidRoundException;
 @property (nonnull, readonly, nonatomic) NSOrderedSet<NSString *> *alivePlayers;
 @property (nonatomic, readonly, getter=isFinished) BOOL finished;
 @property (nonatomic, readonly, nullable) NSString *winner;
+@property (nonatomic, readonly) NSUInteger worstScore;
+@property (nonatomic, readonly) NSUInteger bestScore;
+@property (nonatomic, readonly) NSUInteger worstAliveScore;
+@property (nonatomic, readonly) NSUInteger bestAliveScore;
 
 - (nullable instancetype)initWithPlayers:(nonnull NSOrderedSet<NSString *> *)players scoreLimit:(NSUInteger)scoreLimit NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)isEqualToGame:(nullable SFGame *)game;
 
 - (nonnull SFGameRound *)newRound;
-- (NSUInteger)totalScoreForPlayer:(nonnull NSString *)player;
-
+- (nonnull SFGameRound *)newRoundForIndex:(NSUInteger)index;
 - (void)addRound:(nonnull SFGameRound *)round;
+- (void)replaceRoundAtIndex:(NSUInteger)index withRound:(nonnull SFGameRound *)round;
+- (void)removeRoundAtIndex:(NSUInteger)index;
+
+- (NSUInteger)totalScoreForPlayer:(nonnull NSString *)player;
+- (NSUInteger)totalScoreForPlayer:(nonnull NSString *)player afterRoundIndex:(NSUInteger)index;
+- (NSUInteger)totalScoreForPlayer:(nonnull NSString *)player beforeRoundIndex:(NSUInteger)index;
+
+- (nonnull NSOrderedSet<NSString *> *)alivePlayersBeforeRoundIndex:(NSUInteger)index;
+- (nonnull NSOrderedSet<NSString *> *)alivePlayersAfterRoundIndex:(NSUInteger)index;
+
+- (nonnull NSString *)headerForRoundIndex:(NSUInteger)index;
+
 - (void)updateTimestamp;
+
+NSString * _Nonnull player_short_name(NSString * _Nonnull player);
 
 @end

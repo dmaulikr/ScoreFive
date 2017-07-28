@@ -11,8 +11,10 @@
 #import "SFGameListViewController.h"
 
 #import "SFGameStorage.h"
+#import "SFScoreCardViewController.h"
+#import "SFButtonTableViewCell.h"
 
-@interface SFGameListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SFGameListViewController ()<UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *gameList;
 
@@ -45,14 +47,71 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self _setUpGamesListUI];
+    [self registerForPreviewingWithDelegate:self sourceView:self.gameList];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    [self _refreshGamesList];
+    [self _refreshGamesListWithReload:YES];
+    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"HomeScoreCardSegueID"]) {
+        
+        SFScoreCardViewController *controller = (SFScoreCardViewController *)segue.destinationViewController;
+        controller.storageIdentifier = ((SFGame *)sender).storageIdentifier;
+        
+    }
+    
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    
+    NSIndexPath *indexPath = [self.gameList indexPathForRowAtPoint:location];
+   
+    if (indexPath) {
+     
+        if (indexPath.section == 0) {
+            
+            UITableViewCell *cell = [self.gameList cellForRowAtIndexPath:indexPath];
+            previewingContext.sourceRect = cell.frame;
+            
+            SFGame *game = self.unfinishedGames.count != 0 ? self.unfinishedGames.firstObject : self.allGames[indexPath.row];
+            SFScoreCardViewController *controller = (SFScoreCardViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ScoreCardViewControllerID"];
+            controller.storageIdentifier = game.storageIdentifier;
+            
+            return controller;
+            
+        }
+        
+        if (indexPath.section == 1 && self.unfinishedGames.count != 0) {
+            
+            UITableViewCell *cell = [self.gameList cellForRowAtIndexPath:indexPath];
+            previewingContext.sourceRect = cell.frame;
+            
+            SFGame *game = self.allGames[indexPath.row];
+            SFScoreCardViewController *controller = (SFScoreCardViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ScoreCardViewControllerID"];
+            controller.storageIdentifier = game.storageIdentifier;
+            
+            return controller;
+            
+        }
+        
+    }
+    
+    return nil;
+    
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    
+    [self.navigationController pushViewController:viewControllerToCommit animated:NO];
     
 }
 
@@ -62,6 +121,46 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (indexPath.section == 0) {
+        
+        SFGame *game;
+        
+        if (self.unfinishedGames.count != 0) {
+         
+            game = self.unfinishedGames[indexPath.row];
+            
+        } else {
+            
+            game = self.allGames[indexPath.row];
+            
+        }
+        
+        [self performSegueWithIdentifier:@"HomeScoreCardSegueID" sender:game];
+        
+        
+    }
+    
+    if (indexPath.section == 1) {
+        
+        if (self.allGames.count != 0 && self.unfinishedGames.count != 0) {
+        
+            SFGame *game = self.allGames[indexPath.row];
+            [self performSegueWithIdentifier:@"HomeScoreCardSegueID" sender:game];
+            
+        } else {
+            
+            [self _showAllGamesUI];
+            
+        }
+        
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        
+        [self _showAllGamesUI];
+        
+    }
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -70,9 +169,9 @@
     
     if (section == 0) {
         
-        return NSLocalizedString(@"In Progress", nil);
+        return self.unfinishedGames.count != 0 ? NSLocalizedString(@"Last Game", nil) : NSLocalizedString(@"Recent", nil);
         
-    } else if (section == 1) {
+    } else if (section == 1 && self.unfinishedGames.count != 0) {
         
         return NSLocalizedString(@"Recent", nil);
         
@@ -84,7 +183,19 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return self.allGames.count == 0 ? 3 : 2;
+    if (self.unfinishedGames.count != 0 && self.allGames.count != 0) {
+        
+        return 3;
+        
+    } else if (self.allGames.count != 0) {
+        
+        return 2;
+        
+    } else {
+        
+        return 0;
+        
+    }
     
 }
 
@@ -92,18 +203,28 @@
     
     if (section == 0) {
         
-        return self.unfinishedGames.count != 0 ? self.unfinishedGames.count : 1;
+        if (self.unfinishedGames.count != 0) {
+            
+            return 1;
+            
+        } else if (self.allGames.count != 0) {
+            
+            return self.allGames.count <= 5 ? self.allGames.count : 5;
+            
+        }
         
     } else if (section == 1) {
         
-        if (self.allGames.count == 0) {
+        if (self.unfinishedGames.count != 0) {
+            
+            return self.allGames.count <= 5 ? self.allGames.count : 5;
+            
+        } else if (self.allGames.count != 0) {
             
             return 1;
             
         }
-        
-        return self.allGames.count < 5 ? self.allGames.count : 5;
-        
+    
     } else if (section == 2) {
         
         return 1;
@@ -116,66 +237,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    static NSString *AllGamesCellIdentifier = @"AllGamesCellIdentifier";
+    static NSString *GameCellIdentifier = @"GameCellIdentifier";
+    
     if (indexPath.section == 0) {
         
-        if (self.unfinishedGames.count == 0) {
+        SFGame *game;
+        
+        if (self.unfinishedGames.count != 0) {
             
-            static NSString *NoInProgressGamesCellIdentifier = @"NoInProgressGamesCellIdentifier";
+            game = self.unfinishedGames.firstObject;
             
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NoInProgressGamesCellIdentifier];
+        } else if (self.allGames.count != 0) {
             
-            if (!cell) {
-                
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NoInProgressGamesCellIdentifier];
-                cell.textLabel.textColor = [UIColor lightGrayColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.textLabel.text = NSLocalizedString(@"None", nil);
-                
-            }
-            
-            return cell;
+            game = self.allGames[indexPath.row];
             
         }
-        
-        static NSString *InProgressGameCellIdentifier = @"InProgressGameCellIdentifier";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:InProgressGameCellIdentifier];
-        
-        if (!cell) {
-            
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:InProgressGameCellIdentifier];
-            
-        }
-        
-        SFGame *game = self.unfinishedGames[indexPath.row];
-        
-        cell.textLabel.text = game.displayString;
-        cell.detailTextLabel.text = game.timestampString;
-        
-        return cell;
-        
-    } else if (indexPath.section == 1) {
-        
-        if (self.allGames.count == 0) {
-         
-            static NSString *NoRecentGamesCellIdentifier = @"NoRecentGamesCellIdentifier";
-            
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NoRecentGamesCellIdentifier];
-            
-            if (!cell) {
-                
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NoRecentGamesCellIdentifier];
-                cell.textLabel.textColor = [UIColor lightGrayColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.textLabel.text = NSLocalizedString(@"None", nil);
-                
-            }
-            
-            return cell;
-            
-        }
-        
-        static NSString *GameCellIdentifier = @"GameCellIdentifier";
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GameCellIdentifier];
         
@@ -185,23 +262,59 @@
             
         }
         
-        SFGame *game = self.allGames[indexPath.row];
-        
         cell.textLabel.text = game.displayString;
         cell.detailTextLabel.text = game.timestampString;
+        
+        return cell;
+    
+        
+    } else if (indexPath.section == 1) {
+        
+        SFGame *game;
+        
+        if (self.allGames.count != 0 && self.unfinishedGames.count != 0) {
+            
+            game = self.allGames[indexPath.row];
+            
+        }
+        
+        if (game) {
+         
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GameCellIdentifier];
+            
+            if (!cell) {
+                
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GameCellIdentifier];
+                
+            }
+            
+            cell.textLabel.text = game.displayString;
+            cell.detailTextLabel.text = game.timestampString;
+            
+            return cell;
+            
+        }
+        
+        SFButtonTableViewCell *cell = (SFButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
+        
+        if (!cell) {
+            
+            cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AllGamesCellIdentifier];
+            cell.buttonTintColor = self.view.tintColor;
+            cell.textLabel.text = NSLocalizedString(@"All Games", nil);
+            
+        }
         
         return cell;
         
     } else if (indexPath.section == 2) {
         
-        static NSString *AllGamesCellIdentifier = @"AllGamesCellIdentifier";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
+        SFButtonTableViewCell *cell = (SFButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:AllGamesCellIdentifier];
         
         if (!cell) {
             
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AllGamesCellIdentifier];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:AllGamesCellIdentifier];
+            cell.buttonTintColor = self.view.tintColor;
             cell.textLabel.text = NSLocalizedString(@"All Games", nil);
             
         }
@@ -227,17 +340,17 @@
     
 }
 
-- (void)_setUpGamesListUI {
-    
-}
-
-- (void)_refreshGamesList {
+- (void)_refreshGamesListWithReload:(BOOL)reload {
     
     self.unfinishedGames = [SFGameStorage sharedGameStorage].unfinishedGames;
     self.allGames = [SFGameStorage sharedGameStorage].allGames;
     
-    [self.gameList reloadData];
-    
+    if (reload) {
+        
+        [self.gameList reloadData];
+        
+    }
+
 }
 
 - (void)_showNewGameUI {
@@ -245,6 +358,12 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewGame" bundle:[NSBundle mainBundle]];
     UINavigationController *controller = (UINavigationController *)[storyboard instantiateInitialViewController];
     [self presentViewController:controller animated:YES completion:nil];
+    
+}
+
+- (void)_showAllGamesUI {
+    
+    [self performSegueWithIdentifier:@"HomeAllSegueID" sender:nil];
     
 }
 

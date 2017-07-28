@@ -11,6 +11,7 @@
 @interface SFButtonTableViewCell : UITableViewCell
 
 @property (nonatomic, assign, getter=isButtonEnabled) BOOL buttonEnabled;
+@property (nonatomic, strong, nonnull) UIColor *buttonTintColor;
 
 - (nullable instancetype)initWithReuseIdentifier:(nonnull NSString *)reuseIdentifier;
 

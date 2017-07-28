@@ -10,6 +10,7 @@
 
 NSString * const SFGameRoundInvalidScoreException = @"SFGameRoundInvalidScoreException";
 NSString * const SFGameRoundInvalidPlayerException = @"SFGameRoundInvalidPlayerException";
+NSString * const SFGameRoundUnfinishedStatsException = @"SFGameRoundUnfinishedStatsException";
 
 @interface SFGameRound ()
 
@@ -90,6 +91,50 @@ NSString * const SFGameRoundInvalidPlayerException = @"SFGameRoundInvalidPlayerE
     }
     
     return total;
+    
+}
+
+- (NSUInteger)worstScore {
+    
+    if (!self.finished) {
+        
+        [NSException raise:SFGameRoundUnfinishedStatsException format:@"You can't get stats if the round isn't finished yet"];
+        
+        return 0;
+        
+    }
+    
+    NSArray<NSNumber *> *scores = [[NSArray<NSNumber *> alloc] init];
+    
+    for (NSString *player in self.players) {
+        
+        scores = [scores arrayByAddingObject:@([self scoreForPlayer:player])];
+        
+    }
+    
+    return ((NSNumber *)[scores valueForKeyPath:@"@max.unsignedIntegerValue"]).unsignedIntegerValue;
+    
+}
+
+- (NSUInteger)bestScore {
+    
+    if (!self.finished) {
+        
+        [NSException raise:SFGameRoundUnfinishedStatsException format:@"You can't get stats if the round isn't finished yet"];
+        
+        return 0;
+        
+    }
+    
+    NSArray<NSNumber *> *scores = [[NSArray<NSNumber *> alloc] init];
+    
+    for (NSString *player in self.players) {
+        
+        scores = [scores arrayByAddingObject:@([self scoreForPlayer:player])];
+        
+    }
+    
+    return ((NSNumber *)[scores valueForKeyPath:@"@min.unsignedIntegerValue"]).unsignedIntegerValue;
     
 }
 
@@ -193,6 +238,10 @@ NSString * const SFGameRoundInvalidPlayerException = @"SFGameRoundInvalidPlayerE
     if (![self.players containsObject:player]) {
     
         [NSException raise:SFGameRoundInvalidPlayerException format:@"Player %@ is invalid for this round", player];
+        
+    } else if (self.scoresDict[player]) {
+        
+        [NSException raise:SFGameRoundInvalidScoreException format:@"Round already contains score for Player %@", player];
         
     } else if (!valid_score(score)) {
             

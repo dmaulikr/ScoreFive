@@ -6,10 +6,11 @@
 //  Copyright © 2017 Varun Santhanam. All rights reserved.
 //
 
+#import "UIColor+SFScoreFiveColors.h"
+
 #import "SFAppDelegate.h"
 
 #import "SFAppSettings.h"
-
 #import "SFGameStorage.h"
 
 @interface SFAppDelegate ()
@@ -32,6 +33,8 @@
         [SFAppSettings sharedAppSettings].scoreHighlightingEnabled = YES;
         
     }
+    
+    self.window.tintColor = [UIColor ceruleanColor];
     
     return YES;
     
