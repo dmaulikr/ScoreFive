@@ -17,10 +17,10 @@
 
 @implementation SFIndexedButtonTableViewCell
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-
+    self = [super initWithCoder:aDecoder];
+    
     if (self) {
         
         [self _setUpIndexLabel];
@@ -31,6 +31,23 @@
     return self;
     
 }
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    if (self) {
+    
+        [self _setUpIndexLabel];
+        [self _setUpButtonLabel];
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - Property Access Methods
 
 - (NSString *)indexText {
     
@@ -67,6 +84,25 @@
     self.buttonLabel.textColor = buttonTintColor;
     
 }
+
+#pragma mark - Public Instance Methods
+
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    
+    if (self) {
+        
+        [self _setUpIndexLabel];
+        [self _setUpButtonLabel];
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpIndexLabel {
     

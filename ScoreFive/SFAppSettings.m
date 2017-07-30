@@ -10,6 +10,8 @@
 
 @implementation SFAppSettings
 
+#pragma mark - Public Class Methods
+
 + (instancetype)sharedAppSettings {
     
     static SFAppSettings *sharedAppSettings;
@@ -23,6 +25,8 @@
     return sharedAppSettings;
     
 }
+
+#pragma mark - Property Access Methods
 
 - (BOOL)isIndexByPlayerNameEnabled {
     

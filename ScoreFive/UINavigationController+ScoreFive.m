@@ -10,6 +10,8 @@
 
 @implementation UINavigationController (ScoreFive)
 
+#pragma mark - Overridden Instsance Methods
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     if (self.visibleViewController) {
@@ -18,7 +20,7 @@
         
     }
     
-    return UIStatusBarStyleDefault;
+    return [super preferredStatusBarStyle];
     
 }
 

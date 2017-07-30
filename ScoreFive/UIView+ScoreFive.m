@@ -10,6 +10,8 @@
 
 @implementation UIView (ScoreFive)
 
+#pragma mark - Public Class Methods
+
 + (void)repeatWithDuration:(NSTimeInterval)duration framesPerSecond:(CGFloat)framesPerSecond block:(void (^)(CGFloat))block completionHandler:(void (^)())completionHandler {
     
     CGFloat frameTime = ABS(1.0f/framesPerSecond);

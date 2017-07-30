@@ -13,7 +13,7 @@
         <scene sceneID="JFi-Rx-Wdq">
             <objects>
                 <navigationController id="xen-rt-6Xz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P16-6m-cJ9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P16-6m-cJ9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -55,7 +55,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jen-fb-53e">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="BRB-i9-cL1"/>
+                        <barButtonItem key="leftBarButtonItem" image="slider-icon-bar" id="BRB-i9-cL1">
+                            <connections>
+                                <action selector="userSettings:" destination="SVY-mC-kzj" id="zT9-JX-dNZ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1bI-xD-Qmc">
                             <connections>
                                 <action selector="userNewGame:" destination="SVY-mC-kzj" id="KKL-h9-yuu"/>
@@ -198,6 +202,9 @@
             <point key="canvasLocation" x="34" y="694"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="slider-icon-bar" width="22" height="22"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="UYA-lV-jng"/>
     </inferredMetricsTieBreakers>

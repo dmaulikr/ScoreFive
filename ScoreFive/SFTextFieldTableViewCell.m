@@ -12,6 +12,40 @@
 
 @synthesize textField = _textField;
 
+#pragma mark - Overridden Instance Methods
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self _setUpTextField];
+        
+    }
+    
+    return self;
+    
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    if (self) {
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self _setUpTextField];
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - Public Instance Methods
+
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -26,6 +60,8 @@
     return self;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpTextField {
     

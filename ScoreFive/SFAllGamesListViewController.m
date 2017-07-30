@@ -24,6 +24,8 @@
 
 @implementation SFAllGamesListViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -92,6 +94,8 @@
     
 }
 
+#pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -108,18 +112,6 @@
         [self _removeAllGames];
         
     }
-    
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 0) {
-        
-        return YES;
-        
-    }
-    
-    return NO;
     
 }
 
@@ -143,6 +135,21 @@
     }
     
 }
+
+#pragma mark - UITableViewDataSource
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -209,6 +216,8 @@
     return nil;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_removeAllGames {
     

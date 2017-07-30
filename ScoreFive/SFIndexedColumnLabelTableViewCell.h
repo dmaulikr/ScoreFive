@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong, readonly, nonnull) SFIndexedColumnLabelView *indexedColumnLabelView;
 
-- (nullable instancetype)initWithReuseIdentifier:(nonnull NSString *)reuseIdentifier;
-
+- (nullable instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier;
 
 @end

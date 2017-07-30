@@ -12,6 +12,8 @@
 
 @implementation UILabel (ScoreFive)
 
+#pragma mark - Public Instance Methods
+
 - (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionBlock:(void (^)())completionHandler {
     
     if (endValue == 0) {

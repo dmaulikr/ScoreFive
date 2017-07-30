@@ -16,25 +16,15 @@
 
 @implementation SFIndexedColumnLabelView
 
+#pragma mark - Public Class Methods
+
 + (BOOL)requiresConstraintBasedLayout {
     
     return YES;
     
 }
 
-- (instancetype)init {
-    
-    self = [super init];
-    
-    if (self) {
-        
-        [self _setUp];
-        
-    }
-    
-    return self;
-    
-}
+#pragma mark - Overridden Instance Methods
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
@@ -63,6 +53,8 @@
     return self;
     
 }
+
+#pragma mark - Property Access Methods
 
 - (NSString *)indexText {
     
@@ -99,6 +91,8 @@
     self.indexLabel.font = indexFont;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUp {
     

@@ -27,6 +27,8 @@
 
 @implementation SFNewRoundViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -67,6 +69,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Property Access Methods
+
 - (NSArray<UITextField *> *)textFields {
     
     NSArray<UITextField *> *textFields = [[NSArray<UITextField *> alloc] init];
@@ -84,11 +88,15 @@
     
 }
 
+#pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -99,18 +107,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return self.round.players.count;
-    
-}
-
-- (IBAction)userSave:(id)sender {
-    
-    [self _saveRound];
-    
-}
-
-- (IBAction)userCancel:(id)sender {
-    
-    [self _cancelRound];
     
 }
 
@@ -158,6 +154,22 @@
     
 }
 
+#pragma mark - Interface Builder Actions
+
+- (IBAction)userSave:(id)sender {
+    
+    [self _saveRound];
+    
+}
+
+- (IBAction)userCancel:(id)sender {
+    
+    [self _cancelRound];
+    
+}
+
+#pragma mark - Private Instance Methods
+
 - (void)_setUpNewRoundViewController {
     
     self.title = NSLocalizedString(@"Add Scores", nil);
@@ -186,6 +198,15 @@
         self.round = [game newRound];
         
     }
+    
+}
+
+- (void)_typeFifty:(id)sender {
+ 
+    UITextField *textField = (UITextField *)[UIResponder currentFirstResponder];
+    textField.text = @"50";
+    [self _enteredScores:textField];
+    [self _nextField:textField];
     
 }
 
@@ -332,12 +353,16 @@
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, 44.0f)];
     toolbar.tintColor = self.view.tintColor;
+    UIBarButtonItem *fiftyItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"50", nil)
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(_typeFifty:)];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:text
                                                                  style:UIBarButtonItemStyleDone
                                                                 target:self
                                                                 action:@selector(_nextField:)];
-    toolbar.items = @[flexItem, nextItem];
+    toolbar.items = @[fiftyItem, flexItem, nextItem];
     
     return toolbar;
     

@@ -32,6 +32,8 @@
     
 }
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -69,11 +71,6 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     if (self.scoreCard.contentOffset.y > 0.0f) {
@@ -86,11 +83,15 @@
     
 }
 
+#pragma mark - UIScrollViewDelegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     [self _updateBar];
     
 }
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -154,6 +155,8 @@
     }
     
 }
+
+#pragma mark - UITableViewDataSource
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -271,6 +274,8 @@
     return nil;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpScoreCardViewController {
     

@@ -30,6 +30,8 @@
 		073F8AA71F2016FB0086C7DF /* sf_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AA51F2016FB0086C7DF /* sf_log.c */; };
 		073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F8AA91F2018DA0086C7DF /* SFFormatters.m */; };
 		07411EF41F2BA9DA0020FA7A /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07411EF31F2BA9DA0020FA7A /* Settings.storyboard */; };
+		074CB69D1F2D316800CD3173 /* SFSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074CB69C1F2D316800CD3173 /* SFSettingsViewController.m */; };
+		074CB6A01F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 074CB69F1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m */; };
 		0759E8501F2942E300AF8B0F /* UIColor+SFScoreFiveColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 0759E84F1F2942E300AF8B0F /* UIColor+SFScoreFiveColors.m */; };
 		07783BBB1F22920400E2D26B /* UIView+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BBA1F22920400E2D26B /* UIView+ScoreFive.m */; };
 		07783BBE1F22938400E2D26B /* UILabel+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 07783BBD1F22938400E2D26B /* UILabel+ScoreFive.m */; };
@@ -108,6 +110,10 @@
 		073F8AA81F2018DA0086C7DF /* SFFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFFormatters.h; sourceTree = "<group>"; };
 		073F8AA91F2018DA0086C7DF /* SFFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFFormatters.m; sourceTree = "<group>"; };
 		07411EF31F2BA9DA0020FA7A /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		074CB69B1F2D316800CD3173 /* SFSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSettingsViewController.h; sourceTree = "<group>"; };
+		074CB69C1F2D316800CD3173 /* SFSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSettingsViewController.m; sourceTree = "<group>"; };
+		074CB69E1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSwitchControlTableViewCell.h; sourceTree = "<group>"; };
+		074CB69F1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSwitchControlTableViewCell.m; sourceTree = "<group>"; };
 		0759E84E1F2942E300AF8B0F /* UIColor+SFScoreFiveColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SFScoreFiveColors.h"; sourceTree = "<group>"; };
 		0759E84F1F2942E300AF8B0F /* UIColor+SFScoreFiveColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SFScoreFiveColors.m"; sourceTree = "<group>"; };
 		07783BB91F22920400E2D26B /* UIView+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ScoreFive.h"; sourceTree = "<group>"; };
@@ -258,6 +264,8 @@
 				070133B81F267BA400C0DBEE /* SFScoreCardViewController.m */,
 				070133C21F27DAF900C0DBEE /* SFNewRoundViewController.h */,
 				070133C31F27DAF900C0DBEE /* SFNewRoundViewController.m */,
+				074CB69B1F2D316800CD3173 /* SFSettingsViewController.h */,
+				074CB69C1F2D316800CD3173 /* SFSettingsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -298,6 +306,8 @@
 				070133BE1F26934B00C0DBEE /* SFIndexedColumnLabelTableViewCell.m */,
 				070B2B8B1F2A651000592458 /* SFIndexedButtonTableViewCell.h */,
 				070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */,
+				074CB69E1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.h */,
+				074CB69F1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -553,6 +563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				070133A51F25798500C0DBEE /* SFNewGameViewController.m in Sources */,
+				074CB6A01F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m in Sources */,
 				070133C41F27DAF900C0DBEE /* SFNewRoundViewController.m in Sources */,
 				0701339C1F23A00100C0DBEE /* SFGameRound.m in Sources */,
 				072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */,
@@ -578,6 +589,7 @@
 				073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */,
 				070133991F239F0900C0DBEE /* SFGame.m in Sources */,
 				07783BD61F22CB3700E2D26B /* SFAppSettings.m in Sources */,
+				074CB69D1F2D316800CD3173 /* SFSettingsViewController.m in Sources */,
 				070133B31F25D2CD00C0DBEE /* SFAllGamesListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

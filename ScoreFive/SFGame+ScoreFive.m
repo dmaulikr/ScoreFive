@@ -12,6 +12,8 @@
 
 @implementation SFGame (ScoreFive)
 
+#pragma mark - Property Access Methods
+
 - (NSString *)displayString {
     
     NSString *ds = @"";

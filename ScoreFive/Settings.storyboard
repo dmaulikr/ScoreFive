@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-806" y="22"/>
         </scene>
-        <!--View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="rP7-ic-eFN">
             <objects>
-                <viewController id="gQ0-nl-hn0" sceneMemberID="viewController">
+                <viewController id="gQ0-nl-hn0" customClass="SFSettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZOg-QH-Uls"/>
                         <viewControllerLayoutGuide type="bottom" id="dsK-sH-EXq"/>
@@ -36,9 +36,28 @@
                     <view key="view" contentMode="scaleToFill" id="2wT-lV-pYN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="8qT-Cj-UtK">
+                                <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gQ0-nl-hn0" id="PlJ-6A-0Dm"/>
+                                    <outlet property="delegate" destination="gQ0-nl-hn0" id="SVI-OV-EyG"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8qT-Cj-UtK" firstAttribute="width" secondItem="2wT-lV-pYN" secondAttribute="width" id="O0o-0H-t6Y"/>
+                            <constraint firstItem="8qT-Cj-UtK" firstAttribute="height" secondItem="2wT-lV-pYN" secondAttribute="height" id="PED-f6-L2R"/>
+                            <constraint firstItem="8qT-Cj-UtK" firstAttribute="centerX" secondItem="2wT-lV-pYN" secondAttribute="centerX" id="d9f-as-GRf"/>
+                            <constraint firstItem="8qT-Cj-UtK" firstAttribute="centerY" secondItem="2wT-lV-pYN" secondAttribute="centerY" id="pZH-AZ-KVU"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eZ9-Yn-CRv"/>
+                    <connections>
+                        <outlet property="settingsTableView" destination="8qT-Cj-UtK" id="fuy-AS-GRh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6it-1T-a7G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

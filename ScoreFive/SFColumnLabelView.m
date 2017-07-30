@@ -29,55 +29,7 @@
     
 }
 
-#pragma mark - Overridden Instance Methods
-
-- (instancetype)init {
-    
-    self = [super init];
-    
-    if (self) {
-        
-        _markWithFlags = NO;
-        _defaultColor = [UIColor blackColor];
-        self.numberOfColumns = 4;
-        
-    }
-    
-    return self;
-    
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        
-        _markWithFlags = NO;
-        _defaultColor = [UIColor blackColor];
-        self.numberOfColumns = 4;
-        
-    }
-    
-    return self;
-    
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    
-    self = [super initWithCoder:aDecoder];
-    
-    if (self) {
-        
-        _markWithFlags = NO;
-        _defaultColor = [UIColor blackColor];
-        self.numberOfColumns = 4;
-        
-    }
-    
-    return self;
-    
-}
+#pragma mark - Property Access Methods
 
 - (void)setNumberOfColumns:(NSUInteger)numberOfColumns {
     
@@ -128,6 +80,40 @@
         [self setFont:self.defaultFont forColumn:i];
         
     }
+    
+}
+
+#pragma mark - Overridden Instance Methods
+
+- (instancetype)initWithFrame:(CGRect)frame {
+
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        
+        _markWithFlags = NO;
+        _defaultColor = [UIColor blackColor];
+        self.numberOfColumns = 4;
+        
+    }
+    
+    return self;
+    
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        
+        _markWithFlags = NO;
+        _defaultColor = [UIColor blackColor];
+        self.numberOfColumns = 4;
+        
+    }
+    
+    return self;
     
 }
 

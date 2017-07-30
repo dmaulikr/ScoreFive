@@ -12,7 +12,7 @@
 
 static UIResponder *currentFirstResponder;
 
-#pragma markr - Public Class Methods
+#pragma mark - Public Class Methods
 
 + (instancetype)currentFirstResponder {
     

@@ -13,9 +13,9 @@
 @synthesize buttonEnabled = _buttonEnabled;
 @synthesize buttonTintColor = _buttonTintColor;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
         
@@ -28,12 +28,22 @@
     
 }
 
-- (void)_setUpButtonCell {
- 
-    self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.buttonEnabled = YES;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        
+        self.buttonTintColor = self.tintColor;
+        [self _setUpButtonCell];
+        
+    }
+    
+    return self;
     
 }
+
+#pragma mark - Property Acess Methods
 
 - (void)setButtonEnabled:(BOOL)buttonEnabled {
     
@@ -64,5 +74,32 @@
     }
     
 }
+
+#pragma mark - Public Instance Methods
+
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    
+    if (self) {
+        
+        self.buttonTintColor = self.tintColor;
+        [self _setUpButtonCell];
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - Private Instance Methods
+
+- (void)_setUpButtonCell {
+    
+    self.textLabel.textAlignment = NSTextAlignmentCenter;
+    self.buttonEnabled = YES;
+    
+}
+
 
 @end
