@@ -9,6 +9,7 @@
 #import "SFSettingsViewController.h"
 
 #import "SFSwitchControlTableViewCell.h"
+#import "SFAppSettings.h"
 
 #define NUM_SECTIONS 2
 #define ABOUT_SECTION 0
@@ -17,11 +18,13 @@
 #define ABOUT_BUILD 1
 #define SCORECARD_SECTION 1
 #define NUM_SCORECARD_ROWS 1
-#define SCORECARD_INDEXING 0
+#define SCORECARD_INDEXBYPLAYER 0
 
 @interface SFSettingsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
+
+@property (nonatomic, readonly) UISwitch *scorecardIndexByPlayerSwitch;
 
 @end
 
@@ -37,6 +40,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UISwitch *)scorecardIndexByPlayerSwitch {
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:SCORECARD_INDEXBYPLAYER inSection:SCORECARD_SECTION];
+    SFSwitchControlTableViewCell *cell = (SFSwitchControlTableViewCell *)[self.settingsTableView cellForRowAtIndexPath:indexPath];
+    return cell.switchControl;
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -102,9 +113,13 @@
             
         }
         
-        if (indexPath.row == SCORECARD_INDEXING) {
+        if (indexPath.row == SCORECARD_INDEXBYPLAYER) {
             
-            cell.textLabel.text = NSLocalizedString(@"Index With Player Name", nil);
+            cell.textLabel.text = NSLocalizedString(@"Index By Player", nil);
+            cell.switchControl.on = [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled;
+            [cell.switchControl addTarget:self
+                                   action:@selector(_changedSetting:)
+                         forControlEvents:UIControlEventValueChanged];
             
         }
         
@@ -113,6 +128,28 @@
     }
     
     return nil;
+    
+}
+
+- (IBAction)userDone:(id)sender {
+
+    [self _done];
+    
+}
+
+- (void)_done {
+    
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (void)_changedSetting:(id)sender {
+    
+    if (sender == self.scorecardIndexByPlayerSwitch) {
+        
+        [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled = self.scorecardIndexByPlayerSwitch.on;
+        
+    }
     
 }
 

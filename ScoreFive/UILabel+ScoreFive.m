@@ -14,11 +14,33 @@
 
 #pragma mark - Public Instance Methods
 
-- (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionBlock:(void (^)())completionHandler {
+- (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionHandler:(void (^)())completionHandler {
+    
+    [self animateCounterWithStartValie:startValue
+                              endValue:endValue
+                              duration:duration
+                       progressHandler:nil
+                     completionHandler:completionHandler];
+    
+}
+
+- (void)animateCounterWithStartValie:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration progressHandler:(void (^)(CGFloat))progressHandler completionHandler:(void (^)())completionHandler {
     
     if (endValue == 0) {
         
         self.text = @"0";
+        
+        if (progressHandler) {
+            
+            progressHandler(1.0f);
+            
+        }
+        
+        if (completionHandler) {
+            
+            completionHandler();
+            
+        }
         
     } else if (startValue != endValue) {
         
@@ -27,6 +49,11 @@
                              block:^(CGFloat progress) {
                                  
                                  self.text = @(startValue + (NSInteger)(progress * (endValue - startValue))).stringValue;
+                                 if (progressHandler) {
+                                     
+                                     progressHandler(progress);
+                                     
+                                 }
                                  
                              }
                  completionHandler:completionHandler];

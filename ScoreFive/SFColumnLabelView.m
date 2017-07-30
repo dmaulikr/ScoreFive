@@ -152,38 +152,49 @@
     UILabel *label = self.labels[column];
     label.text = text;
     
+    if (self.markWithFlags) {
+        
+        [self updateFlagMarks];
+        
+    }
+    
 }
 
-- (void)countToInteger:(NSInteger)toInteger forColumn:(NSUInteger)column updateFlags:(BOOL)updateFlags completionHandler:(void (^)())completionHandler {
+- (void)countToInteger:(NSInteger)toInteger forColumn:(NSUInteger)column completionHandler:(void (^)())completionHandler {
     
     UILabel *label = self.labels[column];
     
     if (label.text.integerValue != toInteger) {
-        
-        if (updateFlags) {
+
+        if (self.markWithFlags) {
             
-            label.textColor = self.defaultColor;
+            [self updateFlagMarks];
             
         }
         
-        [label animateCounterWithStartValue:label.text.integerValue
+        void (^progressHandler)(CGFloat progress) = self.markWithFlags ? ^void(CGFloat progress) {
+            
+            [self updateFlagMarks];
+            
+        } : nil;
+        
+        void (^ch)() = self.markWithFlags ? ^void() {
+            
+            [self updateFlagMarks];
+            
+            if (completionHandler) {
+                
+                completionHandler();
+                
+            }
+            
+        } : completionHandler;
+        
+        [label animateCounterWithStartValie:label.text.integerValue
                                    endValue:toInteger
                                    duration:0.75f
-                            completionBlock:^{
-                                
-                                if (updateFlags) {
-                                    
-                                    [self updateFlagMarks];
-                                    
-                                }
-                                
-                                if (completionHandler) {
-                                    
-                                    completionHandler();
-                                    
-                                }
-                                
-                            }];
+                            progressHandler:progressHandler
+                          completionHandler:ch];
         
     }
     
@@ -218,6 +229,14 @@
                 label.textColor = self.defaultColor ? self.defaultColor : [UIColor blackColor];
                 
             }
+            
+        }
+        
+    } else {
+        
+        for (UILabel *label in self.labels) {
+            
+            label.textColor = self.defaultColor;
             
         }
         

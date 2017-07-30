@@ -54,7 +54,13 @@
                             <constraint firstItem="8qT-Cj-UtK" firstAttribute="centerY" secondItem="2wT-lV-pYN" secondAttribute="centerY" id="pZH-AZ-KVU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="eZ9-Yn-CRv"/>
+                    <navigationItem key="navigationItem" id="eZ9-Yn-CRv">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="jcd-ww-OGs">
+                            <connections>
+                                <action selector="userDone:" destination="gQ0-nl-hn0" id="gOd-ja-3nf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="settingsTableView" destination="8qT-Cj-UtK" id="fuy-AS-GRh"/>
                     </connections>

@@ -30,7 +30,7 @@
     if (![SFAppSettings sharedAppSettings].firstLaunchHappened) {
         
         [SFAppSettings sharedAppSettings].indexByPlayerNameEnabled = YES;
-        [SFAppSettings sharedAppSettings].scoreHighlightingEnabled = YES;
+        [SFAppSettings sharedAppSettings].firstLaunchHappened = YES;
         
     }
     

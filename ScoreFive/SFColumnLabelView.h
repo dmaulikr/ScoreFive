@@ -24,7 +24,7 @@ IB_DESIGNABLE;
 - (void)setTextColor:(nonnull UIColor *)color forColumn:(NSUInteger)column;
 - (void)setAlpha:(CGFloat)alpha forColumn:(NSUInteger)column;
 - (void)setText:(nullable NSString *)text forColumn:(NSUInteger)column;
-- (void)countToInteger:(NSInteger)toInteger forColumn:(NSUInteger)column updateFlags:(BOOL)updateFlags completionHandler:(void (^_Nullable)())completionHandler;
+- (void)countToInteger:(NSInteger)toInteger forColumn:(NSUInteger)column completionHandler:(void (^_Nullable)())completionHandler;
 
 - (void)updateFlagMarks;
 

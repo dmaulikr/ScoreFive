@@ -10,6 +10,7 @@
 
 @interface UILabel (ScoreFive)
 
-- (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionBlock:(void (^ _Nullable)())completionHandler;
+- (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionHandler:(void (^ _Nullable)())completionHandler;
+- (void)animateCounterWithStartValie:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration progressHandler:(void (^ _Nullable)(CGFloat progress))progressHandler completionHandler:(void (^ _Nullable)())completionHandler;
 
 @end

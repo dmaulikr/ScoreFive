@@ -314,7 +314,7 @@
                 
             } else {
                 
-                cell.indexText = cell.indexText = @(self.game.rounds.count).stringValue;
+                cell.indexText = cell.indexText = @(self.game.rounds.count + 1).stringValue;
                 
             }
             
@@ -459,41 +459,31 @@
 
 - (void)_updateTotals {
     
+    if (self.game.rounds.count > 0) {
+        
+        self.totalScoreIndexedColumnLabelView.columnLabelView.positiveFlag = @(self.game.bestAliveScore).stringValue;
+        self.totalScoreIndexedColumnLabelView.columnLabelView.negativeFlag = @(self.game.worstAliveScore).stringValue;
+        
+        self.totalScoreIndexedColumnLabelView.columnLabelView.markWithFlags = YES;
+        
+    } else {
+        
+        self.totalScoreIndexedColumnLabelView.columnLabelView.markWithFlags = NO;
+        
+    }
+    
     for (NSString *player in self.game.players) {
         
         NSInteger index = [self.game.players indexOfObject:player];
         
         NSUInteger score = [self.game totalScoreForPlayer:player];
         
-        if (score == 0) {
-        
-            [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@(score).stringValue
-                                                                 forColumn:index];
-            
-        } else {
-            
-            [self.totalScoreIndexedColumnLabelView.columnLabelView countToInteger:score
-                                                                        forColumn:index
-                                                                      updateFlags:YES
-                                                                completionHandler:nil];
-            
-        }
+        [self.totalScoreIndexedColumnLabelView.columnLabelView countToInteger:score
+                                                                    forColumn:index
+                                                            completionHandler:nil];
         
         CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
         [self.totalScoreIndexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
-        
-        if (self.game.rounds.count > 0) {
-            
-            self.totalScoreIndexedColumnLabelView.columnLabelView.positiveFlag = @(self.game.bestAliveScore).stringValue;
-            self.totalScoreIndexedColumnLabelView.columnLabelView.negativeFlag = @(self.game.worstAliveScore).stringValue;
-            
-            self.totalScoreIndexedColumnLabelView.columnLabelView.markWithFlags = YES;
-            
-        } else {
-            
-            self.totalScoreIndexedColumnLabelView.columnLabelView.markWithFlags = NO;
-            
-        }
         
     }
     
