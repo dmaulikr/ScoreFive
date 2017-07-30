@@ -67,13 +67,6 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    [[UIResponder currentFirstResponder] resignFirstResponder];
-    
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     
     [self.textFields.firstObject becomeFirstResponder];
@@ -167,6 +160,18 @@
     }
     
     return cell;
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    
+    if (section == 0) {
+        
+        return NSLocalizedString(@"Enter a score from 0-50 for each player", nil);
+        
+    }
+    
+    return nil;
     
 }
 

@@ -8,6 +8,8 @@
 
 #import "SFSettingsViewController.h"
 
+#import "SFSwitchControlTableViewCell.h"
+
 #define NUM_SECTIONS 2
 #define ABOUT_SECTION 0
 #define NUM_ABOUT_ROWS 2
@@ -61,17 +63,56 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *TestCell = @"TestCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TestCell];
-    
-    if (!cell) {
+    if (indexPath.section == ABOUT_SECTION) {
         
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TestCell];
+        static NSString *AboutDetailCellIdentifier = @"AboutDetailCellIdentifier";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AboutDetailCellIdentifier];
+        
+        if (!cell) {
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AboutDetailCellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
+        
+        if (indexPath.row == ABOUT_VERSION) {
+            
+            cell.textLabel.text = NSLocalizedString(@"Version", nil);
+            
+        }
+        
+        if (indexPath.row == ABOUT_BUILD) {
+            
+            cell.textLabel.text = NSLocalizedString(@"Build", nil);
+            
+        }
+        
+        return cell;
+        
+    } else if (indexPath.section == SCORECARD_SECTION) {
+        
+        static NSString *ScoreCardSwitchCellIdentifier = @"ScoreCardSwitchCellIdentifier";
+        
+        SFSwitchControlTableViewCell *cell = (SFSwitchControlTableViewCell *)[tableView dequeueReusableCellWithIdentifier:ScoreCardSwitchCellIdentifier];
+        
+        if (!cell) {
+            
+            cell = [[SFSwitchControlTableViewCell alloc] initWithReuseIdentifier:ScoreCardSwitchCellIdentifier];
+            
+        }
+        
+        if (indexPath.row == SCORECARD_INDEXING) {
+            
+            cell.textLabel.text = NSLocalizedString(@"Index With Player Name", nil);
+            
+        }
+        
+        return cell;
         
     }
     
-    return cell;
+    return nil;
     
 }
 

@@ -551,7 +551,7 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
     
 }
 
-- (NSString *)headerForRoundIndex:(NSUInteger)index {
+- (NSString *)startingPlayerForRoundIndex:(NSUInteger)index {
     
     if (index == 0) {
         
@@ -567,7 +567,7 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
             
         } else {
             
-            NSString *player = [self headerForRoundIndex:index - 1];
+            NSString *player = [self startingPlayerForRoundIndex:index - 1];
             
             NSInteger playerIndex = [self.players indexOfObject:player];
             

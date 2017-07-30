@@ -50,7 +50,7 @@ extern NSString * _Nonnull const SFGamePostGameMutationException;
 - (nonnull NSOrderedSet<NSString *> *)alivePlayersBeforeRoundIndex:(NSUInteger)index;
 - (nonnull NSOrderedSet<NSString *> *)alivePlayersAfterRoundIndex:(NSUInteger)index;
 
-- (nonnull NSString *)headerForRoundIndex:(NSUInteger)index;
+- (nonnull NSString *)startingPlayerForRoundIndex:(NSUInteger)index;
 
 - (void)updateTimestamp;
 

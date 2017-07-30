@@ -13,6 +13,8 @@
 - (nullable instancetype)initWithReuseIdentifier:(nonnull NSString *)reuseIdentifier;
 
 @property (nonatomic, nullable) NSString *indexText;
+@property (nonatomic) CGFloat indexAlpha;
+@property (nonatomic, nonnull) UIFont *indexFont;
 @property (nonatomic, nullable) NSString *buttonText;
 @property (nonatomic, nonnull) UIColor *buttonTintColor;
 

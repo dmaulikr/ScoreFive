@@ -64,6 +64,30 @@
     
 }
 
+- (CGFloat)indexAlpha {
+    
+    return self.indexLabel.alpha;
+    
+}
+
+- (void)setIndexAlpha:(CGFloat)indexAlpha {
+    
+    self.indexLabel.alpha = indexAlpha;
+    
+}
+
+- (UIFont *)indexFont {
+    
+    return self.indexLabel.font;
+    
+}
+
+- (void)setIndexFont:(UIFont *)indexFont {
+    
+    self.indexLabel.font = indexFont;
+    
+}
+
 - (NSString *)buttonText {
     
     return self.buttonLabel.text;

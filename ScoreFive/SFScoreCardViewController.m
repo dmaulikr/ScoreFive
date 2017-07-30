@@ -72,12 +72,6 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     if (self.scoreCard.contentOffset.y > 0.0f) {
@@ -246,7 +240,7 @@
         
         if ([SFAppSettings sharedAppSettings].indexByPlayerNameEnabled) {
             
-            cell.indexedColumnLabelView.indexText = player_short_name([self.game headerForRoundIndex:indexPath.row]);
+            cell.indexedColumnLabelView.indexText = player_short_name([self.game startingPlayerForRoundIndex:indexPath.row]);
             
         } else {
             
@@ -269,8 +263,60 @@
         if (!cell) {
             
             cell = [[SFIndexedButtonTableViewCell alloc] initWithReuseIdentifier:AddRoundCellIdentifier];
-            cell.buttonText = NSLocalizedString(@"+ Add Scores", nil);
             cell.buttonTintColor = self.view.tintColor;
+            cell.buttonText = NSLocalizedString(@"+ Add Scores", nil);
+            cell.indexFont = [UIFont fontWithName:@"PermanentMarker" size:17.0f];
+            cell.indexAlpha = 0.4f;
+            
+        }
+        
+        if (indexPath.row == 0) {
+            
+            if ([SFAppSettings sharedAppSettings].indexByPlayerNameEnabled) {
+                
+                if (self.game.rounds.count == 0) {
+                    
+                    cell.indexText = player_short_name(self.game.players.firstObject);
+                    
+                } else {
+                    
+                    NSString *nextPlayer = [self.game startingPlayerForRoundIndex:self.game.rounds.count - 1];
+                    
+                    NSInteger playerIndex = [self.game.players indexOfObject:nextPlayer];
+                    
+                    playerIndex++;
+                    
+                    if (playerIndex > self.game.players.count - 1) {
+                        
+                        playerIndex = 0;
+                        
+                    }
+                    
+                    nextPlayer = self.game.players[playerIndex];
+                    
+                    while (![self.game.alivePlayers containsObject:nextPlayer]) {
+                        
+                        playerIndex++;
+                        
+                        if (playerIndex > self.game.players.count - 1) {
+                            
+                            playerIndex = 0;
+                            
+                        }
+                        
+                        nextPlayer = self.game.players[playerIndex];
+                        
+                    }
+                    
+                    cell.indexText = player_short_name(nextPlayer);
+                    
+                }
+                
+            } else {
+                
+                cell.indexText = cell.indexText = @(self.game.rounds.count).stringValue;
+                
+            }
             
         }
         
