@@ -19,19 +19,24 @@
 #define TWITTER_NATIVE_URL "twitter:///user?screen_name=varun_santhanam"
 #define TWITTER_WEB_URL "https://twitter.com/varun_santhanam"
 #define EMAIL_ADDR "talkto@vsanthanam.com"
+#define HELP_URL "https://www.vsanthanam.com/five"
 
-#define NUM_SECTIONS 3
+#define NUM_SECTIONS 4
 
-#define ABOUT_SECTION 0
+#define SCORECARD_SECTION 0
+#define NUM_SCORECARD_ROWS 1
+#define SCORECARD_INDEXBYPLAYER 0
+
+#define HELP_SECTION 1
+#define NUM_HELP_ROWS 1
+#define HELP_HOWTO 0
+
+#define ABOUT_SECTION 2
 #define NUM_ABOUT_ROWS 2
 #define ABOUT_VERSION 0
 #define ABOUT_BUILD 1
 
-#define SCORECARD_SECTION 1
-#define NUM_SCORECARD_ROWS 1
-#define SCORECARD_INDEXBYPLAYER 0
-
-#define CONTACT_SECTION 2
+#define CONTACT_SECTION 3
 #define NUM_CONTACT_ROWS 3
 #define CONTACT_EMAIL 0
 #define CONTACT_TWITTER 1
@@ -105,6 +110,10 @@
             
         }
         
+    } else if (indexPath.section == HELP_SECTION && indexPath.row == HELP_HOWTO) {
+        
+        [self _goToHowTo];
+        
     }
     
 }
@@ -154,6 +163,10 @@
     } else if (section == CONTACT_SECTION) {
         
         return NUM_CONTACT_ROWS;
+        
+    } else if (section == HELP_SECTION) {
+        
+        return NUM_HELP_ROWS;
         
     }
     
@@ -238,6 +251,27 @@
         } else if (indexPath.row == CONTACT_EMAIL) {
             
             cell.textLabel.text = NSLocalizedString(@"Email", nil);
+            
+        }
+        
+        return cell;
+        
+    } else if (indexPath.section == HELP_SECTION) {
+        
+        static NSString *HelpCellIdentifier = @"HelpCellIdentifier";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HelpCellIdentifier];
+        
+        if (!cell) {
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HelpCellIdentifier];
+            
+        }
+        
+        if (indexPath.row == HELP_HOWTO) {
+            
+            cell.textLabel.text = NSLocalizedString(@"How To Play", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         
@@ -332,6 +366,15 @@
                          completion:nil];
         
     }
+    
+}
+
+- (void)_goToHowTo {
+    
+    SFSafariViewController *controller = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@HELP_URL]];
+    [self presentViewController:controller
+                       animated:YES
+                     completion:nil];
     
 }
 

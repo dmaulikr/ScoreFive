@@ -13,7 +13,7 @@
         <scene sceneID="i9r-ip-y2g">
             <objects>
                 <navigationController id="1fv-xb-Frf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="W3o-p8-xTj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="W3o-p8-xTj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-748" y="237"/>
         </scene>
-        <!--View Controller-->
+        <!--Games-->
         <scene sceneID="QmR-iM-k8P">
             <objects>
                 <viewController id="FEt-l2-nAl" sceneMemberID="viewController">
@@ -50,11 +50,18 @@
                             <constraint firstItem="PXY-nf-xkx" firstAttribute="centerY" secondItem="ISI-I2-1ON" secondAttribute="centerY" id="seX-w4-hbo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="RfF-p1-KlW"/>
+                    <navigationItem key="navigationItem" title="Games" id="RfF-p1-KlW">
+                        <barButtonItem key="leftBarButtonItem" image="slider-icon-bar" id="IBQ-4a-9A3"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TsS-Vw-Z9h"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vB-pv-Owd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-7" y="236"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="slider-icon-bar" width="22" height="22"/>
+    </resources>
+    <color key="tintColor" red="0.059868961572647095" green="0.49132883548736572" blue="0.8339201807975769" alpha="1" colorSpace="calibratedRGB"/>
 </document>
