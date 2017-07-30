@@ -58,6 +58,13 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    [[UIResponder currentFirstResponder] resignFirstResponder];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     
     [self.textFields.firstObject becomeFirstResponder];

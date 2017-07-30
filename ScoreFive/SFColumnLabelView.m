@@ -152,30 +152,34 @@
     
     UILabel *label = self.labels[column];
     
-    if (updateFlags) {
+    if (label.text.integerValue != toInteger) {
         
-        label.textColor = self.defaultColor;
+        if (updateFlags) {
+            
+            label.textColor = self.defaultColor;
+            
+        }
+        
+        [label animateCounterWithStartValue:label.text.integerValue
+                                   endValue:toInteger
+                                   duration:0.75f
+                            completionBlock:^{
+                                
+                                if (updateFlags) {
+                                    
+                                    [self updateFlagMarks];
+                                    
+                                }
+                                
+                                if (completionHandler) {
+                                    
+                                    completionHandler();
+                                    
+                                }
+                                
+                            }];
         
     }
-    
-    [label animateCounterWithStartValue:label.text.integerValue
-                               endValue:toInteger
-                               duration:0.5f
-                        completionBlock:^{
-                           
-                            if (updateFlags) {
-                                
-                                [self updateFlagMarks];
-                                
-                            }
-                            
-                            if (completionHandler) {
-                                
-                                completionHandler();
-                                
-                            }
-                            
-                        }];
     
 }
 

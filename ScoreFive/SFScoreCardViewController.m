@@ -332,8 +332,17 @@
 
 - (void)_reloadGameUI {
     
-    self.playerNamesIndexedColumnLabelView.columnLabelView.numberOfColumns = self.game.players.count;
-    self.totalScoreIndexedColumnLabelView.columnLabelView.numberOfColumns = self.game.players.count;
+    if (self.playerNamesIndexedColumnLabelView.columnLabelView.numberOfColumns != self.game.players.count) {
+        
+        self.playerNamesIndexedColumnLabelView.columnLabelView.numberOfColumns = self.game.players.count;
+        
+    }
+    
+    if (self.totalScoreIndexedColumnLabelView.columnLabelView.numberOfColumns != self.game.players.count) {
+        
+        self.totalScoreIndexedColumnLabelView.columnLabelView.numberOfColumns = self.game.players.count;
+        
+    }
     
     for (NSString *player in self.game.players) {
         
@@ -400,11 +409,23 @@
     for (NSString *player in self.game.players) {
         
         NSInteger index = [self.game.players indexOfObject:player];
-//        [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@([self.game totalScoreForPlayer:player]).stringValue forColumn:index];
-        [self.totalScoreIndexedColumnLabelView.columnLabelView countToInteger:[self.game totalScoreForPlayer:player]
-                                                                    forColumn:index
-                                                                  updateFlags:YES
-                                                            completionHandler:nil];
+        
+        NSUInteger score = [self.game totalScoreForPlayer:player];
+        
+        if (score == 0) {
+        
+            [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@(score).stringValue
+                                                                 forColumn:index];
+            
+        } else {
+            
+            [self.totalScoreIndexedColumnLabelView.columnLabelView countToInteger:score
+                                                                        forColumn:index
+                                                                      updateFlags:YES
+                                                                completionHandler:nil];
+            
+        }
+        
         CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
         [self.totalScoreIndexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
         
