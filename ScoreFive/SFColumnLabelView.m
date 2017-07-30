@@ -7,6 +7,7 @@
 //
 
 #import "UIColor+SFScoreFiveColors.h"
+#import "UILabel+ScoreFive.h"
 
 #import "SFColumnLabelView.h"
 
@@ -144,6 +145,37 @@
     
     UILabel *label = self.labels[column];
     label.text = text;
+    
+}
+
+- (void)countToInteger:(NSInteger)toInteger forColumn:(NSUInteger)column updateFlags:(BOOL)updateFlags completionHandler:(void (^)())completionHandler {
+    
+    UILabel *label = self.labels[column];
+    
+    if (updateFlags) {
+        
+        label.textColor = self.defaultColor;
+        
+    }
+    
+    [label animateCounterWithStartValue:label.text.integerValue
+                               endValue:toInteger
+                               duration:0.5f
+                        completionBlock:^{
+                           
+                            if (updateFlags) {
+                                
+                                [self updateFlagMarks];
+                                
+                            }
+                            
+                            if (completionHandler) {
+                                
+                                completionHandler();
+                                
+                            }
+                            
+                        }];
     
 }
 

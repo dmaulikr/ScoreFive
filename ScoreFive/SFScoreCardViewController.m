@@ -400,13 +400,18 @@
     for (NSString *player in self.game.players) {
         
         NSInteger index = [self.game.players indexOfObject:player];
-        [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@([self.game totalScoreForPlayer:player]).stringValue forColumn:index];
+//        [self.totalScoreIndexedColumnLabelView.columnLabelView setText:@([self.game totalScoreForPlayer:player]).stringValue forColumn:index];
+        [self.totalScoreIndexedColumnLabelView.columnLabelView countToInteger:[self.game totalScoreForPlayer:player]
+                                                                    forColumn:index
+                                                                  updateFlags:YES
+                                                            completionHandler:nil];
         CGFloat alpha = [self.game.alivePlayers containsObject:player] ? 1.0f : 0.4f;
         [self.totalScoreIndexedColumnLabelView.columnLabelView setAlpha:alpha forColumn:index];
         
         if (self.game.rounds.count > 0) {
             
-            self.totalScoreIndexedColumnLabelView.columnLabelView.positiveFlag = @([self.game bestAliveScore]).stringValue;
+            self.totalScoreIndexedColumnLabelView.columnLabelView.positiveFlag = @(self.game.bestAliveScore).stringValue;
+            self.totalScoreIndexedColumnLabelView.columnLabelView.negativeFlag = @(self.game.worstAliveScore).stringValue;
             
             self.totalScoreIndexedColumnLabelView.columnLabelView.markWithFlags = YES;
             
