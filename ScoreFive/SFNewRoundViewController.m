@@ -167,7 +167,7 @@
     
     if (section == 0) {
         
-        return NSLocalizedString(@"Enter a score from 0-50 for each player", nil);
+        return [NSString stringWithFormat:NSLocalizedString(@"Enter a score from %@-%@ for each player", nil), @(SF_GAME_ROUND_MIN), @(SF_GAME_ROUND_MAX).stringValue];
         
     }
     
@@ -222,10 +222,10 @@
     
 }
 
-- (void)_typeFifty:(id)sender {
+- (void)_typeMax:(id)sender {
  
     UITextField *textField = (UITextField *)[UIResponder currentFirstResponder];
-    textField.text = @"50";
+    textField.text = @(SF_GAME_ROUND_MAX).stringValue;
     [self _enteredScores:textField];
     [self _nextField:textField];
     
@@ -252,10 +252,10 @@
             
         }
         
-    } else if ([self.textFields[index].text isEqualToString:@"0"]) {
+    } else if ([self.textFields[index].text isEqualToString:@(SF_GAME_ROUND_MIN).stringValue]) {
         
         NSString *player = self.round.players[index];
-        [self.scoresDict setObject:@"0" forKey:player];
+        [self.scoresDict setObject:@(SF_GAME_ROUND_MIN).stringValue forKey:player];
         [self _validateScoresDict];
         [self _nextField:sender];
         
@@ -295,10 +295,10 @@
 
 - (void)_validateScoresDict {
     
-    NSInteger numZerores = 0;
+    NSInteger numMin = 0;
     
     BOOL validScores = YES;
-    BOOL validNumZeroes = YES;
+    BOOL validNumMin = YES;
     BOOL validEntries = YES;
     
     for (NSString *player in self.round.players) {
@@ -318,21 +318,21 @@
             
         }
         
-        if (score == 0) {
+        if (score == SF_GAME_ROUND_MIN) {
             
-            numZerores++;
+            numMin++;
             
         }
         
     }
     
-    if (numZerores == 0 || numZerores >= self.round.players.count) {
+    if (numMin == 0 || numMin >= self.round.players.count) {
         
-        validNumZeroes = NO;
+        validNumMin = NO;
         
     }
     
-    self.saveButton.enabled = validScores && validNumZeroes && validEntries ? YES : NO;
+    self.saveButton.enabled = validScores && validNumMin && validEntries ? YES : NO;
     
 }
 
@@ -396,16 +396,16 @@
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, 44.0f)];
     toolbar.tintColor = self.view.tintColor;
-    UIBarButtonItem *fiftyItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"50", nil)
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(_typeFifty:)];
+    UIBarButtonItem *maxItem = [[UIBarButtonItem alloc] initWithTitle:@(SF_GAME_ROUND_MAX).stringValue
+                                                                style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(_typeMax:)];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:text
                                                                  style:UIBarButtonItemStyleDone
                                                                 target:self
                                                                 action:@selector(_nextField:)];
-    toolbar.items = @[fiftyItem, flexItem, nextItem];
+    toolbar.items = @[maxItem, flexItem, nextItem];
     
     return toolbar;
     

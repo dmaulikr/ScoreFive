@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *gameList;
 
+@property (nonatomic, strong) UILabel *emptyGamesLabel;
 @property (nonatomic, strong) NSArray<SFGame *> *unfinishedGames;
 @property (nonatomic, strong) NSArray<SFGame *> *allGames;
 
@@ -55,6 +56,16 @@
     
     [super viewWillAppear:animated];
     [self _refreshGamesListWithReload:YES];
+    
+    if (self.gameList.numberOfSections == 0) {
+        
+        [self _showEmptyLabel];
+        
+    } else {
+        
+        [self _hideEmptyLabel];
+        
+    }
     
 }
 
@@ -377,6 +388,62 @@
 - (void)_showAllGamesUI {
     
     [self performSegueWithIdentifier:@"HomeAllSegueID" sender:nil];
+    
+}
+
+- (void)_showEmptyLabel {
+    
+    if (self.emptyGamesLabel) {
+        
+        [self.emptyGamesLabel removeFromSuperview];
+        
+    }
+    
+    self.emptyGamesLabel = [[UILabel alloc] init];
+    self.emptyGamesLabel.textAlignment = NSTextAlignmentCenter;
+    self.emptyGamesLabel.text = NSLocalizedString(@"No Games", nil);
+    self.emptyGamesLabel.textColor = [UIColor darkGrayColor];
+    self.emptyGamesLabel.font = [UIFont systemFontOfSize:22.0f];
+    
+    self.emptyGamesLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.view addSubview:self.emptyGamesLabel];
+    
+    [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:self.emptyGamesLabel
+                                                             attribute:NSLayoutAttributeTop
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeTop
+                                                            multiplier:1.0f
+                                                              constant:0.0f],
+                                [NSLayoutConstraint constraintWithItem:self.emptyGamesLabel
+                                                             attribute:NSLayoutAttributeBottom
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeBottom
+                                                            multiplier:1.0f
+                                                              constant:0.0f],
+                                [NSLayoutConstraint constraintWithItem:self.emptyGamesLabel
+                                                             attribute:NSLayoutAttributeLeft
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeLeft
+                                                            multiplier:1.0f
+                                                              constant:0.0f],
+                                [NSLayoutConstraint constraintWithItem:self.emptyGamesLabel
+                                                             attribute:NSLayoutAttributeRight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeRight
+                                                            multiplier:1.0f
+                                                              constant:0.0f]]];
+    
+}
+
+- (void)_hideEmptyLabel {
+    
+    [self.emptyGamesLabel removeFromSuperview];
+    self.emptyGamesLabel = nil;
     
 }
 

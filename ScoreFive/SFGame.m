@@ -9,6 +9,7 @@
 #import "SFGame.h"
 
 NSString * const SFGameInvalidPlayerCountException = @"SFGameInvalidPlayerCountException";
+NSString * const SFGameInvalidScoreLimitException = @"SFGameInvalidScoreLimitException";
 NSString * const SFGameInvalidPlayerException = @"SFGameInvalidPlayerException";
 NSString * const SFGameInvalidRoundException = @"SFGameInvalidRoundException";
 NSString * const SFGameInvalidRoundIndexException = @"SFGameInvalidRoundIndexException";
@@ -30,7 +31,7 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
     NSArray<NSString *> *playersArray = @[@"Player 1", @"Player 2"];
     NSOrderedSet<NSString *> *players = [NSOrderedSet orderedSetWithArray:playersArray];
     
-    self = [self initWithPlayers:players scoreLimit:200];
+    self = [self initWithPlayers:players scoreLimit:SF_GAME_SCORE_LIMIT_MIN];
  
     return self;
     
@@ -285,19 +286,19 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
         
     } else {
         
-        NSInteger numZeroes = 0;
+        NSInteger numMin = 0;
         
         for (NSString *player in round.players) {
             
-            if ([round scoreForPlayer:player] == 0) {
+            if ([round scoreForPlayer:player] == SF_GAME_ROUND_MIN) {
                 
-                numZeroes++;
+                numMin++;
                 
             }
             
         }
         
-        if (numZeroes == 0 || numZeroes == round.players.count) {
+        if (numMin == 0 || numMin == round.players.count) {
             
             [NSException raise:SFGameInvalidRoundException format:@"Round scores are invalid"];
             
@@ -613,9 +614,15 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
 
 - (void)_validateAfterInitialization {
     
-    if (self.players.count < 2 || self.scoreLimit < 50) {
+    if (self.players.count < SF_GAME_PLAYERS_MIN || self.players.count > SF_GAME_PLAYERS_MAX) {
         
-        [NSException raise:SFGameInvalidPlayerCountException format:@"A game requies at least 2 players"];
+        [NSException raise:SFGameInvalidPlayerCountException format:@"A game requires %@-%@ players, you have %@", @(SF_GAME_PLAYERS_MIN), @(SF_GAME_ROUND_MAX), @(self.players.count)];
+        
+    }
+    
+    if (self.scoreLimit < SF_GAME_SCORE_LIMIT_MIN || self.scoreLimit > SF_GAME_SCORE_LIMIT_MAX) {
+        
+        [NSException raise:SFGameInvalidScoreLimitException format:@"A game requires a score limit from %@-%@, you have %@", @(SF_GAME_SCORE_LIMIT_MIN), @(SF_GAME_SCORE_LIMIT_MAX), @(self.scoreLimit)];
         
     }
     

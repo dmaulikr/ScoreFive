@@ -146,8 +146,22 @@
     
     if (indexPath.section == 1 && editingStyle == UITableViewCellEditingStyleDelete) {
         
+        NSInteger currentPlayersCount = self.playerNames.count;
+        
         [self.playerNames removeObjectAtIndex:indexPath.row];
+        
+        [tableView beginUpdates];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        if (currentPlayersCount == 6) {
+            
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationMiddle];
+            
+        }
+        
+        [tableView endUpdates];
+        
         [self _updatePlaceholders];
         
     }
@@ -156,21 +170,27 @@
 
 #pragma mark - UITableViewDataSource
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     
-    if (indexPath.section == 1 && self.playerNames.count > 2) {
+    if (section == 0) {
         
-        return YES;
+        return [NSString stringWithFormat:NSLocalizedString(@"Enter a score limit betwen %@-%@", nil), @(SF_GAME_SCORE_LIMIT_MIN), @(SF_GAME_SCORE_LIMIT_MAX)];
         
     }
     
-    return NO;
+    return nil;
+    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return (indexPath.section == 1 && self.playerNames.count > SF_GAME_PLAYERS_MIN) ? YES : NO;
     
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 3;
+    return self.playerNames.count < SF_GAME_PLAYERS_MAX ? 3 : 2;
     
 }
 
@@ -237,16 +257,7 @@
         }
         
         cell.textField.placeholder = [NSString stringWithFormat:@"Player %@", @(indexPath.row + 1).stringValue];
-        
-        if (indexPath.row == self.playerNames.count - 1) {
-            
-            cell.textField.returnKeyType = UIReturnKeyDone;
-            
-        } else {
-            
-            cell.textField.returnKeyType = UIReturnKeyNext;
-            
-        }
+        cell.textField.returnKeyType = (indexPath.row == self.playerNames.count - 1) ? UIReturnKeyDone : UIReturnKeyNext;
         
         return cell;
         
@@ -307,7 +318,7 @@
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                               target:nil
                                                                               action:nil];
-    UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil)
+    UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", nil)
                                                                  style:UIBarButtonItemStyleDone
                                                                 target:self
                                                                 action:@selector(_nextField:)];
@@ -319,7 +330,7 @@
 
 - (void)_validateScoreLimit:(id)sender {
     
-    if (self.scoreLimitTextField.text.integerValue >= 50) {
+    if (self.scoreLimitTextField.text.integerValue >= SF_GAME_ROUND_MAX) {
         
         _validScoreLimit = YES;
         self.scoreLimitTextField.textColor = [UIColor blackColor];
@@ -382,14 +393,18 @@
     
     [self.playerNames addObject:@""];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.playerNames.count - 1 inSection:1];
+    
+    [self.gameSettingsTableView beginUpdates];
+    
     [self.gameSettingsTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    if (self.playerNames.count == 6) {
         
-        SFTextFieldTableViewCell *cell = (SFTextFieldTableViewCell *)[self.gameSettingsTableView cellForRowAtIndexPath:indexPath];
-        [cell.textField becomeFirstResponder];
+        [self.gameSettingsTableView deleteSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationMiddle];
         
-    });
+    }
+    
+    [self.gameSettingsTableView endUpdates];
     
 }
 
@@ -411,9 +426,9 @@
                 
             }
             
-        } else {
+        } else if (sender == self.scoreLimitTextField){
             
-            [self.playerTextFields.firstObject becomeFirstResponder];
+            [sender resignFirstResponder];
             
         }
         

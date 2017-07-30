@@ -16,7 +16,7 @@
 
 - (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration completionHandler:(void (^)())completionHandler {
     
-    [self animateCounterWithStartValie:startValue
+    [self animateCounterWithStartValue:startValue
                               endValue:endValue
                               duration:duration
                        progressHandler:nil
@@ -24,7 +24,7 @@
     
 }
 
-- (void)animateCounterWithStartValie:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration progressHandler:(void (^)(CGFloat))progressHandler completionHandler:(void (^)())completionHandler {
+- (void)animateCounterWithStartValue:(NSInteger)startValue endValue:(NSInteger)endValue duration:(NSTimeInterval)duration progressHandler:(void (^)(CGFloat))progressHandler completionHandler:(void (^)())completionHandler {
     
     if (endValue == 0) {
         

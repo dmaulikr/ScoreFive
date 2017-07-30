@@ -10,7 +10,13 @@
 
 #import "SFGameRound.h"
 
+#define SF_GAME_SCORE_LIMIT_MIN 100
+#define SF_GAME_SCORE_LIMIT_MAX 9999
+#define SF_GAME_PLAYERS_MIN 2
+#define SF_GAME_PLAYERS_MAX 6
+
 extern NSString * _Nonnull const SFGameInvalidPlayerCountException;
+extern NSString * _Nonnull const SFGameInvalidScoreLimitException;
 extern NSString * _Nonnull const SFGameInvalidPlayerException;
 extern NSString * _Nonnull const SFGameInvalidRoundException;
 extern NSString * _Nonnull const SFGameInvalidRoundIndexException;

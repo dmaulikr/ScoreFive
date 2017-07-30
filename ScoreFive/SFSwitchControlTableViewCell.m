@@ -12,6 +12,8 @@
 
 @synthesize switchControl = _switchControl;
 
+#pragma mark - Overridden Instance Methods
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -42,6 +44,8 @@
     
 }
 
+#pragma mark - Public Instance Methods
+
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -55,6 +59,8 @@
     return self;
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_setUpSwitchControl {
  

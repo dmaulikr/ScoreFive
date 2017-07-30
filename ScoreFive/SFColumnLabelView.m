@@ -190,7 +190,7 @@
             
         } : completionHandler;
         
-        [label animateCounterWithStartValie:label.text.integerValue
+        [label animateCounterWithStartValue:label.text.integerValue
                                    endValue:toInteger
                                    duration:0.75f
                             progressHandler:progressHandler

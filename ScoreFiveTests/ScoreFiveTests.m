@@ -34,7 +34,7 @@
     NSArray<NSString *> *players = @[@"Player 1", @"Player 2"];
     
     XCTAssertThrows([[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithArray:shortPlayers] scoreLimit:200], @"Creating an invalid game didn't throw an exception: only 1 player");
-    XCTAssertThrows([[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithArray:players] scoreLimit:49], @"Creating an invalid game didn't throw an exception: score limit < 50");
+    XCTAssertThrows([[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithArray:players] scoreLimit:99], @"Creating an invalid game didn't throw an exception: score limit < %@", @SF_GAME_SCORE_LIMIT_MIN);
     
 }
 
@@ -49,7 +49,7 @@
     
     XCTAssert(game.players.count == game.alivePlayers.count, @"Some players are dead In -init Game");
     
-    XCTAssert(game.scoreLimit == 200, @"Invalid Score Limit In -init Game");
+    XCTAssert(game.scoreLimit == SF_GAME_SCORE_LIMIT_MIN, @"Invalid Score Limit In -init Game");
     
     XCTAssert(game.rounds.count == 0, @"Invalid Round # In -init Game");
     
@@ -115,8 +115,8 @@
     
     SFGameRound *round = [game newRound];
     
-    XCTAssertThrows([round setScore:-1 forPlayer:@"Player 1"], @"Allowed score that is too low");
-    XCTAssertThrows([round setScore:51 forPlayer:@"Player 2"], @"Allowed a score that is too high");
+    XCTAssertThrows([round setScore:SF_GAME_ROUND_MIN - 1 forPlayer:@"Player 1"], @"Allowed score that is too low");
+    XCTAssertThrows([round setScore:SF_GAME_ROUND_MAX + 1 forPlayer:@"Player 2"], @"Allowed a score that is too high");
     
 }
 
@@ -125,7 +125,7 @@
     SFGame *game = [[SFGame alloc] init];
     
     SFGameRound *round = [game newRound];
-    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:SF_GAME_ROUND_MAX forPlayer:@"Player 1"];
     [round setScore:0 forPlayer:@"Player 2"];
     
     XCTAssertThrows([round setScore:0 forPlayer:@"Player 1"], @"Allowing Player 1 to be rescored");
@@ -257,9 +257,19 @@
 
 - (void)testPlayerDeath {
     
-    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:50];
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", @"Player 3", nil] scoreLimit:100];
     
     SFGameRound *round = [game newRound];
+    
+    [round setScore:50 forPlayer:@"Player 1"];
+    [round setScore:0 forPlayer:@"Player 2"];
+    [round setScore:0 forPlayer:@"Player 3"];
+    
+    [game addRound:round];
+    
+    XCTAssert([game.alivePlayers isEqual:game.players], @"Player Died Too Early");
+    
+    round = [game newRound];
     
     [round setScore:50 forPlayer:@"Player 1"];
     [round setScore:0 forPlayer:@"Player 2"];
@@ -291,7 +301,7 @@
     
     [game addRound:round];
     
-    XCTAssert([game totalScoreForPlayer:@"Player 1"] == 50, @"Invalid total score fore Player 1 after death");
+    XCTAssert([game totalScoreForPlayer:@"Player 1"] == 100, @"Invalid total score fore Player 1 after death");
     XCTAssert([game totalScoreForPlayer:@"Player 2"] == 1, @"Invalid total score for Player 2 after Player 1 death");
     XCTAssert([game totalScoreForPlayer:@"Player 3"] == 2, @"Invalid total score for Player 3 after Player 1 death");
     
@@ -299,11 +309,18 @@
 
 - (void)testGameEnd {
     
-    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:50];
+    SFGame *game = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:100];
     
     XCTAssertNil(game.winner, @"Game already has a winner");
     
     SFGameRound *round = [game newRound];
+    
+    [round setScore:0 forPlayer:@"Player 1"];
+    [round setScore:50 forPlayer:@"Player 2"];
+    
+    [game addRound:round];
+    
+    round = [game newRound];
     
     [round setScore:0 forPlayer:@"Player 1"];
     [round setScore:50 forPlayer:@"Player 2"];
@@ -1221,14 +1238,21 @@
 
 - (void)testRetrieveFinishedUnfinishedGames {
     
-    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:50];
+    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:100];
     SFGame *game2 = [[SFGame alloc] init];
     
-    SFGameRound *round1 = [game1 newRound];
-    [round1 setScore:50 forPlayer:@"Player 1"];
-    [round1 setScore:0 forPlayer:@"Player 2"];
+    SFGameRound *round1_1 = [game1 newRound];
+    [round1_1 setScore:50 forPlayer:@"Player 1"];
+    [round1_1 setScore:0 forPlayer:@"Player 2"];
     
-    [game1 addRound:round1];
+    [game1 addRound:round1_1];
+    
+    SFGameRound *round1_2 = [game1 newRound];
+    
+    [round1_2 setScore:50 forPlayer:@"Player 1"];
+    [round1_2 setScore:0 forPlayer:@"Player 2"];
+    
+    [game1 addRound:round1_2];
     
     SFGameRound *round2 = [game2 newRound];
     [round2 setScore:50 forPlayer:@"Player 1"];
@@ -1252,7 +1276,7 @@
 
 - (void)testDeleteSingleGame {
     
-    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:50];
+    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:100];
     SFGame *game2 = [[SFGame alloc] init];
     
     SFGameRound *round1 = [game1 newRound];
@@ -1287,7 +1311,7 @@
 
 - (void)testDeleteAllGames {
     
-    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:50];
+    SFGame *game1 = [[SFGame alloc] initWithPlayers:[NSOrderedSet<NSString *> orderedSetWithObjects:@"Player 1", @"Player 2", nil] scoreLimit:100];
     SFGame *game2 = [[SFGame alloc] init];
     
     SFGameRound *round1 = [game1 newRound];
