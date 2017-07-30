@@ -16,6 +16,10 @@
 
 @implementation SFIndexedColumnLabelView
 
+@synthesize columnLabelView = _columnLabelView;
+
+@synthesize indexLabel = _indexLabel;
+
 #pragma mark - Public Class Methods
 
 + (BOOL)requiresConstraintBasedLayout {
@@ -32,7 +36,7 @@
     
     if (self) {
         
-        [self _setUp];
+        [self _setUpIndexedColumnLabelView];
         
     }
     
@@ -46,7 +50,7 @@
     
     if (self) {
         
-        [self _setUp];
+        [self _setUpIndexedColumnLabelView];
         
     }
     
@@ -94,7 +98,7 @@
 
 #pragma mark - Private Instance Methods
 
-- (void)_setUp {
+- (void)_setUpIndexedColumnLabelView {
     
     [self _setUpIndexLabel];
     [self _setUpColumnLabelView];
@@ -103,14 +107,14 @@
 
 - (void)_setUpIndexLabel {
     
-    if (!self.indexLabel) {
+    if (self.indexLabel) {
         
-        _indexLabel = [[UILabel alloc] init];
-        _indexLabel.textAlignment = NSTextAlignmentCenter;
+        [self.indexLabel removeFromSuperview];
         
     }
     
-    [self.indexLabel removeFromSuperview];
+    _indexLabel = [[UILabel alloc] init];
+    _indexLabel.textAlignment = NSTextAlignmentCenter;
     
     self.indexLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -150,13 +154,13 @@
 - (void)_setUpColumnLabelView {
     
     
-    if (!self.columnLabelView) {
+    if (self.columnLabelView) {
         
-        _columnLabelView = [[SFColumnLabelView alloc] initWithFrame:CGRectZero];
+        [self.columnLabelView removeFromSuperview];
         
     }
     
-    [self.columnLabelView removeFromSuperview];
+    _columnLabelView = [[SFColumnLabelView alloc] initWithFrame:CGRectZero];
     
     self.columnLabelView.translatesAutoresizingMaskIntoConstraints = NO;
     

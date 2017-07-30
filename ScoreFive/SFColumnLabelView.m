@@ -21,6 +21,12 @@
 
 @synthesize numberOfColumns = _numberOfColumns;
 @synthesize defaultColor = _defaultColor;
+@synthesize markWithFlags = _markWithFlags;
+@synthesize positiveFlag = _positiveFlag;
+@synthesize negativeFlag = _negativeFlag;
+@synthesize defaultFont = _defaultFont;
+
+@synthesize labels = _labels;
 
 #pragma mark - Overridden Class Methods
 

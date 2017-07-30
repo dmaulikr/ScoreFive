@@ -35,6 +35,10 @@
     
 }
 
+@synthesize gameSettingsTableView = _gameSettingsTableView;
+@synthesize saveButton = _saveButton;
+@synthesize playerNames = _playerNames;
+
 #pragma mark - Overridden Instance Methods
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

@@ -24,6 +24,7 @@
 
 @implementation SFGameListViewController
 
+@synthesize gameList = _gameList;
 @synthesize unfinishedGames = _unfinishedGames;
 @synthesize allGames = _allGames;
 

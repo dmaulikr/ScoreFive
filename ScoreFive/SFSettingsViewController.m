@@ -25,6 +25,8 @@
 
 @implementation SFSettingsViewController
 
+@synthesize settingsTableView = _settingsTableView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

@@ -17,6 +17,9 @@
 
 @implementation SFIndexedButtonTableViewCell
 
+@synthesize indexLabel = _indexLabel;
+@synthesize buttonLabel = _buttonLabel;
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -106,14 +109,14 @@
 
 - (void)_setUpIndexLabel {
     
-    if (!self.indexLabel) {
+    if (self.indexLabel) {
         
-        self.indexLabel = [[UILabel alloc] init];
-        self.indexLabel.textAlignment = NSTextAlignmentCenter;
+        [self.indexLabel removeFromSuperview];
         
     }
-
-    [self.indexLabel removeFromSuperview];
+    
+    self.indexLabel = [[UILabel alloc] init];
+    self.indexLabel.textAlignment = NSTextAlignmentCenter;
     
     self.indexLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -153,14 +156,13 @@
 - (void)_setUpButtonLabel {
     
     if (!self.buttonLabel) {
-        
-        self.buttonLabel = [[UILabel alloc] init];
-        self.buttonLabel.textAlignment = NSTextAlignmentCenter;
-
+     
+        [self.buttonLabel removeFromSuperview];
         
     }
     
-    [self.buttonLabel removeFromSuperview];
+    self.buttonLabel = [[UILabel alloc] init];
+    self.buttonLabel.textAlignment = NSTextAlignmentCenter;
     
     self.buttonLabel.translatesAutoresizingMaskIntoConstraints = NO;
     

@@ -34,6 +34,13 @@
 
 #pragma mark - Overridden Instance Methods
 
+@synthesize storageIdentifier = _storageIdentifier;
+
+@synthesize scoreCard = _scoreCard;
+@synthesize playerNamesIndexedColumnLabelView = _playerNamesIndexedColumnLabelView;
+@synthesize totalScoreIndexedColumnLabelView = _totalScoreIndexedColumnLabelView;
+@synthesize game = _game;
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];

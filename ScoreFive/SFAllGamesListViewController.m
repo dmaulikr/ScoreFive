@@ -24,6 +24,9 @@
 
 @implementation SFAllGamesListViewController
 
+@synthesize gamesList = _gamesList;
+@synthesize games = _games;
+
 #pragma mark - Overridden Instance Methods
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

@@ -27,6 +27,15 @@
 
 @implementation SFNewRoundViewController
 
+@synthesize storageIdentifier = _storageIdentifier;
+@synthesize index = _index;
+@synthesize replace = _replace;
+
+@synthesize scoresTableView = _scoresTableView;
+@synthesize saveButton = _saveButton;
+@synthesize scoresDict = _scoresDict;
+@synthesize round = _round;
+
 #pragma mark - Overridden Instance Methods
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -223,13 +232,35 @@
     
     if (self.textFields[index].text.length > 2) {
         
-        self.textFields[index].text = [self.textFields[index].text substringWithRange:NSMakeRange(0, 2)];
+        NSString *this = [self.textFields[index].text substringWithRange:NSMakeRange(0, 2)];
+        NSString *next = [self.textFields[index].text substringWithRange:NSMakeRange(2, 1)];
+        
+        self.textFields[index].text = this;
+        [self _nextField:sender];
+        
+        UIResponder *responder = [UIResponder currentFirstResponder];
+        
+        if (responder) {
+            
+            ((UITextField *)responder).text = next;
+            [self _enteredScores:responder];
+            
+        }
+        
+    } else if ([self.textFields[index].text isEqualToString:@"0"]) {
+        
+        NSString *player = self.round.players[index];
+        [self.scoresDict setObject:@"0" forKey:player];
+        [self _validateScoresDict];
+        [self _nextField:sender];
+        
+    } else {
+     
+        NSString *player = self.round.players[index];
+        [self.scoresDict setObject:self.textFields[index].text forKey:player];
+        [self _validateScoresDict];
         
     }
-    
-    NSString *player = self.round.players[index];
-    [self.scoresDict setObject:self.textFields[index].text forKey:player];
-    [self _validateScoresDict];
     
 }
 
