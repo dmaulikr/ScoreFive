@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray<UILabel *> *scoreLabels;
 @property (nonatomic, strong) NSArray<UILabel *> *nameLabels;
 @property (nonatomic, strong) NSArray<UIView *> *separatorViews;
+@property (nonatomic, strong) UIView *separatorView;
 
 @end
 
@@ -76,47 +77,49 @@
     self.nameLabels = [[NSArray<UILabel *> alloc] init];
     self.separatorViews = [[NSArray<UIView *> alloc] init];
     
+    CGFloat widthMultiplier = 1.0f/(CGFloat)self.game.players.count;
+    CGFloat widthConstant = -(16.0f/(CGFloat)self.game.players.count);
+    
     for (int i = 0; i < self.game.players.count; i++) {
         
-        UILabel *label = [[UILabel alloc] init];
-        label.text = @"0";
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:22.0f];
+        NSString *player = self.game.players[i];
         
-        label.translatesAutoresizingMaskIntoConstraints = NO;
+        UILabel *playerLabel = [[UILabel alloc] init];
+        playerLabel.textAlignment = NSTextAlignmentCenter;
+        playerLabel.text = player;
+        playerLabel.font = [UIFont systemFontOfSize:14.0f];
         
-        self.scoreLabels = [self.scoreLabels arrayByAddingObject:label];
+        self.nameLabels = [self.nameLabels arrayByAddingObject:playerLabel];
         
+        playerLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self.view addSubview:label];
+        [self.view addSubview:playerLabel];
         
-        CGFloat widthMuliplier = 1.0f/(CGFloat)self.game.players.count;
-        
-        [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:label
+        [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:playerLabel
                                                                  attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeTop
                                                                 multiplier:1.0f
-                                                                  constant:0.0f],
-                                    [NSLayoutConstraint constraintWithItem:label
+                                                                  constant:8.0f],
+                                    [NSLayoutConstraint constraintWithItem:playerLabel
                                                                  attribute:NSLayoutAttributeHeight
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:nil
                                                                  attribute:NSLayoutAttributeHeight
                                                                 multiplier:0.0f
-                                                                  constant:78.0f],
-                                    [NSLayoutConstraint constraintWithItem:label
+                                                                  constant:16.0f],
+                                    [NSLayoutConstraint constraintWithItem:playerLabel
                                                                  attribute:NSLayoutAttributeWidth
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeWidth
-                                                                multiplier:widthMuliplier
-                                                                  constant:-(16.0f/((CGFloat)self.game.players.count))]]];
+                                                                multiplier:widthMultiplier
+                                                                  constant:widthConstant]]];
         
         if (i == 0) {
-         
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:label
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:playerLabel
                                                                   attribute:NSLayoutAttributeLeft
                                                                   relatedBy:NSLayoutRelationEqual
                                                                      toItem:self.view
@@ -126,117 +129,142 @@
             
         } else {
             
-            UILabel *prevLabel = self.scoreLabels[i - 1];
+            UILabel *prevPlayerLabel = self.nameLabels[i - 1];
             
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:label
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:playerLabel
                                                                   attribute:NSLayoutAttributeLeft
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:prevLabel
+                                                                     toItem:prevPlayerLabel
                                                                   attribute:NSLayoutAttributeRight
                                                                  multiplier:1.0f
                                                                    constant:0.0f]];
             
         }
         
-    }
- 
-    for (UILabel *scoreLabel in self.scoreLabels) {
+        UILabel *scoreLabel = [[UILabel alloc] init];
+        scoreLabel.textAlignment = NSTextAlignmentCenter;
+        scoreLabel.text = @([self.game totalScoreForPlayer:player]).stringValue;
+        scoreLabel.font = [UIFont systemFontOfSize:22.0f];
         
-        UILabel *label = [[UILabel alloc] init];
+        self.scoreLabels = [self.scoreLabels arrayByAddingObject:scoreLabel];
         
-        label.translatesAutoresizingMaskIntoConstraints = NO;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.text = NSLocalizedString(@"Player", nil);
-        label.font = [UIFont systemFontOfSize:14.0f];
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
-        self.nameLabels = [self.nameLabels arrayByAddingObject:label];
+        [self.view addSubview:scoreLabel];
         
-        [self.view addSubview:label];
-        
-        [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:label
+        [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:scoreLabel
                                                                  attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:scoreLabel
+                                                                    toItem:playerLabel
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0f
                                                                   constant:0.0f],
-                                    [NSLayoutConstraint constraintWithItem:label
-                                                                 attribute:NSLayoutAttributeHeight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:nil
-                                                                 attribute:NSLayoutAttributeHeight
-                                                                multiplier:0.0f
-                                                                  constant:16.0f],
-                                    [NSLayoutConstraint constraintWithItem:label
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:scoreLabel
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                multiplier:1.0f
-                                                                  constant:0.0f],
-                                    [NSLayoutConstraint constraintWithItem:label
-                                                                 attribute:NSLayoutAttributeCenterX
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:scoreLabel
-                                                                 attribute:NSLayoutAttributeCenterX
-                                                                multiplier:1.0f
-                                                                  constant:0.0f]]];
-        
-    }
-    
-    for (int i = 0; i < self.game.players.count; i++) {
-        
-        NSString *player = self.game.players[i];
-        UILabel *scoreLabel = self.scoreLabels[i];
-        UILabel *nameLabel = self.nameLabels[i];
-        
-        scoreLabel.text = @([self.game totalScoreForPlayer:player]).stringValue;
-        nameLabel.text = player_short_name(player);
-        
-    }
-    
-    for (int i = 0; i < self.scoreLabels.count - 1; i++) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-        view.backgroundColor = [UIColor blackColor];
-        view.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        self.separatorViews = [self.separatorViews arrayByAddingObject:view];
-        
-        UILabel *scoreLabel = self.scoreLabels[i];
-        
-        [self.view addSubview:view];
-        
-        [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:view
-                                                                 attribute:NSLayoutAttributeTop
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.view
-                                                                 attribute:NSLayoutAttributeTop
-                                                                multiplier:1.0f
-                                                                  constant:8.0f],
-                                    [NSLayoutConstraint constraintWithItem:view
+                                    [NSLayoutConstraint constraintWithItem:scoreLabel
                                                                  attribute:NSLayoutAttributeBottom
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0f
                                                                   constant:-8.0f],
-                                    [NSLayoutConstraint constraintWithItem:view
+                                    [NSLayoutConstraint constraintWithItem:scoreLabel
                                                                  attribute:NSLayoutAttributeWidth
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:nil
+                                                                    toItem:playerLabel
                                                                  attribute:NSLayoutAttributeWidth
-                                                                multiplier:0.0f
-                                                                  constant:1.0f],
-                                    [NSLayoutConstraint constraintWithItem:view
+                                                                multiplier:1.0f
+                                                                  constant:0.0f],
+                                    [NSLayoutConstraint constraintWithItem:scoreLabel
                                                                  attribute:NSLayoutAttributeCenterX
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:scoreLabel
-                                                                 attribute:NSLayoutAttributeRight
+                                                                    toItem:playerLabel
+                                                                 attribute:NSLayoutAttributeCenterX
                                                                 multiplier:1.0f
                                                                   constant:0.0f]]];
         
+        if (i != self.game.players.count - 1) {
+            
+            UIView *separator = [[UIView alloc] initWithFrame:CGRectZero];
+            separator.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.75];
+            
+            self.separatorViews = [self.separatorViews arrayByAddingObject:separator];
+            
+            separator.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            [self.view addSubview:separator];
+            
+            [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:separator
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0f
+                                                                      constant:8.0f],
+                                        [NSLayoutConstraint constraintWithItem:separator
+                                                                     attribute:NSLayoutAttributeBottom
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeBottom
+                                                                    multiplier:1.0f
+                                                                      constant:-8.0f],
+                                        [NSLayoutConstraint constraintWithItem:separator
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:playerLabel
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1.0f
+                                                                      constant:0.0f],
+                                        [NSLayoutConstraint constraintWithItem:separator
+                                                                     attribute:NSLayoutAttributeWidth
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:nil
+                                                                     attribute:NSLayoutAttributeWidth
+                                                                    multiplier:0.0f
+                                                                      constant:1.0]]];
+            
+        }
+        
     }
+    
+    if (self.separatorViews) {
+        
+        [self.separatorView removeFromSuperview];
+        
+    }
+    
+    self.separatorView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.separatorView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.75];
+    self.separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.view addSubview:self.separatorView];
+    
+    [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:self.separatorView
+                                                             attribute:NSLayoutAttributeTop
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeTop
+                                                            multiplier:1.0f
+                                                              constant:32.0f],
+                                [NSLayoutConstraint constraintWithItem:self.separatorView
+                                                             attribute:NSLayoutAttributeWidth
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeWidth
+                                                            multiplier:1.0f
+                                                              constant:-16.0f],
+                                [NSLayoutConstraint constraintWithItem:self.separatorView
+                                                             attribute:NSLayoutAttributeCenterX
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeCenterX
+                                                            multiplier:1.0f
+                                                              constant:0.0f],
+                                [NSLayoutConstraint constraintWithItem:self.separatorView
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeHeight
+                                                            multiplier:0.0f
+                                                              constant:1.0f]]];
     
 }
 

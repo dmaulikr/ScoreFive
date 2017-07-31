@@ -13,6 +13,11 @@
 #import "SFAppSettings.h"
 #import "SFGameStorage.h"
 
+#import "SFGameListViewController.h"
+#import "SFScoreCardViewController.h"
+
+NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutItemTypeNewGame";
+
 @interface SFAppDelegate ()
 
 @end
@@ -33,6 +38,8 @@
         [SFAppSettings sharedAppSettings].firstLaunchHappened = YES;
         
     }
+    
+    [self _setUpShortcutItems];
     
     self.window.tintColor = [UIColor ceruleanColor];
     
@@ -69,6 +76,16 @@
     NSError *terminateError;
     [self saveContextWithError:&terminateError];
     
+    
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    
+    if ([shortcutItem.type isEqualToString:SFAppDelegateShortcutItemTypeNewGame]) {
+        
+        [self _newGameWithViewController:self.window.rootViewController];
+        
+    }
     
 }
 
@@ -133,6 +150,24 @@
         *error = saveError;
         
     }
+    
+}
+
+#pragma mark - Private Instance Methods
+
+- (void)_setUpShortcutItems {
+    
+    UIApplicationShortcutIcon *newGameShortcutIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeAdd];
+    UIApplicationShortcutItem *newGameShortcutItem = [[UIApplicationShortcutItem alloc] initWithType:SFAppDelegateShortcutItemTypeNewGame
+                                                                                      localizedTitle:NSLocalizedString(@"New Game", nil)
+                                                                                   localizedSubtitle:nil
+                                                                                                icon:newGameShortcutIcon
+                                                                                            userInfo:nil];
+    [UIApplication sharedApplication].shortcutItems = @[newGameShortcutItem];
+    
+}
+
+- (void)_newGameWithViewController:(UIViewController *)controller; {
     
 }
 
