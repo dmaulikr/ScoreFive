@@ -23,6 +23,8 @@ NSString * const SFPublicGameWidgetBundleIdentifier = @"com.varunsanthanam.Score
 
 @implementation SFPublicGame
 
+#pragma mark - Public Class Methods
+
 + (instancetype)sharedGame {
     
     static SFPublicGame *sharedGame;
@@ -36,6 +38,8 @@ NSString * const SFPublicGameWidgetBundleIdentifier = @"com.varunsanthanam.Score
     return sharedGame;
     
 }
+
+#pragma mark - Property Access Methods
 
 - (NSUserDefaults *)defaults {
     
@@ -55,6 +59,8 @@ NSString * const SFPublicGameWidgetBundleIdentifier = @"com.varunsanthanam.Score
     
 }
 
+#pragma mark - Public Instance Methods
+
 - (void)storeGame:(SFGame *)game {
     
     NSData *gameData = [NSKeyedArchiver archivedDataWithRootObject:game];
@@ -73,6 +79,8 @@ NSString * const SFPublicGameWidgetBundleIdentifier = @"com.varunsanthanam.Score
     [self _hideWidget];
     
 }
+
+#pragma mark - PRivate Instance Methods
 
 - (void)_showWidget {
     

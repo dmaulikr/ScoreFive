@@ -23,6 +23,8 @@
 
 @implementation SFPublicGameViewController
 
+#pragma mark - Overridden Instance Methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -32,16 +34,15 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - NCWidgetProviding
 
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     
     completionHandler(NCUpdateResultNewData);
     
 }
+
+#pragma mark - Private Instance Methods
 
 - (void)_updateGame {
     
@@ -90,8 +91,6 @@
         [self.view addSubview:label];
         
         CGFloat widthMuliplier = 1.0f/(CGFloat)self.game.players.count;
-        CGFloat widthConstant = -(((CGFloat)self.game.players.count)/16.0f);
-        NSLog(@"%@", @(widthConstant));
         
         [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:label
                                                                  attribute:NSLayoutAttributeTop
