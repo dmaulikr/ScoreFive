@@ -201,7 +201,7 @@
 
 - (void)_createRound {
     
-    SFGame *game = [[SFGameStorage sharedGameStorage] gameWithStorageIdentifier:self.storageIdentifier];
+    SFGame *game = [[SFGameStorage sharedStorage] gameWithStorageIdentifier:self.storageIdentifier];
     
     if (self.replace) {
         
@@ -345,12 +345,12 @@
         
     }
     
-    SFGame *game = [[SFGameStorage sharedGameStorage] gameWithStorageIdentifier:self.storageIdentifier];
+    SFGame *game = [[SFGameStorage sharedStorage] gameWithStorageIdentifier:self.storageIdentifier];
     
     if (!self.replace) {
         
         [game addRound:self.round];
-        [[SFGameStorage sharedGameStorage] storeGame:game];
+        [[SFGameStorage sharedStorage] storeGame:game];
         [self.navigationController dismissViewControllerAnimated:YES
                                                       completion:nil];
         
@@ -359,7 +359,7 @@
         @try {
             
             [game replaceRoundAtIndex:self.index withRound:self.round];
-            [[SFGameStorage sharedGameStorage] storeGame:game];
+            [[SFGameStorage sharedStorage] storeGame:game];
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             
         } @catch (NSException *exception) {

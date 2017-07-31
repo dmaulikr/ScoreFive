@@ -288,7 +288,7 @@
 - (IBAction)userSave:(id)sender {
     
     SFGame *game = [[SFGame alloc] initWithPlayers:self.players scoreLimit:(NSUInteger)self.scoreLimitTextField.text.integerValue];
-    [[SFGameStorage sharedGameStorage] storeGame:game];
+    [[SFGameStorage sharedStorage] storeGame:game];
     
     [self _dismiss];
     

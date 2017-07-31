@@ -124,7 +124,7 @@
         @try {
             
             [self.game removeRoundAtIndex:indexPath.row];
-            [[SFGameStorage sharedGameStorage] storeGame:self.game];
+            [[SFGameStorage sharedStorage] storeGame:self.game];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -373,7 +373,7 @@
 
 - (void)_refreshGameWithReload:(BOOL)reload {
     
-    self.game = [[SFGameStorage sharedGameStorage] gameWithStorageIdentifier:self.storageIdentifier];
+    self.game = [[SFGameStorage sharedStorage] gameWithStorageIdentifier:self.storageIdentifier];
         
     if (reload) {
         

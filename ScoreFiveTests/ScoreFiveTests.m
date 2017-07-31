@@ -1109,7 +1109,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     XCTAssert(storage.allGames.count == 0, @"Erasing Game Storage failed");
     
@@ -1119,7 +1119,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     SFGame *game = [[SFGame alloc] init];
     
@@ -1151,7 +1151,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     [storage storeGame:game1];
     [storage storeGame:game2];
@@ -1166,7 +1166,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     SFGame *game = [[SFGame alloc] init];
     
@@ -1187,7 +1187,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     [storage storeGame:game];
     
@@ -1226,7 +1226,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     [storage storeGame:game];
     
     SFGame *retrieved = [storage gameWithStorageIdentifier:@"X"];
@@ -1262,7 +1262,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     [storage storeGame:game1];
     [storage storeGame:game2];
@@ -1293,7 +1293,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     [storage storeGame:game1];
     [storage storeGame:game2];
@@ -1328,7 +1328,7 @@
     
     [self _eraseEntitiesWithName:@"SFGameMO"];
     
-    SFGameStorage *storage = [SFGameStorage sharedGameStorage];
+    SFGameStorage *storage = [SFGameStorage sharedStorage];
     
     [storage storeGame:game1];
     [storage storeGame:game2];

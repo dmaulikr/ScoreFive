@@ -20,7 +20,7 @@ extern NSString * _Nonnull const SFGameStorageInconsistencyException;
 @property (nonatomic, readonly, nonnull) NSArray<SFGame *> *unfinishedGames;
 @property (nonatomic, readonly, nonnull) NSArray<SFGame *> *finishedGames;
 
-+ (nullable instancetype)sharedGameStorage;
++ (nullable instancetype)sharedStorage;
 
 - (void)storeGame:(nonnull SFGame *)game;
 - (nullable SFGame *)gameWithStorageIdentifier:(nonnull NSString *)storageIdentifier;

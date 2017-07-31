@@ -124,7 +124,7 @@
         
         SFGame *game = self.games[indexPath.row];
         
-        [[SFGameStorage sharedGameStorage] removeGameWithIdentifier:game.storageIdentifier];
+        [[SFGameStorage sharedStorage] removeGameWithIdentifier:game.storageIdentifier];
         [self _refreshGamesWithReload:NO];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -233,7 +233,7 @@
         
     }
     
-    [[SFGameStorage sharedGameStorage] removeAllGames];
+    [[SFGameStorage sharedStorage] removeAllGames];
     [self _refreshGamesWithReload:NO];
     
     [self.gamesList deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -248,7 +248,7 @@
 
 - (void)_refreshGamesWithReload:(BOOL)reload {
     
-    self.games = [SFGameStorage sharedGameStorage].allGames;
+    self.games = [SFGameStorage sharedStorage].allGames;
     
     if (reload) {
         

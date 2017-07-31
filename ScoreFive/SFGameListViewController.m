@@ -367,8 +367,8 @@
 
 - (void)_refreshGamesListWithReload:(BOOL)reload {
     
-    self.unfinishedGames = [SFGameStorage sharedGameStorage].unfinishedGames;
-    self.allGames = [SFGameStorage sharedGameStorage].allGames;
+    self.unfinishedGames = [SFGameStorage sharedStorage].unfinishedGames;
+    self.allGames = [SFGameStorage sharedStorage].allGames;
     
     if (reload) {
         

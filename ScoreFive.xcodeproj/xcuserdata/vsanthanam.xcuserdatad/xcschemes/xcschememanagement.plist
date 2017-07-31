@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ScoreFive Current Game.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>ScoreFive.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>070A68BE1F2FA2A9000CAD72</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>074CB6A91F2EA14B00CD3173</key>
 		<dict>
 			<key>primary</key>

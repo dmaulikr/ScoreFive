@@ -11,6 +11,7 @@
 #import "SFGameStorage.h"
 
 #import "SFAppDelegate.h"
+#import "SFPublicGame.h"
 
 NSString * const SFGameStorageErrorNotification = @"SFGameStorageErrorNotification";
 NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsistencyException";
@@ -25,18 +26,18 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
 
 #pragma mark - Public Class Methods
 
-+ (instancetype)sharedGameStorage {
++ (instancetype)sharedStorage {
     
-    static SFGameStorage *sharedGameStorage;
+    static SFGameStorage *sharedStorage;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        sharedGameStorage = [[[self class] alloc] init];
+        sharedStorage = [[[self class] alloc] init];
         
     });
     
     
-    return sharedGameStorage;
+    return sharedStorage;
     
 }
 
@@ -185,6 +186,16 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
         
     }
     
+    if (!game.finished) {
+        
+        [[SFPublicGame sharedGame] storeGame:game];
+        
+    } else {
+        
+        [[SFPublicGame sharedGame] removeGame];
+        
+    }
+    
 }
 
 - (SFGame *)gameWithStorageIdentifier:(NSString *)storageIdentifier {
@@ -234,6 +245,12 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
         
     }
     
+    if ([[SFPublicGame sharedGame].storageIdentifier isEqualToString:storageIdentifier]) {
+        
+        [[SFPublicGame sharedGame] removeGame];
+        
+    }
+    
 }
 
 - (void)removeAllGames {
@@ -250,6 +267,8 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
         [[NSNotificationCenter defaultCenter] postNotificationName:SFGameStorageErrorNotification object:error];
         
     }
+    
+    [[SFPublicGame sharedGame] removeGame];
     
 }
 

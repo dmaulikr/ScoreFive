@@ -24,6 +24,14 @@
 		070133C11F27DA4000C0DBEE /* AddRound.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 070133C01F27DA4000C0DBEE /* AddRound.storyboard */; };
 		070133C41F27DAF900C0DBEE /* SFNewRoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070133C31F27DAF900C0DBEE /* SFNewRoundViewController.m */; };
 		070133C61F293B4C00C0DBEE /* PermanentMarker.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 070133C51F293B4C00C0DBEE /* PermanentMarker.ttf */; };
+		070A68C11F2FA2A9000CAD72 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 070A68C01F2FA2A9000CAD72 /* NotificationCenter.framework */; };
+		070A68C81F2FA2A9000CAD72 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 070A68C61F2FA2A9000CAD72 /* MainInterface.storyboard */; };
+		070A68CD1F2FA2A9000CAD72 /* ScoreFive Current Game.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 070A68BF1F2FA2A9000CAD72 /* ScoreFive Current Game.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		070A68D31F2FA3AE000CAD72 /* SFPublicGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68D21F2FA3AE000CAD72 /* SFPublicGame.m */; };
+		070A68D41F2FA3BA000CAD72 /* SFPublicGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68D21F2FA3AE000CAD72 /* SFPublicGame.m */; };
+		070A68D51F2FA3CE000CAD72 /* SFGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 070133981F239F0900C0DBEE /* SFGame.m */; };
+		070A68D61F2FA3D0000CAD72 /* SFGameRound.m in Sources */ = {isa = PBXBuildFile; fileRef = 0701339B1F23A00100C0DBEE /* SFGameRound.m */; };
+		070A68E01F2FAB1A000CAD72 /* SFPublicGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */; };
 		070B2B8D1F2A651000592458 /* SFIndexedButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */; };
 		072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */; };
 		072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */; };
@@ -53,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		070A68CA1F2FA2A9000CAD72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0793EF431F1FA42B00FF2D08 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 070A68BE1F2FA2A9000CAD72;
+			remoteInfo = "ScoreFive Current Game";
+		};
 		0793EF681F1FA42B00FF2D08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0793EF431F1FA42B00FF2D08 /* Project object */;
@@ -70,12 +85,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		074CB6BB1F2EA14B00CD3173 /* Embed App Extensions */ = {
+		070A68CC1F2FA2A9000CAD72 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				070A68CD1F2FA2A9000CAD72 /* ScoreFive Current Game.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,6 +130,15 @@
 		070133C21F27DAF900C0DBEE /* SFNewRoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFNewRoundViewController.h; sourceTree = "<group>"; };
 		070133C31F27DAF900C0DBEE /* SFNewRoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFNewRoundViewController.m; sourceTree = "<group>"; };
 		070133C51F293B4C00C0DBEE /* PermanentMarker.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PermanentMarker.ttf; sourceTree = "<group>"; };
+		070A68BF1F2FA2A9000CAD72 /* ScoreFive Current Game.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ScoreFive Current Game.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		070A68C01F2FA2A9000CAD72 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		070A68C71F2FA2A9000CAD72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		070A68C91F2FA2A9000CAD72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		070A68D11F2FA3AE000CAD72 /* SFPublicGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPublicGame.h; sourceTree = "<group>"; };
+		070A68D21F2FA3AE000CAD72 /* SFPublicGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPublicGame.m; sourceTree = "<group>"; };
+		070A68DA1F2FA3EF000CAD72 /* ScoreFive Current Game.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ScoreFive Current Game.entitlements"; sourceTree = "<group>"; };
+		070A68DD1F2FAB12000CAD72 /* SFPublicGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPublicGameViewController.h; sourceTree = "<group>"; };
+		070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPublicGameViewController.m; sourceTree = "<group>"; };
 		070B2B8B1F2A651000592458 /* SFIndexedButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFIndexedButtonTableViewCell.h; sourceTree = "<group>"; };
 		070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFIndexedButtonTableViewCell.m; sourceTree = "<group>"; };
 		072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ScoreFive.h"; sourceTree = "<group>"; };
@@ -164,6 +189,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		070A68BC1F2FA2A9000CAD72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				070A68C11F2FA2A9000CAD72 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0793EF481F1FA42B00FF2D08 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -193,6 +226,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		070A68C21F2FA2A9000CAD72 /* ScoreFive Current Game - Today Extension */ = {
+			isa = PBXGroup;
+			children = (
+				070A68DC1F2FA419000CAD72 /* Supporting Files */,
+				070A68DB1F2FA412000CAD72 /* UI */,
+				070A68D71F2FA3D4000CAD72 /* Src */,
+			);
+			name = "ScoreFive Current Game - Today Extension";
+			path = "ScoreFive Current Game";
+			sourceTree = "<group>";
+		};
+		070A68D71F2FA3D4000CAD72 /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				070A68D91F2FA3DD000CAD72 /* Core */,
+				070A68D81F2FA3D8000CAD72 /* View Controllers */,
+			);
+			name = Src;
+			sourceTree = "<group>";
+		};
+		070A68D81F2FA3D8000CAD72 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				070A68DD1F2FAB12000CAD72 /* SFPublicGameViewController.h */,
+				070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		070A68D91F2FA3DD000CAD72 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				070A68D11F2FA3AE000CAD72 /* SFPublicGame.h */,
+				070A68D21F2FA3AE000CAD72 /* SFPublicGame.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		070A68DB1F2FA412000CAD72 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				070A68C61F2FA2A9000CAD72 /* MainInterface.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		070A68DC1F2FA419000CAD72 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				070A68C91F2FA2A9000CAD72 /* Info.plist */,
+				070A68DA1F2FA3EF000CAD72 /* ScoreFive Current Game.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		074CB6C01F2EA7E800CD3173 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,8 +306,9 @@
 			isa = PBXGroup;
 			children = (
 				0793EF4D1F1FA42B00FF2D08 /* ScoreFive - iOS App */,
-				0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests */,
-				0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests */,
+				070A68C21F2FA2A9000CAD72 /* ScoreFive Current Game - Today Extension */,
+				0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests - Test */,
+				0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests - UITests */,
 				0793EF4C1F1FA42B00FF2D08 /* Products */,
 				079B95FA1F218C3C00A5FFE1 /* Frameworks */,
 			);
@@ -231,6 +320,7 @@
 				0793EF4B1F1FA42B00FF2D08 /* ScoreFive.app */,
 				0793EF671F1FA42B00FF2D08 /* ScoreFiveTests.xctest */,
 				0793EF721F1FA42B00FF2D08 /* ScoreFiveUITests.xctest */,
+				070A68BF1F2FA2A9000CAD72 /* ScoreFive Current Game.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -256,21 +346,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests */ = {
+		0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests - Test */ = {
 			isa = PBXGroup;
 			children = (
 				079B95F51F216CBC00A5FFE1 /* Src */,
 				079B95F61F216CC000A5FFE1 /* Supporting Files */,
 			);
+			name = "ScoreFiveTests - Test";
 			path = ScoreFiveTests;
 			sourceTree = "<group>";
 		};
-		0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests */ = {
+		0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests - UITests */ = {
 			isa = PBXGroup;
 			children = (
 				079B95F81F216CD000A5FFE1 /* Src */,
 				079B95F71F216CC900A5FFE1 /* Supporting Files */,
 			);
+			name = "ScoreFiveUITests - UITests";
 			path = ScoreFiveUITests;
 			sourceTree = "<group>";
 		};
@@ -442,6 +534,7 @@
 				07783BBF1F229BD300E2D26B /* QuartzCore.framework */,
 				079B95FD1F218C4000A5FFE1 /* UIKit.framework */,
 				079B95FB1F218C3C00A5FFE1 /* Foundation.framework */,
+				070A68C01F2FA2A9000CAD72 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -449,6 +542,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		070A68BE1F2FA2A9000CAD72 /* ScoreFive Current Game */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 070A68CE1F2FA2A9000CAD72 /* Build configuration list for PBXNativeTarget "ScoreFive Current Game" */;
+			buildPhases = (
+				070A68BB1F2FA2A9000CAD72 /* Sources */,
+				070A68BC1F2FA2A9000CAD72 /* Frameworks */,
+				070A68BD1F2FA2A9000CAD72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ScoreFive Current Game";
+			productName = "ScoreFive Current Game";
+			productReference = 070A68BF1F2FA2A9000CAD72 /* ScoreFive Current Game.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		0793EF4A1F1FA42B00FF2D08 /* ScoreFive */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0793EF7B1F1FA42B00FF2D08 /* Build configuration list for PBXNativeTarget "ScoreFive" */;
@@ -456,11 +566,12 @@
 				0793EF471F1FA42B00FF2D08 /* Sources */,
 				0793EF481F1FA42B00FF2D08 /* Frameworks */,
 				0793EF491F1FA42B00FF2D08 /* Resources */,
-				074CB6BB1F2EA14B00CD3173 /* Embed App Extensions */,
+				070A68CC1F2FA2A9000CAD72 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				070A68CB1F2FA2A9000CAD72 /* PBXTargetDependency */,
 			);
 			name = ScoreFive;
 			productName = ScoreFive;
@@ -512,6 +623,16 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Varun Santhanam";
 				TargetAttributes = {
+					070A68BE1F2FA2A9000CAD72 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = Y88YPD4RJA;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					0793EF4A1F1FA42B00FF2D08 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = Y88YPD4RJA;
@@ -550,6 +671,7 @@
 			projectRoot = "";
 			targets = (
 				0793EF4A1F1FA42B00FF2D08 /* ScoreFive */,
+				070A68BE1F2FA2A9000CAD72 /* ScoreFive Current Game */,
 				0793EF661F1FA42B00FF2D08 /* ScoreFiveTests */,
 				0793EF711F1FA42B00FF2D08 /* ScoreFiveUITests */,
 			);
@@ -557,6 +679,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		070A68BD1F2FA2A9000CAD72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				070A68C81F2FA2A9000CAD72 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0793EF491F1FA42B00FF2D08 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -588,6 +718,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		070A68BB1F2FA2A9000CAD72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				070A68E01F2FAB1A000CAD72 /* SFPublicGameViewController.m in Sources */,
+				070A68D51F2FA3CE000CAD72 /* SFGame.m in Sources */,
+				070A68D41F2FA3BA000CAD72 /* SFPublicGame.m in Sources */,
+				070A68D61F2FA3D0000CAD72 /* SFGameRound.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0793EF471F1FA42B00FF2D08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -621,6 +762,7 @@
 				07783BD61F22CB3700E2D26B /* SFAppSettings.m in Sources */,
 				074CB69D1F2D316800CD3173 /* SFSettingsViewController.m in Sources */,
 				070133B31F25D2CD00C0DBEE /* SFAllGamesListViewController.m in Sources */,
+				070A68D31F2FA3AE000CAD72 /* SFPublicGame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +785,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		070A68CB1F2FA2A9000CAD72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 070A68BE1F2FA2A9000CAD72 /* ScoreFive Current Game */;
+			targetProxy = 070A68CA1F2FA2A9000CAD72 /* PBXContainerItemProxy */;
+		};
 		0793EF691F1FA42B00FF2D08 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0793EF4A1F1FA42B00FF2D08 /* ScoreFive */;
@@ -656,6 +803,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		070A68C61F2FA2A9000CAD72 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				070A68C71F2FA2A9000CAD72 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		0793EF571F1FA42B00FF2D08 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -675,6 +830,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		070A68CF1F2FA2A9000CAD72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "ScoreFive Current Game/ScoreFive Current Game.entitlements";
+				DEVELOPMENT_TEAM = Y88YPD4RJA;
+				INFOPLIST_FILE = "ScoreFive Current Game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.varunsanthanam.ScoreFive.ScoreFive-Current-Game";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		070A68D01F2FA2A9000CAD72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "ScoreFive Current Game/ScoreFive Current Game.entitlements";
+				DEVELOPMENT_TEAM = Y88YPD4RJA;
+				INFOPLIST_FILE = "ScoreFive Current Game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.varunsanthanam.ScoreFive.ScoreFive-Current-Game";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		0793EF791F1FA42B00FF2D08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -852,6 +1035,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		070A68CE1F2FA2A9000CAD72 /* Build configuration list for PBXNativeTarget "ScoreFive Current Game" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				070A68CF1F2FA2A9000CAD72 /* Debug */,
+				070A68D01F2FA2A9000CAD72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		0793EF461F1FA42B00FF2D08 /* Build configuration list for PBXProject "ScoreFive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
