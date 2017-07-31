@@ -136,6 +136,7 @@
                  forControlEvents:UIControlEventEditingChanged];
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         
+        
     }
     
     cell.textField.placeholder = self.round.players[indexPath.row];

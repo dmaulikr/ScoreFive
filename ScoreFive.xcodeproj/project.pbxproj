@@ -69,6 +69,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		074CB6BB1F2EA14B00CD3173 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		070133971F239F0900C0DBEE /* SFGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGame.h; sourceTree = "<group>"; };
 		070133981F239F0900C0DBEE /* SFGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGame.m; sourceTree = "<group>"; };
@@ -118,6 +131,7 @@
 		074CB69F1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSwitchControlTableViewCell.m; sourceTree = "<group>"; };
 		074CB6A11F2E6EAB00CD3173 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		074CB6A31F2E739D00CD3173 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		074CB6A51F2EA0D500CD3173 /* ScoreFive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScoreFive.entitlements; sourceTree = "<group>"; };
 		0759E84E1F2942E300AF8B0F /* UIColor+SFScoreFiveColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SFScoreFiveColors.h"; sourceTree = "<group>"; };
 		0759E84F1F2942E300AF8B0F /* UIColor+SFScoreFiveColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SFScoreFiveColors.m"; sourceTree = "<group>"; };
 		07783BB91F22920400E2D26B /* UIView+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ScoreFive.h"; sourceTree = "<group>"; };
@@ -179,6 +193,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		074CB6C01F2EA7E800CD3173 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				070133971F239F0900C0DBEE /* SFGame.h */,
+				070133981F239F0900C0DBEE /* SFGame.m */,
+				0701339A1F23A00100C0DBEE /* SFGameRound.h */,
+				0701339B1F23A00100C0DBEE /* SFGameRound.m */,
+				0701339D1F25310400C0DBEE /* SFGameStorage.h */,
+				0701339E1F25310400C0DBEE /* SFGameStorage.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		07783BB81F228BD400E2D26B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,7 +217,7 @@
 		0793EF421F1FA42B00FF2D08 = {
 			isa = PBXGroup;
 			children = (
-				0793EF4D1F1FA42B00FF2D08 /* ScoreFive */,
+				0793EF4D1F1FA42B00FF2D08 /* ScoreFive - iOS App */,
 				0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests */,
 				0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests */,
 				0793EF4C1F1FA42B00FF2D08 /* Products */,
@@ -208,7 +235,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0793EF4D1F1FA42B00FF2D08 /* ScoreFive */ = {
+		0793EF4D1F1FA42B00FF2D08 /* ScoreFive - iOS App */ = {
 			isa = PBXGroup;
 			children = (
 				079B95F41F216C5A00A5FFE1 /* Data Models */,
@@ -216,12 +243,14 @@
 				0793EF4E1F1FA42B00FF2D08 /* Supporting Files */,
 				079B95F11F216C3400A5FFE1 /* UI */,
 			);
+			name = "ScoreFive - iOS App";
 			path = ScoreFive;
 			sourceTree = "<group>";
 		};
 		0793EF4E1F1FA42B00FF2D08 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				074CB6A51F2EA0D500CD3173 /* ScoreFive.entitlements */,
 				0793EF621F1FA42B00FF2D08 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -230,8 +259,8 @@
 		0793EF6A1F1FA42B00FF2D08 /* ScoreFiveTests */ = {
 			isa = PBXGroup;
 			children = (
-				079B95F61F216CC000A5FFE1 /* Supporting Files */,
 				079B95F51F216CBC00A5FFE1 /* Src */,
+				079B95F61F216CC000A5FFE1 /* Supporting Files */,
 			);
 			path = ScoreFiveTests;
 			sourceTree = "<group>";
@@ -239,8 +268,8 @@
 		0793EF751F1FA42B00FF2D08 /* ScoreFiveUITests */ = {
 			isa = PBXGroup;
 			children = (
-				079B95F71F216CC900A5FFE1 /* Supporting Files */,
 				079B95F81F216CD000A5FFE1 /* Src */,
+				079B95F71F216CC900A5FFE1 /* Supporting Files */,
 			);
 			path = ScoreFiveUITests;
 			sourceTree = "<group>";
@@ -248,10 +277,10 @@
 		079B95EB1F216BBC00A5FFE1 /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				079B95ED1F216BC900A5FFE1 /* Categories */,
+				074CB6C01F2EA7E800CD3173 /* Core */,
 				079B95EE1F216BE000A5FFE1 /* Views */,
 				079B95EC1F216BC100A5FFE1 /* View Controllers */,
-				079B95ED1F216BC900A5FFE1 /* Categories */,
-				079B95EF1F216BF500A5FFE1 /* Core */,
 				079B95F01F216BFD00A5FFE1 /* Other */,
 			);
 			name = Src;
@@ -316,19 +345,6 @@
 				074CB69F1F2D3CB100CD3173 /* SFSwitchControlTableViewCell.m */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		079B95EF1F216BF500A5FFE1 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				070133971F239F0900C0DBEE /* SFGame.h */,
-				070133981F239F0900C0DBEE /* SFGame.m */,
-				0701339A1F23A00100C0DBEE /* SFGameRound.h */,
-				0701339B1F23A00100C0DBEE /* SFGameRound.m */,
-				0701339D1F25310400C0DBEE /* SFGameStorage.h */,
-				0701339E1F25310400C0DBEE /* SFGameStorage.m */,
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 		079B95F01F216BFD00A5FFE1 /* Other */ = {
@@ -440,6 +456,7 @@
 				0793EF471F1FA42B00FF2D08 /* Sources */,
 				0793EF481F1FA42B00FF2D08 /* Frameworks */,
 				0793EF491F1FA42B00FF2D08 /* Resources */,
+				074CB6BB1F2EA14B00CD3173 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -499,6 +516,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = Y88YPD4RJA;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					0793EF661F1FA42B00FF2D08 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -747,6 +769,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScoreFive/ScoreFive.entitlements;
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(PROJECT_NAME)-Prefix.pch";
@@ -755,6 +778,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.varunsanthanam.ScoreFive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -762,6 +786,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScoreFive/ScoreFive.entitlements;
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(PROJECT_NAME)-Prefix.pch";
@@ -770,6 +795,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.varunsanthanam.ScoreFive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
