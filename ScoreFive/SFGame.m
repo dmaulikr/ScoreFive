@@ -192,6 +192,8 @@ NSString * const SFGamePostGameMutationException = @"SFGamePostGameMutationExcep
         self->_storageIdentifier = (NSString *)[aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(storageIdentifier))];
         self->_timestamp = (NSDate *)[aDecoder decodeObjectOfClass:[NSDate class] forKey:NSStringFromSelector(@selector(timestamp))];
         
+        [self _validateAfterInitialization];
+        
     }
     
     return self;
