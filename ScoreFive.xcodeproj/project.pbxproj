@@ -32,6 +32,7 @@
 		070A68D51F2FA3CE000CAD72 /* SFGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 070133981F239F0900C0DBEE /* SFGame.m */; };
 		070A68D61F2FA3D0000CAD72 /* SFGameRound.m in Sources */ = {isa = PBXBuildFile; fileRef = 0701339B1F23A00100C0DBEE /* SFGameRound.m */; };
 		070A68E01F2FAB1A000CAD72 /* SFPublicGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */; };
+		070A68E31F30F72C000CAD72 /* SFApplicationShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */; };
 		070B2B8D1F2A651000592458 /* SFIndexedButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */; };
 		072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */; };
 		072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */; };
@@ -139,6 +140,8 @@
 		070A68DA1F2FA3EF000CAD72 /* ScoreFive Current Game.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ScoreFive Current Game.entitlements"; sourceTree = "<group>"; };
 		070A68DD1F2FAB12000CAD72 /* SFPublicGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPublicGameViewController.h; sourceTree = "<group>"; };
 		070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPublicGameViewController.m; sourceTree = "<group>"; };
+		070A68E11F30F72C000CAD72 /* SFApplicationShortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFApplicationShortcuts.h; sourceTree = "<group>"; };
+		070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFApplicationShortcuts.m; sourceTree = "<group>"; };
 		070B2B8B1F2A651000592458 /* SFIndexedButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFIndexedButtonTableViewCell.h; sourceTree = "<group>"; };
 		070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFIndexedButtonTableViewCell.m; sourceTree = "<group>"; };
 		072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ScoreFive.h"; sourceTree = "<group>"; };
@@ -452,6 +455,8 @@
 				0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */,
 				07783BD41F22CB3700E2D26B /* SFAppSettings.h */,
 				07783BD51F22CB3700E2D26B /* SFAppSettings.m */,
+				070A68E11F30F72C000CAD72 /* SFApplicationShortcuts.h */,
+				070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -756,6 +761,7 @@
 				0793EF501F1FA42B00FF2D08 /* main.m in Sources */,
 				070133BF1F26934B00C0DBEE /* SFIndexedColumnLabelTableViewCell.m in Sources */,
 				070133B91F267BA400C0DBEE /* SFScoreCardViewController.m in Sources */,
+				070A68E31F30F72C000CAD72 /* SFApplicationShortcuts.m in Sources */,
 				0701339F1F25310400C0DBEE /* SFGameStorage.m in Sources */,
 				073F8AAA1F2018DA0086C7DF /* SFFormatters.m in Sources */,
 				070133991F239F0900C0DBEE /* SFGame.m in Sources */,

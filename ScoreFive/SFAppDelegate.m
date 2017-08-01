@@ -12,11 +12,7 @@
 
 #import "SFAppSettings.h"
 #import "SFGameStorage.h"
-
-#import "SFGameListViewController.h"
-#import "SFSettingsViewController.h"
-#import "SFNewRoundViewController.h"
-#import "SFScoreCardViewController.h"
+#import "SFApplicationShortcuts.h"
 
 NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutItemTypeNewGame";
 
@@ -41,7 +37,7 @@ NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutI
         
     }
     
-    [self _setUpShortcutItems];
+    [[SFApplicationShortcuts sharedShortcuts] assignDynamicShortcuts];
     
     self.window.tintColor = [UIColor ceruleanColor];
     
@@ -83,11 +79,9 @@ NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutI
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     
-    if ([shortcutItem.type isEqualToString:SFAppDelegateShortcutItemTypeNewGame]) {
-        
-        [self _newGameWithViewController:self.window.rootViewController];
-        
-    }
+    BOOL result = [[SFApplicationShortcuts sharedShortcuts] processShortcut:shortcutItem forWindow:self.window];
+    
+    completionHandler(result);
     
 }
 
@@ -150,65 +144,6 @@ NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutI
     if ([context hasChanges] && ![context save:&saveError]) {
         
         *error = saveError;
-        
-    }
-    
-}
-
-#pragma mark - Private Instance Methods
-
-- (void)_setUpShortcutItems {
-    
-    UIApplicationShortcutIcon *newGameShortcutIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeAdd];
-    UIApplicationShortcutItem *newGameShortcutItem = [[UIApplicationShortcutItem alloc] initWithType:SFAppDelegateShortcutItemTypeNewGame
-                                                                                      localizedTitle:NSLocalizedString(@"New Game", nil)
-                                                                                   localizedSubtitle:nil
-                                                                                                icon:newGameShortcutIcon
-                                                                                            userInfo:nil];
-    [UIApplication sharedApplication].shortcutItems = @[newGameShortcutItem];
-    
-}
-
-- (void)_newGameWithViewController:(UIViewController *)controller; {
-    
-    if ([controller isKindOfClass:[UINavigationController class]]) {
-        
-        UINavigationController *navController = (UINavigationController *)controller;
-        
-        if ([navController.visibleViewController isKindOfClass:[SFGameListViewController class]]) {
-            
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewGame" bundle:[NSBundle mainBundle]];
-            UINavigationController *newGameNav = (UINavigationController *)[storyboard instantiateInitialViewController];
-            [navController.visibleViewController presentViewController:newGameNav
-                                                              animated:YES
-                                                            completion:nil];
-            
-        } else if ([navController.visibleViewController isKindOfClass:[SFSettingsViewController class]]) {
-            
-            [navController dismissViewControllerAnimated:NO completion:^{
-                
-                [self _newGameWithViewController:self.window.rootViewController];
-                
-            }];
-            
-        } else if ([navController.visibleViewController isKindOfClass:[SFScoreCardViewController class]]) {
-            
-            [navController popViewControllerAnimated:NO];
-            [self _newGameWithViewController:self.window.rootViewController];
-            
-        } else if ([navController.visibleViewController isKindOfClass:[SFNewRoundViewController class]]) {
-            
-            [navController dismissViewControllerAnimated:NO completion:^{
-               
-                [self _newGameWithViewController:self.window.rootViewController];
-                
-            }];
-            
-        }
-        
-    } else {
-        
-        [NSException raise:NSInvalidArgumentException format:@"Somehow, %@ is the root view controller, and its not an instance of UINavigationController", controller];
         
     }
     
