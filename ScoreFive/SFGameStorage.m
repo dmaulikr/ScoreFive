@@ -12,6 +12,7 @@
 
 #import "SFAppDelegate.h"
 #import "SFPublicGame.h"
+#import "SFApplicationShortcuts.h"
 
 NSString * const SFGameStorageErrorNotification = @"SFGameStorageErrorNotification";
 NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsistencyException";
@@ -196,6 +197,8 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
         
     }
     
+    [[SFApplicationShortcuts sharedShortcuts] assignDynamicShortcuts];
+    
 }
 
 - (SFGame *)gameWithStorageIdentifier:(NSString *)storageIdentifier {
@@ -251,6 +254,8 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
         
     }
     
+    [[SFApplicationShortcuts sharedShortcuts] assignDynamicShortcuts];
+    
 }
 
 - (void)removeAllGames {
@@ -269,6 +274,8 @@ NSString * const SFGameStorageInconsistencyException = @"SFGameStorageInconsiste
     }
     
     [[SFPublicGame sharedGame] removeGame];
+    
+    [[SFApplicationShortcuts sharedShortcuts] assignDynamicShortcuts];
     
 }
 

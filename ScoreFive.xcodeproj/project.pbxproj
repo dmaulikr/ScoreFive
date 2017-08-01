@@ -449,14 +449,14 @@
 				0793EF4F1F1FA42B00FF2D08 /* main.m */,
 				073F8AA61F2016FB0086C7DF /* sf_log.h */,
 				073F8AA51F2016FB0086C7DF /* sf_log.c */,
-				073F8AA81F2018DA0086C7DF /* SFFormatters.h */,
-				073F8AA91F2018DA0086C7DF /* SFFormatters.m */,
 				0793EF511F1FA42B00FF2D08 /* SFAppDelegate.h */,
 				0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */,
 				07783BD41F22CB3700E2D26B /* SFAppSettings.h */,
 				07783BD51F22CB3700E2D26B /* SFAppSettings.m */,
 				070A68E11F30F72C000CAD72 /* SFApplicationShortcuts.h */,
 				070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */,
+				073F8AA81F2018DA0086C7DF /* SFFormatters.h */,
+				073F8AA91F2018DA0086C7DF /* SFFormatters.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -840,12 +840,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "ScoreFive Current Game/ScoreFive Current Game.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
 				INFOPLIST_FILE = "ScoreFive Current Game/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.varunsanthanam.ScoreFive.ScoreFive-Current-Game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -854,12 +856,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "ScoreFive Current Game/ScoreFive Current Game.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Y88YPD4RJA;
 				INFOPLIST_FILE = "ScoreFive Current Game/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.varunsanthanam.ScoreFive.ScoreFive-Current-Game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

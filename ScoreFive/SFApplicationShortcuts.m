@@ -8,16 +8,20 @@
 
 #import "SFApplicationShortcuts.h"
 
+#import "SFPublicGame.h"
 #import "SFGameListViewController.h"
 #import "SFSettingsViewController.h"
 #import "SFNewRoundViewController.h"
 #import "SFScoreCardViewController.h"
+#import "SFNewGameViewController.h"
+#import "SFAllGamesListViewController.h"
 
 NSString * const SFApplicationShortcutItemTypeNewGame = @"SFApplicationShortcutItemTypeNewGame";
+NSString * const SFApplicationShortcutItemTypeResumeGame = @"SFApplicationShortcutItemTypeResumeGame";
 
 @implementation SFApplicationShortcuts
 
-- (UIApplicationShortcutItem *)createNGameShortcutItem {
+- (UIApplicationShortcutItem *)createNewGameShortcutItem {
     
     UIApplicationShortcutIcon *newGameShortcutIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeAdd];
     UIApplicationShortcutItem *newGameShortcutItem = [[UIApplicationShortcutItem alloc] initWithType:SFApplicationShortcutItemTypeNewGame
@@ -27,6 +31,19 @@ NSString * const SFApplicationShortcutItemTypeNewGame = @"SFApplicationShortcutI
                                                                                             userInfo:nil];
     
     return newGameShortcutItem;
+    
+}
+
+- (UIApplicationShortcutItem *)resumeGameShortcutItem {
+    
+    UIApplicationShortcutIcon *resumeGameShortcutIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypePlay];
+    UIApplicationShortcutItem *resumeGameShortcutItem = [[UIApplicationShortcutItem alloc] initWithType:SFApplicationShortcutItemTypeResumeGame
+                                                                                         localizedTitle:NSLocalizedString(@"Resume Game", nil)
+                                                                                      localizedSubtitle:nil
+                                                                                                   icon:resumeGameShortcutIcon
+                                                                                               userInfo:nil];
+    
+    return resumeGameShortcutItem;
     
 }
 
@@ -52,6 +69,12 @@ NSString * const SFApplicationShortcutItemTypeNewGame = @"SFApplicationShortcutI
         
         return YES;
         
+    } else if ([item.type isEqualToString:SFApplicationShortcutItemTypeResumeGame]) {
+        
+        [self _resumeGameForWindow:window];
+        
+        return YES;
+        
     }
     
     return NO;
@@ -60,52 +83,117 @@ NSString * const SFApplicationShortcutItemTypeNewGame = @"SFApplicationShortcutI
 
 - (void)assignDynamicShortcuts {
     
-    [UIApplication sharedApplication].shortcutItems = @[self.createNGameShortcutItem];
+    if ([SFPublicGame sharedGame].gameData) {
+        
+        [UIApplication sharedApplication].shortcutItems = @[self.resumeGameShortcutItem, self.createNewGameShortcutItem];
+        
+    } else {
+        
+        [UIApplication sharedApplication].shortcutItems = @[self.createNewGameShortcutItem];
+        
+    }
     
 }
 
 - (void)_newGameForWindow:(UIWindow *)window {
     
-    UIViewController *controller = window.rootViewController;
-    
-    if ([controller isKindOfClass:[UINavigationController class]]) {
+    if ([window.rootViewController isKindOfClass:[UINavigationController class]]) {
         
-        UINavigationController *navController = (UINavigationController *)controller;
-        
-        if ([navController.visibleViewController isKindOfClass:[SFGameListViewController class]]) {
+        UINavigationController *controller = (UINavigationController *)window.rootViewController;
+
+        if ([controller.visibleViewController isKindOfClass:[SFGameListViewController class]]) {
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewGame" bundle:[NSBundle mainBundle]];
             UINavigationController *newGameNav = (UINavigationController *)[storyboard instantiateInitialViewController];
-            [navController.visibleViewController presentViewController:newGameNav
-                                                              animated:YES
+            [controller.visibleViewController presentViewController:newGameNav
+                                                              animated:NO
                                                             completion:nil];
             
-        } else if ([navController.visibleViewController isKindOfClass:[SFSettingsViewController class]]) {
+        } else if ([controller.visibleViewController isKindOfClass:[SFSettingsViewController class]]) {
             
-            [navController dismissViewControllerAnimated:NO completion:^{
+            [controller dismissViewControllerAnimated:NO completion:^{
                 
                 [self _newGameForWindow:window];
                 
             }];
             
-        } else if ([navController.visibleViewController isKindOfClass:[SFScoreCardViewController class]]) {
+        } else if ([controller.visibleViewController isKindOfClass:[SFScoreCardViewController class]]) {
             
-            [navController popViewControllerAnimated:NO];
+            [controller popViewControllerAnimated:NO];
             [self _newGameForWindow:window];
             
-        } else if ([navController.visibleViewController isKindOfClass:[SFNewRoundViewController class]]) {
+        } else if ([controller.visibleViewController isKindOfClass:[SFNewRoundViewController class]]) {
             
-            [navController dismissViewControllerAnimated:NO completion:^{
+            [controller dismissViewControllerAnimated:NO completion:^{
                 
                 [self _newGameForWindow:window];
                 
             }];
             
+        } else if ([controller.visibleViewController isKindOfClass:[SFAllGamesListViewController class]]) {
+            
+            [controller popViewControllerAnimated:NO];
+            [self _newGameForWindow:window];
         }
         
     } else {
         
-        [NSException raise:NSInvalidArgumentException format:@"Somehow, %@ is the root view controller, and its not an instance of UINavigationController", controller];
+        [NSException raise:NSInvalidArgumentException format:@"Somehow, %@ is the root view controller, and its not an instance of UINavigationController", window.rootViewController];
+        
+    }
+    
+}
+
+- (void)_resumeGameForWindow:(UIWindow *)window {
+    
+    if ([window.rootViewController isKindOfClass:[UINavigationController class]]) {
+        
+        UINavigationController *controller = (UINavigationController *)window.rootViewController;
+        
+        if ([controller.visibleViewController isKindOfClass:[SFGameListViewController class]]) {
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            SFScoreCardViewController *scoreCardController = (SFScoreCardViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ScoreCardViewControllerID"];
+            scoreCardController.storageIdentifier = [SFPublicGame sharedGame].storageIdentifier;
+            [controller pushViewController:scoreCardController animated:NO];
+            
+        } else if ([controller.visibleViewController isKindOfClass:[SFAllGamesListViewController class]]) {
+            
+            [controller popViewControllerAnimated:YES];
+            [self _resumeGameForWindow:window];
+            
+        } else if ([controller.visibleViewController isKindOfClass:[SFSettingsViewController class]]) {
+            
+            [controller dismissViewControllerAnimated:NO completion:^{
+               
+                [self _resumeGameForWindow:window];
+                
+            }];
+            
+        } else if ([controller.visibleViewController isKindOfClass:[SFNewRoundViewController class]]) {
+            
+            [controller dismissViewControllerAnimated:NO completion:^{
+               
+                [self _resumeGameForWindow:window];
+                
+            }];
+            
+        } else if ([controller.visibleViewController isKindOfClass:[SFScoreCardViewController class]]) {
+            
+            SFScoreCardViewController *scoreCardController = (SFScoreCardViewController *)controller.visibleViewController;
+            
+            if (![scoreCardController.storageIdentifier isEqualToString:[SFPublicGame sharedGame].storageIdentifier]) {
+                
+                [controller popViewControllerAnimated:NO];
+                [self _resumeGameForWindow:window];
+                
+            }
+            
+        }
+        
+    } else {
+     
+        [NSException raise:NSInvalidArgumentException format:@"Somehow, %@ is the root view controller, and its not an instance of UINavigationController", window.rootViewController];
         
     }
     

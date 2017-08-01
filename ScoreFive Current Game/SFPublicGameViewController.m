@@ -86,7 +86,7 @@
         
         UILabel *playerLabel = [[UILabel alloc] init];
         playerLabel.textAlignment = NSTextAlignmentCenter;
-        playerLabel.text = player;
+        playerLabel.text = player_short_name(player);
         playerLabel.font = [UIFont systemFontOfSize:14.0f];
         
         self.nameLabels = [self.nameLabels arrayByAddingObject:playerLabel];
@@ -225,7 +225,7 @@
         
     }
     
-    if (self.separatorViews) {
+    if (self.separatorView) {
         
         [self.separatorView removeFromSuperview];
         
