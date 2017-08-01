@@ -48,14 +48,7 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
-        
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self _setUpTextField];
-        
-    }
+    self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     
     return self;
     

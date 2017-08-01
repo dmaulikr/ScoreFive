@@ -14,6 +14,7 @@
 #import "SFSwitchControlTableViewCell.h"
 #import "SFButtonTableViewCell.h"
 #import "SFAppSettings.h"
+#import "SFAppReview.h"
 
 #define WEBSITE_URL "https://www.vsanthanam.com"
 #define TWITTER_NATIVE_URL "twitter:///user?screen_name=varun_santhanam"
@@ -21,7 +22,7 @@
 #define EMAIL_ADDR "talkto@vsanthanam.com"
 #define HELP_URL "https://www.vsanthanam.com/five"
 
-#define NUM_SECTIONS 4
+#define NUM_SECTIONS 5
 
 #define SCORECARD_SECTION 0
 #define NUM_SCORECARD_ROWS 1
@@ -41,6 +42,10 @@
 #define CONTACT_EMAIL 0
 #define CONTACT_TWITTER 1
 #define CONTACT_WEBSITE 2
+
+#define REVIEW_SECTION 4
+#define NUM_REVIEW_ROWS 1
+#define REVIEW_APPSTORE 0
 
 @interface SFSettingsViewController ()<UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
@@ -114,6 +119,10 @@
         
         [self _goToHowTo];
         
+    } else if (indexPath.section == REVIEW_SECTION && indexPath.row == REVIEW_APPSTORE) {
+        
+        [self _goToAppStoreReview];
+        
     }
     
 }
@@ -144,6 +153,18 @@
     
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    
+    if (section == REVIEW_SECTION) {
+        
+        return NSLocalizedString(@"It only takes a minute!", nil);
+        
+    }
+    
+    return nil;
+    
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return NUM_SECTIONS;
@@ -167,6 +188,10 @@
     } else if (section == HELP_SECTION) {
         
         return NUM_HELP_ROWS;
+        
+    } else if (section == REVIEW_SECTION) {
+        
+        return NUM_REVIEW_ROWS;
         
     }
     
@@ -277,6 +302,27 @@
         
         return cell;
         
+    } else if (indexPath.section == REVIEW_SECTION) {
+        
+        static NSString *ReviewButtonCellIdentifier = @"ReviewCellIdentifier";
+        
+        SFButtonTableViewCell *cell = (SFButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:ReviewButtonCellIdentifier];
+        
+        if (!cell) {
+            
+            cell = [[SFButtonTableViewCell alloc] initWithReuseIdentifier:ReviewButtonCellIdentifier];
+            cell.buttonTintColor = self.view.tintColor;
+            
+        }
+        
+        if (indexPath.row == REVIEW_APPSTORE) {
+            
+            cell.textLabel.text = NSLocalizedString(@"Review ScoreFive", nil);
+            
+        }
+        
+        return cell;
+        
     }
     
     return nil;
@@ -375,6 +421,12 @@
     [self presentViewController:controller
                        animated:YES
                      completion:nil];
+    
+}
+
+- (void)_goToAppStoreReview {
+    
+    [SFAppReview openReviewInAppStore];
     
 }
 

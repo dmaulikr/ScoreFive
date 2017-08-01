@@ -15,6 +15,7 @@
 #import "SFIndexedButtonTableViewCell.h"
 #import "SFNewRoundViewController.h"
 #import "SFAppSettings.h"
+#import "SFAppReview.h"
 
 @interface SFScoreCardViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
@@ -69,6 +70,17 @@
     
     [self _updateBar];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    if (self.game.finished) {
+        
+        [SFAppReview promptReviewOnControllerIfNeeded:self];
+        
+    }
     
 }
 

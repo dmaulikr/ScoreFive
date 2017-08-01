@@ -116,14 +116,7 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    
-    if (self) {
-        
-        [self _setUpIndexLabel];
-        [self _setUpButtonLabel];
-        
-    }
+    self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     
     return self;
     

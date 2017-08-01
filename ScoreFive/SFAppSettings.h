@@ -13,6 +13,7 @@
 @property (nonatomic, getter=isIndexByPlayerNameEnabled) BOOL indexByPlayerNameEnabled;
 @property (nonatomic, getter=isScoreHighlightingEnabled) BOOL scoreHighlightingEnabled;
 @property (nonatomic) BOOL firstLaunchHappened;
+@property (nonatomic) BOOL reviewPromptHappened;
 
 + (nullable instancetype)sharedAppSettings;
 

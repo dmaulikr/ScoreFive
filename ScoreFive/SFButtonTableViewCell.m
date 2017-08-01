@@ -81,13 +81,6 @@
     
     self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     
-    if (self) {
-        
-        self.buttonTintColor = self.tintColor;
-        [self _setUpButtonCell];
-        
-    }
-    
     return self;
     
 }

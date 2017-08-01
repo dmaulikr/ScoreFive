@@ -64,4 +64,16 @@
     
 }
 
+- (BOOL)reviewPromptHappened {
+    
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"SFReviewPrompt"];
+    
+}
+
+- (void)setReviewPromptHappened:(BOOL)reviewPromptHappened {
+    
+    [[NSUserDefaults standardUserDefaults] setBool:reviewPromptHappened forKey:@"SFReviewPrompt"];
+    
+}
+
 @end

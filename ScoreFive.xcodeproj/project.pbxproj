@@ -33,6 +33,8 @@
 		070A68D61F2FA3D0000CAD72 /* SFGameRound.m in Sources */ = {isa = PBXBuildFile; fileRef = 0701339B1F23A00100C0DBEE /* SFGameRound.m */; };
 		070A68E01F2FAB1A000CAD72 /* SFPublicGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */; };
 		070A68E31F30F72C000CAD72 /* SFApplicationShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */; };
+		070A68E71F3106BD000CAD72 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 070A68E61F3106BD000CAD72 /* StoreKit.framework */; };
+		070A68EA1F310752000CAD72 /* SFAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A68E91F310752000CAD72 /* SFAppReview.m */; };
 		070B2B8D1F2A651000592458 /* SFIndexedButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */; };
 		072B95E91F21387500E4D1FB /* UINavigationController+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95E81F21387500E4D1FB /* UINavigationController+ScoreFive.m */; };
 		072B95EC1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B95EB1F213AE000E4D1FB /* UINavigationBar+ScoreFive.m */; };
@@ -142,6 +144,9 @@
 		070A68DE1F2FAB12000CAD72 /* SFPublicGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPublicGameViewController.m; sourceTree = "<group>"; };
 		070A68E11F30F72C000CAD72 /* SFApplicationShortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFApplicationShortcuts.h; sourceTree = "<group>"; };
 		070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFApplicationShortcuts.m; sourceTree = "<group>"; };
+		070A68E61F3106BD000CAD72 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		070A68E81F310752000CAD72 /* SFAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAppReview.h; sourceTree = "<group>"; };
+		070A68E91F310752000CAD72 /* SFAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAppReview.m; sourceTree = "<group>"; };
 		070B2B8B1F2A651000592458 /* SFIndexedButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFIndexedButtonTableViewCell.h; sourceTree = "<group>"; };
 		070B2B8C1F2A651000592458 /* SFIndexedButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFIndexedButtonTableViewCell.m; sourceTree = "<group>"; };
 		072B95E71F21387500E4D1FB /* UINavigationController+ScoreFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ScoreFive.h"; sourceTree = "<group>"; };
@@ -204,6 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				070A68E71F3106BD000CAD72 /* StoreKit.framework in Frameworks */,
 				074CB6A41F2E739D00CD3173 /* MessageUI.framework in Frameworks */,
 				074CB6A21F2E6EAB00CD3173 /* SafariServices.framework in Frameworks */,
 				07783BC01F229BD300E2D26B /* QuartzCore.framework in Frameworks */,
@@ -453,6 +459,8 @@
 				0793EF521F1FA42B00FF2D08 /* SFAppDelegate.m */,
 				07783BD41F22CB3700E2D26B /* SFAppSettings.h */,
 				07783BD51F22CB3700E2D26B /* SFAppSettings.m */,
+				070A68E81F310752000CAD72 /* SFAppReview.h */,
+				070A68E91F310752000CAD72 /* SFAppReview.m */,
 				070A68E11F30F72C000CAD72 /* SFApplicationShortcuts.h */,
 				070A68E21F30F72C000CAD72 /* SFApplicationShortcuts.m */,
 				073F8AA81F2018DA0086C7DF /* SFFormatters.h */,
@@ -534,6 +542,7 @@
 		079B95FA1F218C3C00A5FFE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				070A68E61F3106BD000CAD72 /* StoreKit.framework */,
 				074CB6A31F2E739D00CD3173 /* MessageUI.framework */,
 				074CB6A11F2E6EAB00CD3173 /* SafariServices.framework */,
 				07783BBF1F229BD300E2D26B /* QuartzCore.framework */,
@@ -758,6 +767,7 @@
 				070133B61F2651E600C0DBEE /* SFColumnLabelView.m in Sources */,
 				070133BC1F26897700C0DBEE /* SFIndexedColumnLabelView.m in Sources */,
 				0759E8501F2942E300AF8B0F /* UIColor+SFScoreFiveColors.m in Sources */,
+				070A68EA1F310752000CAD72 /* SFAppReview.m in Sources */,
 				0793EF501F1FA42B00FF2D08 /* main.m in Sources */,
 				070133BF1F26934B00C0DBEE /* SFIndexedColumnLabelTableViewCell.m in Sources */,
 				070133B91F267BA400C0DBEE /* SFScoreCardViewController.m in Sources */,
