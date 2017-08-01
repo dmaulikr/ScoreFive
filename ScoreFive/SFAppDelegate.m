@@ -14,6 +14,8 @@
 #import "SFGameStorage.h"
 
 #import "SFGameListViewController.h"
+#import "SFSettingsViewController.h"
+#import "SFNewRoundViewController.h"
 #import "SFScoreCardViewController.h"
 
 NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutItemTypeNewGame";
@@ -168,6 +170,47 @@ NSString * const SFAppDelegateShortcutItemTypeNewGame = @"SFAppDelegateShortcutI
 }
 
 - (void)_newGameWithViewController:(UIViewController *)controller; {
+    
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        
+        UINavigationController *navController = (UINavigationController *)controller;
+        
+        if ([navController.visibleViewController isKindOfClass:[SFGameListViewController class]]) {
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewGame" bundle:[NSBundle mainBundle]];
+            UINavigationController *newGameNav = (UINavigationController *)[storyboard instantiateInitialViewController];
+            [navController.visibleViewController presentViewController:newGameNav
+                                                              animated:YES
+                                                            completion:nil];
+            
+        } else if ([navController.visibleViewController isKindOfClass:[SFSettingsViewController class]]) {
+            
+            [navController dismissViewControllerAnimated:NO completion:^{
+                
+                [self _newGameWithViewController:self.window.rootViewController];
+                
+            }];
+            
+        } else if ([navController.visibleViewController isKindOfClass:[SFScoreCardViewController class]]) {
+            
+            [navController popViewControllerAnimated:NO];
+            [self _newGameWithViewController:self.window.rootViewController];
+            
+        } else if ([navController.visibleViewController isKindOfClass:[SFNewRoundViewController class]]) {
+            
+            [navController dismissViewControllerAnimated:NO completion:^{
+               
+                [self _newGameWithViewController:self.window.rootViewController];
+                
+            }];
+            
+        }
+        
+    } else {
+        
+        [NSException raise:NSInvalidArgumentException format:@"Somehow, %@ is the root view controller, and its not an instance of UINavigationController", controller];
+        
+    }
     
 }
 
